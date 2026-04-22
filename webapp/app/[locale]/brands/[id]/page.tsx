@@ -127,9 +127,13 @@ export default async function BrandDetailPage({
             emailTemplates: ct.emailTemplates.map((et) => ({
               id: et.id,
               step: et.step,
+              delayDays: et.delayDays,
               subject: et.subject,
               bodyText: et.bodyText,
               branch: et.branch,
+              cta: et.cta,
+              stopRule: et.stopRule,
+              claimSources: JSON.parse(et.claimSources || "[]") as string[],
             })),
           })),
         }}

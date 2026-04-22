@@ -36,9 +36,13 @@ interface Recommendation {
 interface EmailTemplate {
   id: string;
   step: number;
+  delayDays: number;
   subject: string;
   bodyText: string;
   branch: string | null;
+  cta: string | null;
+  stopRule: string | null;
+  claimSources: string[];
 }
 
 interface CampaignTarget {
@@ -97,10 +101,26 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
   const [emailTarget, setEmailTarget] = useState<CampaignTarget | null>(
     brand.campaignTargets[0] ?? null
   );
+  const [stepIdx, setStepIdx] = useState(0);
+  const [editedSubject, setEditedSubject] = useState("");
+  const [editedBody, setEditedBody] = useState("");
   const [toEmail, setToEmail] = useState("");
   const [toFirstName, setToFirstName] = useState("");
   const [sendStatus, setSendStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const currentTemplate = emailTarget?.emailTemplates[stepIdx] ?? null;
+
+  // Reset editor when template changes
+  useEffect(() => {
+    if (currentTemplate) {
+      setEditedSubject(currentTemplate.subject);
+      setEditedBody(currentTemplate.bodyText);
+    } else {
+      setEditedSubject("");
+      setEditedBody("");
+    }
+  }, [currentTemplate?.id]);
 
   function profileToWeights(p: WeightProfile | undefined): ScoringWeightsInput {
     if (!p) return { wCategory: 30, wGeo: 12, wScale: 15, wOps: 13, wPositioning: 12, wIncrementality: 8, wStory: 5, wPenalty: 0, wPrior: 10 };
@@ -148,18 +168,27 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
   );
 
   async function handleSend() {
-    if (!emailTarget || !toEmail) return;
+    if (!emailTarget || !toEmail || !currentTemplate) return;
     setSendStatus("sending");
-    const step1Template = emailTarget.emailTemplates.find((et) => et.step === 1);
+    const profile = weightProfiles.find((p) => p.id === selectedProfileId);
+    const top = liveScores[0];
     const res = await fetch("/api/outreach", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         brandId: brand.id,
         marketplaceId: emailTarget.marketplaceId,
-        emailTemplateId: step1Template?.id,
+        emailTemplateId: currentTemplate.id,
         toEmail,
         toFirstName: toFirstName || undefined,
+        subject: editedSubject,
+        bodyText: editedBody,
+        scoringProfile: profile?.profileName,
+        finalScore: top?.finalScore,
+        priority: top?.priority ?? undefined,
+        branch: (currentTemplate.branch === "Launch" || currentTemplate.branch === "Accelerate")
+          ? currentTemplate.branch
+          : null,
       }),
     });
     setSendStatus(res.ok ? "sent" : "error");
@@ -167,7 +196,6 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
   }
 
   const topScore = liveScores[0];
-  const step1 = emailTarget?.emailTemplates.find((et) => et.step === 1);
 
   const WEIGHT_FIELDS: { key: keyof ScoringWeightsInput; label: string }[] = [
     { key: "wCategory", label: t("fitCategory") },
@@ -187,17 +215,34 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
           <label className="text-xs text-zinc-400 font-medium uppercase tracking-wide block mb-1">
             {t("strategy")}
           </label>
-          <select
-            value={selectedProfileId}
-            onChange={(e) => handleProfileChange(e.target.value)}
-            className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
-          >
-            {weightProfiles.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.profileName} {p.isDefault ? "(default)" : ""}
-              </option>
-            ))}
-          </select>
+          <div className="flex gap-2">
+            <select
+              value={selectedProfileId}
+              onChange={(e) => handleProfileChange(e.target.value)}
+              className="flex-1 text-sm border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+            >
+              {weightProfiles.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.profileName} {p.isDefault ? "(default)" : ""}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={async () => {
+                const name = window.prompt("Profile name");
+                if (!name) return;
+                const res = await fetch("/api/scoring-weights", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ profileName: name, ...weights }),
+                });
+                if (res.ok) window.location.reload();
+              }}
+              className="px-3 py-2 text-xs font-medium bg-zinc-100 text-zinc-700 hover:bg-zinc-200 rounded-lg"
+            >
+              Save as profile
+            </button>
+          </div>
         </div>
 
         {liveScores.slice(0, 2).map((sl) => (
@@ -353,19 +398,18 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
 
       {/* Email preview tab */}
       {tab === "email" && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Controls */}
-          <div className="bg-white border border-zinc-200 rounded-xl p-5 space-y-4">
-            <h3 className="text-sm font-semibold text-zinc-700">{t("emailPreview")}</h3>
-
+        <div className="space-y-4">
+          {/* Target + step selector */}
+          <div className="flex flex-wrap gap-3 items-end">
             {brand.campaignTargets.length > 0 && (
-              <div>
+              <div className="flex-1 min-w-[200px]">
                 <label className="text-xs text-zinc-400 block mb-1">Target</label>
                 <select
                   value={emailTarget?.id ?? ""}
                   onChange={(e) => {
                     const ct = brand.campaignTargets.find((t) => t.id === e.target.value);
                     setEmailTarget(ct ?? null);
+                    setStepIdx(0);
                   }}
                   className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 bg-zinc-50 focus:outline-none"
                 >
@@ -377,71 +421,162 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
                 </select>
               </div>
             )}
-
-            <div>
-              <label className="text-xs text-zinc-400 block mb-1">To Email</label>
-              <input
-                type="email"
-                value={toEmail}
-                onChange={(e) => setToEmail(e.target.value)}
-                placeholder="contact@brand.com"
-                className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
-              />
-            </div>
-            <div>
-              <label className="text-xs text-zinc-400 block mb-1">First Name</label>
-              <input
-                type="text"
-                value={toFirstName}
-                onChange={(e) => setToFirstName(e.target.value)}
-                placeholder="Sarah"
-                className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
-              />
-            </div>
-
-            <button
-              onClick={handleSend}
-              disabled={!toEmail || sendStatus === "sending"}
-              className={`w-full py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                sendStatus === "sent"
-                  ? "bg-emerald-600 text-white"
-                  : sendStatus === "error"
-                  ? "bg-red-600 text-white"
-                  : "bg-indigo-600 hover:bg-indigo-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-              }`}
-            >
-              {sendStatus === "sending"
-                ? "Sending…"
-                : sendStatus === "sent"
-                ? t("sendSuccess")
-                : sendStatus === "error"
-                ? t("sendError")
-                : t("sendToN8n")}
-            </button>
-          </div>
-
-          {/* Email preview */}
-          <div className="bg-white border border-zinc-200 rounded-xl p-5">
-            {step1 ? (
+            {emailTarget && emailTarget.emailTemplates.length > 0 && (
               <div>
-                <div className="mb-3 pb-3 border-b border-zinc-100">
-                  <div className="text-xs text-zinc-400 mb-1">{t("step1Subject")}</div>
-                  <div className="text-sm font-medium text-zinc-900">
-                    {replaceVars(step1.subject, toFirstName, brand.name, emailTarget?.marketplaceName ?? "")}
-                  </div>
+                <label className="text-xs text-zinc-400 block mb-1">Step</label>
+                <div className="inline-flex bg-zinc-100 rounded-lg p-0.5">
+                  {emailTarget.emailTemplates.map((et, i) => (
+                    <button
+                      key={et.id}
+                      onClick={() => setStepIdx(i)}
+                      className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                        i === stepIdx
+                          ? "bg-white text-indigo-700 shadow-sm"
+                          : "text-zinc-500 hover:text-zinc-700"
+                      }`}
+                    >
+                      {et.step}
+                      {et.branch ? ` · ${et.branch}` : ""}
+                    </button>
+                  ))}
                 </div>
-                <div>
-                  <div className="text-xs text-zinc-400 mb-2">{t("step1Body")}</div>
-                  <div className="text-sm text-zinc-700 whitespace-pre-wrap leading-relaxed">
-                    {replaceVars(step1.bodyText, toFirstName, brand.name, emailTarget?.marketplaceName ?? "")}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-10 text-zinc-400 text-sm">
-                {t("notConfigured")}
               </div>
             )}
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {/* Editable email (left, 2 cols) */}
+            <div className="lg:col-span-2 bg-white border border-zinc-200 rounded-xl p-5 space-y-3">
+              {currentTemplate ? (
+                <>
+                  <div>
+                    <label className="text-xs text-zinc-400 uppercase tracking-wide block mb-1">Subject</label>
+                    <input
+                      type="text"
+                      value={editedSubject}
+                      onChange={(e) => setEditedSubject(e.target.value)}
+                      className="w-full text-sm font-medium border border-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-zinc-400 uppercase tracking-wide block mb-1">Body</label>
+                    <textarea
+                      rows={14}
+                      value={editedBody}
+                      onChange={(e) => setEditedBody(e.target.value)}
+                      className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+                    />
+                    <div className="mt-1 text-xs text-zinc-400">
+                      Tokens: <code className="px-1 bg-zinc-100 rounded">{"{{first_name}}"}</code>{" "}
+                      <code className="px-1 bg-zinc-100 rounded">{"{{brand}}"}</code>{" "}
+                      <code className="px-1 bg-zinc-100 rounded">{"{{marketplace}}"}</code>{" "}
+                      <code className="px-1 bg-zinc-100 rounded">{"{{sender.first_name}}"}</code>
+                    </div>
+                  </div>
+
+                  {/* Live preview */}
+                  <details className="border-t border-zinc-100 pt-3">
+                    <summary className="text-xs text-zinc-500 cursor-pointer">Live preview (with substitutions)</summary>
+                    <div className="mt-2 p-3 bg-zinc-50 rounded-lg text-sm">
+                      <div className="font-medium text-zinc-900 mb-2">
+                        {replaceVars(editedSubject, toFirstName, brand.name, emailTarget?.marketplaceName ?? "")}
+                      </div>
+                      <div className="text-zinc-700 whitespace-pre-wrap leading-relaxed">
+                        {replaceVars(editedBody, toFirstName, brand.name, emailTarget?.marketplaceName ?? "")}
+                      </div>
+                    </div>
+                  </details>
+                </>
+              ) : (
+                <div className="text-center py-10 text-zinc-400 text-sm">
+                  {t("notConfigured")}
+                </div>
+              )}
+            </div>
+
+            {/* Metadata + send (right, 1 col) */}
+            <div className="space-y-4">
+              <div className="bg-white border border-zinc-200 rounded-xl p-4 space-y-3 text-xs">
+                <div>
+                  <div className="text-zinc-400 uppercase tracking-wide mb-0.5">Contact role</div>
+                  <div className="text-zinc-800">{emailTarget?.contactRole ?? "—"}</div>
+                </div>
+                <div>
+                  <div className="text-zinc-400 uppercase tracking-wide mb-0.5">CTA</div>
+                  <div className="text-zinc-800">{currentTemplate?.cta ?? "—"}</div>
+                </div>
+                <div>
+                  <div className="text-zinc-400 uppercase tracking-wide mb-0.5">Stop rule</div>
+                  <div className="text-zinc-800">{currentTemplate?.stopRule ?? "—"}</div>
+                </div>
+                <div>
+                  <div className="text-zinc-400 uppercase tracking-wide mb-0.5">Delay</div>
+                  <div className="text-zinc-800">{currentTemplate?.delayDays ?? 0} days</div>
+                </div>
+                {currentTemplate && currentTemplate.claimSources.length > 0 && (
+                  <div>
+                    <div className="text-zinc-400 uppercase tracking-wide mb-0.5">Claim sources</div>
+                    <ul className="space-y-0.5">
+                      {currentTemplate.claimSources.map((src, i) => (
+                        <li key={i}>
+                          <a
+                            href={src}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-indigo-600 hover:underline break-all"
+                          >
+                            {src}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              <div className="bg-white border border-zinc-200 rounded-xl p-4 space-y-3">
+                <div>
+                  <label className="text-xs text-zinc-400 block mb-1">To Email</label>
+                  <input
+                    type="email"
+                    value={toEmail}
+                    onChange={(e) => setToEmail(e.target.value)}
+                    placeholder="contact@brand.com"
+                    className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-zinc-400 block mb-1">First name</label>
+                  <input
+                    type="text"
+                    value={toFirstName}
+                    onChange={(e) => setToFirstName(e.target.value)}
+                    placeholder="Sarah"
+                    className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+                  />
+                </div>
+
+                <button
+                  onClick={handleSend}
+                  disabled={!toEmail || sendStatus === "sending" || !currentTemplate}
+                  className={`w-full py-2.5 text-sm font-medium rounded-lg transition-colors ${
+                    sendStatus === "sent"
+                      ? "bg-emerald-600 text-white"
+                      : sendStatus === "error"
+                      ? "bg-red-600 text-white"
+                      : "bg-indigo-600 hover:bg-indigo-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  }`}
+                >
+                  {sendStatus === "sending"
+                    ? "Sending…"
+                    : sendStatus === "sent"
+                    ? t("sendSuccess")
+                    : sendStatus === "error"
+                    ? t("sendError")
+                    : t("sendToN8n")}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

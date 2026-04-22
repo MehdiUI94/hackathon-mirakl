@@ -1,68 +1,95 @@
 import { prisma } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+
+const EventSchema = z.object({
+  event: z.enum([
+    "email.sent",
+    "email.opened",
+    "email.replied",
+    "email.bounced",
+    "email.unsubscribed",
+    "meeting.booked",
+  ]),
+  emailSendId: z.string(),
+  n8nExecutionId: z.string().optional(),
+  occurredAt: z.string().optional(),
+  data: z.record(z.string(), z.unknown()).optional(),
+});
+
+const STOP_EVENTS = new Set([
+  "email.replied",
+  "email.bounced",
+  "email.unsubscribed",
+  "meeting.booked",
+]);
 
 export async function POST(req: NextRequest) {
   const settings = await prisma.appSettings.findUnique({ where: { id: "singleton" } });
 
-  // Validate secret if configured
   if (settings?.n8nWebhookSecret) {
-    const incomingSecret =
-      req.headers.get("x-webhook-secret") ??
-      req.headers.get("x-n8n-signature") ??
-      "";
-    if (incomingSecret !== settings.n8nWebhookSecret) {
+    const incoming =
+      req.headers.get("x-webhook-secret") ?? req.headers.get("X-Webhook-Secret") ?? "";
+    if (incoming !== settings.n8nWebhookSecret) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
   }
 
-  const body = await req.json() as Record<string, unknown>;
-  const sendId = String(body.sendId ?? "");
-  if (!sendId) {
-    return NextResponse.json({ error: "Missing sendId" }, { status: 400 });
+  const parsed = EventSchema.safeParse(await req.json());
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
+  const { event, emailSendId, n8nExecutionId, occurredAt, data } = parsed.data;
+  const ts = occurredAt ? new Date(occurredAt) : new Date();
 
-  const send = await prisma.emailSend.findUnique({ where: { id: sendId } });
+  const send = await prisma.emailSend.findUnique({
+    where: { id: emailSendId },
+    include: { emailTemplate: true },
+  });
   if (!send) {
     return NextResponse.json({ error: "EmailSend not found" }, { status: 404 });
   }
 
-  const event = String(body.event ?? "");
-  const updateData: Record<string, unknown> = {};
+  const update: Record<string, unknown> = {};
+  if (n8nExecutionId) update.n8nExecutionId = n8nExecutionId;
 
-  if (event === "replied" || body.replyAt) {
-    updateData.replyAt = body.replyAt ? new Date(String(body.replyAt)) : new Date();
-    updateData.replyType = String(body.replyType ?? "POSITIVE");
-    updateData.status = "REPLIED";
+  switch (event) {
+    case "email.sent":
+      update.status = "SENT";
+      update.sentAt = ts;
+      break;
+    case "email.opened":
+      if (send.status !== "REPLIED") update.status = "OPENED";
+      break;
+    case "email.replied":
+      update.status = "REPLIED";
+      update.replyAt = ts;
+      update.replyType = String(data?.replyType ?? "POSITIVE");
+      break;
+    case "email.bounced":
+      update.status = "BOUNCED";
+      break;
+    case "email.unsubscribed":
+      update.status = "STOPPED";
+      update.replyType = "UNSUBSCRIBE";
+      update.replyAt = ts;
+      break;
+    case "meeting.booked":
+      update.status = "REPLIED";
+      update.meetingBooked = true;
+      update.replyType = "MEETING";
+      update.replyAt = ts;
+      break;
   }
 
-  if (body.meetingBooked === true || String(body.event) === "meeting_booked") {
-    updateData.meetingBooked = true;
-    updateData.replyType = "MEETING";
-    updateData.status = "REPLIED";
-  }
+  await prisma.emailSend.update({ where: { id: emailSendId }, data: update });
 
-  if (body.unsubscribed || body.replyType === "UNSUBSCRIBE") {
-    updateData.replyType = "UNSUBSCRIBE";
-    updateData.status = "REPLIED";
-    // Pause the campaign target
-    const template = await prisma.emailTemplate.findUnique({
-      where: { id: send.emailTemplateId },
-      include: { campaignTarget: true },
+  if (STOP_EVENTS.has(event)) {
+    await prisma.campaignTarget.update({
+      where: { id: send.emailTemplate.campaignTargetId },
+      data: event === "email.unsubscribed" ? { stopped: true } : { paused: true },
     });
-    if (template) {
-      await prisma.campaignTarget.update({
-        where: { id: template.campaignTargetId },
-        data: { paused: true },
-      });
-    }
   }
 
-  if (event === "sent") {
-    updateData.status = "SENT";
-    updateData.sentAt = body.sentAt ? new Date(String(body.sentAt)) : new Date();
-  }
-
-  await prisma.emailSend.update({ where: { id: sendId }, data: updateData });
-
-  return NextResponse.json({ received: true });
+  return NextResponse.json({ received: true, event, emailSendId });
 }

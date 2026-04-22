@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Editorial palette — warm paper, deep ink, terracotta accent */
+  --paper: #faf8f4;
+  --paper-2: #f4f1ea;
+  --paper-3: #ece8de;
+  --ink: #18181b;
+  --ink-2: #3f3f46;
+  --muted: #6b6b67;
+  --muted-2: #a1a1a1;
+  --rule: rgba(24, 24, 27, 0.08);
+  --rule-strong: rgba(24, 24, 27, 0.18);
+  --ember: #c2410c;
+  --ember-soft: #fed7aa;
+  --foreground: var(--ink);
+  --background: var(--paper);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-paper-3: var(--paper-3);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-ember: var(--ember);
+  --color-ember-soft: var(--ember-soft);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-display: var(--font-display);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+}
+
+/* Display utility */
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+  font-feature-settings: "ss01";
+  letter-spacing: -0.01em;
+}
+
+/* Eyebrow / label */
+.eyebrow {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Editorial rule */
+.rule {
+  border-color: var(--rule);
+}
+
+/* Tabular numerals */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle in-page reveal */
+@keyframes editorial-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  animation: editorial-rise 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.rise-2 { animation-delay: 80ms; }
+.rise-3 { animation-delay: 160ms; }
+.rise-4 { animation-delay: 240ms; }
+
+/* Scrollbar — quiet */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--paper-3); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--rule-strong); }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* Selection */
+::selection {
+  background: var(--ember);
+  color: var(--paper);
 }

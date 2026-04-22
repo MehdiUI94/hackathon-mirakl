@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { scoreBrandAgainstMarketplaces } from "@/lib/scoring";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -35,7 +36,6 @@ export async function GET(request: NextRequest) {
     skip,
   });
 
-  // Filter by priority after fetch (computed field on scoring line)
   const filtered = priority
     ? brands.filter((b) =>
         b.scoringLines[0]?.priority?.startsWith(priority) ?? false
@@ -65,20 +65,75 @@ const CreateBrandSchema = z.object({
   category: z.string().optional(),
   positioning: z.string().optional(),
   notes: z.string().optional(),
+  revenueMUsd: z.number().optional(),
+  headcount: z.number().optional(),
+  intlPresence: z.string().optional(),
+  sustainable: z.boolean().optional(),
+  existingMarketplaces: z.array(z.string()).optional(),
+  productTags: z.array(z.string()).optional(),
+  sources: z.string().optional(),
+  createdVia: z.enum(["WORKBOOK", "MANUAL", "ENRICHED"]).optional(),
 });
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
-  const parsed = CreateBrandSchema.safeParse(body);
+  const parsed = CreateBrandSchema.safeParse(await request.json());
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
+  const data = parsed.data;
+
   const brand = await prisma.brand.create({
     data: {
-      ...parsed.data,
-      createdVia: "MANUAL",
+      name: data.name,
+      url: data.url,
+      country: data.country,
+      category: data.category,
+      positioning: data.positioning,
+      notes: data.notes,
+      revenueMUsd: data.revenueMUsd,
+      headcount: data.headcount,
+      intlPresence: data.intlPresence,
+      sustainable: data.sustainable ?? false,
+      existingMarketplaces: JSON.stringify(data.existingMarketplaces ?? []),
+      productTags: JSON.stringify(data.productTags ?? []),
+      sources: data.sources,
+      createdVia: data.createdVia ?? "MANUAL",
       sourceGroup: "MAIN",
     },
   });
+
+  // Score against all marketplaces and persist lines + top-2 recos
+  const marketplaces = await prisma.marketplace.findMany();
+  if (marketplaces.length > 0) {
+    const scored = scoreBrandAgainstMarketplaces(brand, marketplaces);
+
+    await prisma.scoringLine.createMany({
+      data: scored.map((s) => ({
+        brandId: brand.id,
+        marketplaceId: s.marketplaceId,
+        ...s.components,
+        rawModelScore: s.finalScore,
+        finalScore: s.finalScore,
+        priority: s.priority,
+        alreadyPresent: s.alreadyPresent,
+      })),
+    });
+
+    const ranked = scored
+      .filter((s) => !s.alreadyPresent)
+      .sort((a, b) => b.finalScore - a.finalScore)
+      .slice(0, 2);
+    await prisma.recommendation.createMany({
+      data: ranked.map((s, idx) => ({
+        brandId: brand.id,
+        rank: idx + 1,
+        marketplaceId: s.marketplaceId,
+        score: s.finalScore,
+        priority: s.priority,
+        confidence: "Moyenne",
+      })),
+    });
+  }
+
   return NextResponse.json(brand, { status: 201 });
 }

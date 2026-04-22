@@ -29,6 +29,7 @@ model Brand {
   scoringLines         ScoringLine[]
   recommendations      Recommendation[]
   campaignTargets      CampaignTarget[]
+  emailDrafts          EmailDraft[]
 }
 
 model Marketplace {
@@ -44,6 +45,7 @@ model Marketplace {
   scoringLines       ScoringLine[]
   recommendations    Recommendation[]
   campaignTargets    CampaignTarget[]
+  emailDrafts        EmailDraft[]
 }
 
 model ScoringLine {
@@ -170,6 +172,38 @@ model ScoringWeights {
   wPrior          Float   @default(10)
   isDefault       Boolean @default(false)
   isSystem        Boolean @default(true)
+}
+
+model EmailDraft {
+  id              String       @id @default(cuid())
+  brandId         String?
+  marketplaceId   String?
+  brand           Brand?       @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  marketplace     Marketplace? @relation(fields: [marketplaceId], references: [id], onDelete: SetNull)
+  brandName       String
+  marketplaceName String
+  campaign        String?
+  step            Int          @default(1)
+  branch          String?
+  toEmail         String
+  toFirstName     String?
+  subject         String
+  bodyText        String
+  cta             String?
+  stopRule        String?
+  claimSources    String       @default("[]")
+  meta            String       @default("{}")
+  callbackUrl     String?
+  n8nExecutionId  String?
+  status          String       @default("PENDING")
+  edited          Boolean      @default(false)
+  receivedAt      DateTime     @default(now())
+  decidedAt       DateTime?
+  sentAt          DateTime?
+  errorMessage    String?
+
+  @@index([status])
+  @@index([campaign])
 }
 
 model AppSettings {
