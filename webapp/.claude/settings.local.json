@@ -3,7 +3,11 @@
     "allow": [
       "Bash(npx tsc *)",
       "Bash(npx prisma *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(mkdir -p \"C:\\\\Cours\\\\hackathon-mirakl\\\\webapp\\\\app\\\\api\\\\campaigns\\\\launch\")",
+      "Bash(mkdir -p \"C:\\\\Cours\\\\hackathon-mirakl\\\\webapp\\\\app\\\\api\\\\drafts\\\\[id]\\\\suggest\")",
+      "Skill(autoplan)",
+      "Bash(curl -s http://localhost:3000/api/settings)"
     ]
   }
 }

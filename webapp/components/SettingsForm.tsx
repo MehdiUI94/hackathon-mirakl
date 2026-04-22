@@ -27,6 +27,8 @@ export default function SettingsForm() {
     searchApiKey: "",
   });
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [btnHovered, setBtnHovered] = useState(false);
+  const [btnPressed, setBtnPressed] = useState(false);
 
   useEffect(() => {
     fetch("/api/settings")
@@ -60,40 +62,92 @@ export default function SettingsForm() {
     { key: "searchApiKey", label: t("searchApiKey"), type: "password", placeholder: "api key" },
   ];
 
+  const btnBgBase =
+    status === "saved" ? "#059669" : status === "error" ? "var(--color-danger)" : "var(--color-primary)";
+  const btnBg =
+    status === "saving" ? btnBgBase
+    : btnPressed ? "#143058"
+    : btnHovered ? "var(--color-primary-dark)"
+    : btnBgBase;
+
   return (
-    <div className="bg-white border border-zinc-200 rounded-xl p-6 space-y-5">
+    <div
+      style={{
+        background: "var(--color-surface)",
+        border: "1px solid var(--color-border)",
+        borderRadius: 12,
+        padding: 24,
+        boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+      }}
+    >
       {fields.map(({ key, label, type = "text", placeholder }) => (
-        <div key={key}>
-          <label className="block text-sm font-medium text-zinc-700 mb-1.5">{label}</label>
+        <div key={key} style={{ marginBottom: 20 }}>
+          <label
+            style={{
+              display: "block",
+              fontSize: 13,
+              fontWeight: 500,
+              color: "var(--color-text-primary)",
+              marginBottom: 6,
+            }}
+          >
+            {label}
+          </label>
           <input
             type={type}
             value={settings[key]}
             onChange={(e) => update(key, e.target.value)}
             placeholder={placeholder}
-            className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2.5 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition"
+            style={{
+              width: "100%",
+              fontSize: 14,
+              border: "1px solid var(--color-border)",
+              borderRadius: 8,
+              padding: "8px 12px",
+              background: "var(--color-bg)",
+              color: "var(--color-text-primary)",
+              outline: "none",
+              boxSizing: "border-box",
+              fontFamily: "inherit",
+              transition: "border-color 0.12s",
+            }}
+            onFocus={(e) => {
+              e.target.style.borderColor = "var(--color-primary)";
+              e.target.style.boxShadow = "0 0 0 3px var(--color-primary-light)";
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = "var(--color-border)";
+              e.target.style.boxShadow = "none";
+            }}
           />
         </div>
       ))}
 
-      <div className="pt-2">
+      <div style={{ marginTop: 8 }}>
         <button
           onClick={handleSave}
           disabled={status === "saving"}
-          className={`px-5 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-            status === "saved"
-              ? "bg-emerald-600 text-white"
-              : status === "error"
-              ? "bg-red-600 text-white"
-              : "bg-indigo-600 hover:bg-indigo-700 text-white disabled:opacity-50"
-          }`}
+          onMouseEnter={() => status !== "saving" && setBtnHovered(true)}
+          onMouseLeave={() => { setBtnHovered(false); setBtnPressed(false); }}
+          onMouseDown={() => status !== "saving" && setBtnPressed(true)}
+          onMouseUp={() => setBtnPressed(false)}
+          style={{
+            padding: "9px 20px",
+            fontSize: 14,
+            fontWeight: 500,
+            borderRadius: 8,
+            border: "none",
+            background: btnBg,
+            color: "#fff",
+            cursor: status === "saving" ? "not-allowed" : "pointer",
+            opacity: status === "saving" ? 0.7 : 1,
+            fontFamily: "inherit",
+            transform: btnPressed && status !== "saving" ? "scale(0.97)" : "scale(1)",
+            transition: "background 0.12s, transform 0.08s",
+            userSelect: "none",
+          }}
         >
-          {status === "saving"
-            ? "Saving…"
-            : status === "saved"
-            ? t("saved")
-            : status === "error"
-            ? t("saveError")
-            : t("save")}
+          {status === "saving" ? "Saving…" : status === "saved" ? t("saved") : status === "error" ? t("saveError") : t("save")}
         </button>
       </div>
     </div>

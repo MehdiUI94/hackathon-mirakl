@@ -2,6 +2,9 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
+import { LaunchCampaignModal } from "./LaunchCampaignModal";
+
+type Toast = { id: number; type: "success" | "error" | "info"; message: string };
 import {
   BarChart,
   Bar,
@@ -52,6 +55,8 @@ export default function CampaignsDashboard({ locale }: { locale: string }) {
   const [loading, setLoading] = useState(true);
   const [campaignFilter, setCampaignFilter] = useState("");
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [toasts, setToasts] = useState<Toast[]>([]);
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -77,13 +82,25 @@ export default function CampaignsDashboard({ locale }: { locale: string }) {
 
   async function action(id: string, act: "pause" | "resume" | "stop") {
     setBusyId(id);
-    await fetch(`/api/campaigns/${id}`, {
+    const res = await fetch(`/api/campaigns/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: act }),
     });
+    if (res.ok) {
+      const labels = { pause: "Campagne mise en pause", resume: "Campagne relancée", stop: "Campagne arrêtée" };
+      pushToast("success", labels[act]);
+    } else {
+      pushToast("error", "Échec de l'action");
+    }
     setBusyId(null);
     refresh();
+  }
+
+  function pushToast(type: Toast["type"], message: string) {
+    const id = Date.now() + Math.random();
+    setToasts((prev) => [...prev, { id, type, message }]);
+    setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 5000);
   }
 
   function exportCSV() {
@@ -186,7 +203,7 @@ export default function CampaignsDashboard({ locale }: { locale: string }) {
       )}
 
       {/* Filter + export bar */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 flex-wrap">
         <select
           value={campaignFilter}
           onChange={(e) => setCampaignFilter(e.target.value)}
@@ -199,9 +216,18 @@ export default function CampaignsDashboard({ locale }: { locale: string }) {
         <div className="flex-1" />
         <button
           onClick={exportCSV}
-          className="flex items-center gap-2 px-3 py-2 text-sm text-zinc-600 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors"
+          className="flex items-center gap-2 px-3 py-2 text-sm text-zinc-600 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 active:bg-zinc-100 active:scale-95 transition-all"
         >
           {t("export")}
+        </button>
+        <button
+          onClick={() => setShowModal(true)}
+          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 active:scale-95 rounded-lg transition-all shadow-sm"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+          </svg>
+          Lancer la campagne
         </button>
       </div>
 
@@ -254,7 +280,7 @@ export default function CampaignsDashboard({ locale }: { locale: string }) {
                       <button
                         disabled={busyId === row.id}
                         onClick={() => action(row.id, "pause")}
-                        className="px-2 py-1 text-xs rounded bg-amber-50 text-amber-700 hover:bg-amber-100 disabled:opacity-50"
+                        className="px-2 py-1 text-xs rounded bg-amber-50 text-amber-700 hover:bg-amber-100 active:bg-amber-200 active:scale-95 disabled:opacity-50 transition-all"
                       >
                         Pause
                       </button>
@@ -263,7 +289,7 @@ export default function CampaignsDashboard({ locale }: { locale: string }) {
                       <button
                         disabled={busyId === row.id}
                         onClick={() => action(row.id, "resume")}
-                        className="px-2 py-1 text-xs rounded bg-emerald-50 text-emerald-700 hover:bg-emerald-100 disabled:opacity-50"
+                        className="px-2 py-1 text-xs rounded bg-emerald-50 text-emerald-700 hover:bg-emerald-100 active:bg-emerald-200 active:scale-95 disabled:opacity-50 transition-all"
                       >
                         Resume
                       </button>
@@ -272,7 +298,7 @@ export default function CampaignsDashboard({ locale }: { locale: string }) {
                       <button
                         disabled={busyId === row.id}
                         onClick={() => action(row.id, "stop")}
-                        className="px-2 py-1 text-xs rounded bg-zinc-100 text-zinc-700 hover:bg-zinc-200 disabled:opacity-50"
+                        className="px-2 py-1 text-xs rounded bg-zinc-100 text-zinc-700 hover:bg-zinc-200 active:bg-zinc-300 active:scale-95 disabled:opacity-50 transition-all"
                       >
                         Stop
                       </button>
@@ -289,6 +315,38 @@ export default function CampaignsDashboard({ locale }: { locale: string }) {
           </div>
         )}
       </div>
+
+      {/* Toasts */}
+      <div className="fixed bottom-8 right-8 space-y-2 z-50 pointer-events-none">
+        {toasts.map((toast) => (
+          <div
+            key={toast.id}
+            className={`px-5 py-3.5 text-[13px] flex items-center gap-3 shadow-lg rounded-lg pointer-events-auto ${
+              toast.type === "success"
+                ? "bg-white border-l-4 border-emerald-500 text-zinc-800"
+                : toast.type === "error"
+                ? "bg-white border-l-4 border-rose-500 text-zinc-800"
+                : "bg-zinc-900 border-l-4 border-indigo-400 text-white"
+            }`}
+          >
+            <span
+              className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                toast.type === "success"
+                  ? "bg-emerald-500"
+                  : toast.type === "error"
+                  ? "bg-rose-500"
+                  : "bg-indigo-400"
+              }`}
+            />
+            {toast.message}
+          </div>
+        ))}
+      </div>
+
+      {/* Launch modal */}
+      {showModal && (
+        <LaunchCampaignModal locale={locale} onClose={() => setShowModal(false)} />
+      )}
     </div>
   );
 }

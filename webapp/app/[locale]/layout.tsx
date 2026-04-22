@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { DM_Sans, JetBrains_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -7,21 +7,16 @@ import { routing } from "@/i18n/routing";
 import "../globals.css";
 import Sidebar from "@/components/Sidebar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-display",
-  weight: "400",
-  style: ["normal", "italic"],
-  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -47,22 +42,12 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="h-full flex bg-paper text-ink relative">
-        {/* Editorial paper grain */}
-        <div className="pointer-events-none fixed inset-0 z-0 opacity-[0.035] mix-blend-multiply" aria-hidden>
-          <svg width="100%" height="100%">
-            <filter id="noise">
-              <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
-              <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.9 0" />
-            </filter>
-            <rect width="100%" height="100%" filter="url(#noise)" />
-          </svg>
-        </div>
+      <body className="h-full flex bg-[var(--color-bg)] text-[var(--color-text-primary)]">
         <NextIntlClientProvider messages={messages}>
           <Sidebar locale={locale} />
-          <main className="flex-1 overflow-auto relative z-10">{children}</main>
+          <main className="flex-1 overflow-auto">{children}</main>
         </NextIntlClientProvider>
       </body>
     </html>

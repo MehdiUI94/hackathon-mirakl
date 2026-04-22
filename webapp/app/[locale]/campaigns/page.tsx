@@ -10,9 +10,11 @@ export default async function CampaignsPage({
   const t = await getTranslations("campaigns");
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-zinc-900">{t("title")}</h1>
+    <div style={{ padding: "24px 32px", maxWidth: 1280, margin: "0 auto" }}>
+      <div style={{ marginBottom: 24 }}>
+        <h1 style={{ fontSize: 22, fontWeight: 700, color: "var(--color-text-primary)", margin: 0 }}>
+          {t("title")}
+        </h1>
       </div>
       <CampaignsDashboard locale={locale} />
     </div>

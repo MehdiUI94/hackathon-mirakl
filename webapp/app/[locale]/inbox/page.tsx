@@ -8,36 +8,60 @@ export default async function InboxPage({
   const { locale } = await params;
 
   return (
-    <div className="min-h-full">
-      {/* Editorial masthead */}
-      <header className="px-12 pt-14 pb-10 border-b border-rule">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-baseline justify-between">
-            <div className="rise">
-              <div className="eyebrow mb-3">Section II · Validation des envois</div>
-              <h1 className="font-display text-[68px] leading-[0.92] text-ink">
-                Boîte de <em className="text-ember">réception</em>
+    <div style={{ minHeight: "100%" }}>
+      <header
+        style={{
+          padding: "24px 32px 20px",
+          borderBottom: "1px solid var(--color-border)",
+          background: "var(--color-surface)",
+        }}
+      >
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+            <div>
+              <p
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  color: "var(--color-text-secondary)",
+                  margin: "0 0 6px",
+                }}
+              >
+                Validation des envois
+              </p>
+              <h1
+                style={{
+                  fontSize: 22,
+                  fontWeight: 700,
+                  color: "var(--color-text-primary)",
+                  margin: "0 0 6px",
+                }}
+              >
+                Boîte de réception
               </h1>
-              <p className="mt-4 max-w-md text-[15px] text-muted leading-relaxed">
+              <p style={{ fontSize: 14, color: "var(--color-text-secondary)", margin: 0, maxWidth: 480 }}>
                 Relisez les aperçus préparés par n8n, ajustez le ton si besoin,
-                puis approuvez l'envoi. Rien ne part sans votre validation.
+                puis approuvez l&apos;envoi. Rien ne part sans votre validation.
               </p>
             </div>
-            <div className="hidden lg:block text-right rise rise-2">
-              <div className="eyebrow mb-1">Édition</div>
-              <div className="font-display italic text-3xl text-ink">
-                {new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long" })}
-              </div>
-              <div className="font-mono text-[10px] tracking-widest text-muted mt-1">
-                {new Date().getFullYear()}
-              </div>
+            <div
+              style={{
+                textAlign: "right",
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+                fontSize: 12,
+                color: "var(--color-text-secondary)",
+              }}
+            >
+              {new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
             </div>
           </div>
         </div>
       </header>
 
-      <div className="px-12 py-10">
-        <div className="max-w-6xl mx-auto">
+      <div style={{ padding: "24px 32px" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <InboxClient locale={locale} />
         </div>
       </div>

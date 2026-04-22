@@ -359,13 +359,13 @@ export default function InboxClient({ locale: _locale }: { locale: string }) {
                       <div className="flex items-center gap-1">
                         <button
                           onClick={() => setConfirm({ type: "discard", draft: d })}
-                          className="font-mono text-[10px] tracking-widest uppercase text-muted hover:text-rose-700 px-3 py-2 transition-colors"
+                          className="font-mono text-[10px] tracking-widest uppercase text-muted hover:text-rose-700 active:text-rose-900 active:scale-95 px-3 py-2 transition-all"
                         >
                           {t("discard")}
                         </button>
                         <button
                           onClick={() => setConfirm({ type: "send", draft: d })}
-                          className="font-mono text-[10px] tracking-widest uppercase text-paper bg-ink hover:bg-ember px-4 py-2 transition-colors"
+                          className="font-mono text-[10px] tracking-widest uppercase text-paper bg-ink hover:bg-ember active:bg-ember/80 active:scale-95 px-4 py-2 transition-all"
                         >
                           {t("approveSimple")} →
                         </button>
@@ -447,19 +447,19 @@ export default function InboxClient({ locale: _locale }: { locale: string }) {
           </div>
           <button
             onClick={() => setChecked(new Set())}
-            className="px-4 font-mono text-[10px] tracking-widest text-paper/60 hover:text-paper uppercase transition-colors border-r border-paper/15"
+            className="px-4 font-mono text-[10px] tracking-widest text-paper/60 hover:text-paper active:text-paper/40 active:scale-95 uppercase transition-all border-r border-paper/15"
           >
             Annuler
           </button>
           <button
             onClick={() => setConfirm({ type: "bulkDiscard", ids: Array.from(checked) })}
-            className="px-4 font-mono text-[10px] tracking-widest text-paper/70 hover:text-rose-300 hover:bg-rose-950/30 uppercase transition-colors border-r border-paper/15"
+            className="px-4 font-mono text-[10px] tracking-widest text-paper/70 hover:text-rose-300 hover:bg-rose-950/30 active:bg-rose-950/50 active:scale-95 uppercase transition-all border-r border-paper/15"
           >
             Refuser tout
           </button>
           <button
             onClick={() => setConfirm({ type: "bulkSend", ids: Array.from(checked) })}
-            className="px-6 bg-ember hover:bg-ember/90 text-paper font-mono text-[10px] tracking-widest uppercase transition-colors flex items-center gap-2"
+            className="px-6 bg-ember hover:bg-ember/90 active:bg-ember/70 active:scale-95 text-paper font-mono text-[10px] tracking-widest uppercase transition-all flex items-center gap-2"
           >
             Approuver tout
             <span className="font-display italic text-base normal-case tracking-normal">→</span>
@@ -523,6 +523,12 @@ function relTime(iso: string): string {
   return `il y a ${d} j`;
 }
 
+interface AISuggestion {
+  subject: string;
+  bodyText: string;
+  tips: string[];
+}
+
 function DraftDrawer({
   draft,
   t,
@@ -544,13 +550,44 @@ function DraftDrawer({
   const [bodyText, setBodyText] = useState(draft.bodyText);
   const [toEmail, setToEmail] = useState(draft.toEmail);
   const [toFirstName, setToFirstName] = useState(draft.toFirstName ?? "");
+  const [suggesting, setSuggesting] = useState(false);
+  const [suggestion, setSuggestion] = useState<AISuggestion | null>(null);
+  const [suggestError, setSuggestError] = useState<string | null>(null);
 
   useEffect(() => {
     setSubject(draft.subject);
     setBodyText(draft.bodyText);
     setToEmail(draft.toEmail);
     setToFirstName(draft.toFirstName ?? "");
+    setSuggestion(null);
+    setSuggestError(null);
   }, [draft.id]);
+
+  async function fetchSuggestion() {
+    setSuggesting(true);
+    setSuggestion(null);
+    setSuggestError(null);
+    try {
+      const res = await fetch(`/api/drafts/${draft.id}/suggest`, { method: "POST" });
+      const data = await res.json();
+      if (res.ok) {
+        setSuggestion(data as AISuggestion);
+      } else {
+        setSuggestError(data.error ?? "Erreur inattendue");
+      }
+    } catch {
+      setSuggestError("Erreur réseau");
+    } finally {
+      setSuggesting(false);
+    }
+  }
+
+  function applySuggestion() {
+    if (!suggestion) return;
+    setSubject(suggestion.subject);
+    setBodyText(suggestion.bodyText);
+    setSuggestion(null);
+  }
 
   const dirty =
     subject !== draft.subject ||
@@ -583,7 +620,7 @@ function DraftDrawer({
             </div>
             <button
               onClick={onClose}
-              className="font-mono text-[10px] tracking-widest uppercase text-muted hover:text-ink transition-colors p-2 -mr-2"
+              className="font-mono text-[10px] tracking-widest uppercase text-muted hover:text-ink active:opacity-60 active:scale-95 transition-all p-2 -mr-2"
               aria-label="Close"
             >
               Fermer ×
@@ -684,6 +721,83 @@ function DraftDrawer({
               {draft.errorMessage}
             </div>
           )}
+
+          {/* AI Suggestions panel */}
+          {editable && (
+            <div className="border-t border-rule pt-6">
+              <div className="flex items-center justify-between mb-4">
+                <span className="eyebrow">Suggestions IA</span>
+                <button
+                  onClick={fetchSuggestion}
+                  disabled={suggesting || busy}
+                  className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase text-ink-2 hover:text-ink active:opacity-60 active:scale-95 border border-rule-strong px-3 py-2 transition-all disabled:opacity-50"
+                >
+                  {suggesting ? (
+                    <>
+                      <svg className="animate-spin w-3 h-3" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                      </svg>
+                      Analyse…
+                    </>
+                  ) : (
+                    <>✦ Améliorer avec Claude</>
+                  )}
+                </button>
+              </div>
+
+              {suggestError && (
+                <div className="text-[13px] text-rose-700 border-l-2 border-rose-400 pl-3 py-1">
+                  {suggestError}
+                </div>
+              )}
+
+              {suggestion && (
+                <div className="bg-paper-2/60 border border-rule p-5 space-y-4">
+                  <div>
+                    <span className="eyebrow block mb-1.5">Objet suggéré</span>
+                    <p className="font-display text-[18px] leading-snug text-ink tracking-tight">
+                      {suggestion.subject}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="eyebrow block mb-1.5">Corps suggéré</span>
+                    <p className="text-[13px] text-ink-2 leading-relaxed whitespace-pre-wrap">
+                      {suggestion.bodyText}
+                    </p>
+                  </div>
+                  {suggestion.tips.length > 0 && (
+                    <div>
+                      <span className="eyebrow block mb-2">Ce qui a été amélioré</span>
+                      <ul className="space-y-1.5">
+                        {suggestion.tips.map((tip, i) => (
+                          <li key={i} className="flex items-start gap-2 text-[13px] text-ink-2">
+                            <span className="text-ember mt-0.5 flex-shrink-0">—</span>
+                            {tip}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2 pt-2 border-t border-rule">
+                    <button
+                      onClick={() => setSuggestion(null)}
+                      className="font-mono text-[10px] tracking-widest uppercase text-muted hover:text-ink active:opacity-60 active:scale-95 transition-all px-3 py-2"
+                    >
+                      Ignorer
+                    </button>
+                    <div className="flex-1" />
+                    <button
+                      onClick={applySuggestion}
+                      className="font-mono text-[10px] tracking-widest uppercase bg-ink text-paper hover:bg-ember active:bg-ember/70 active:scale-95 px-5 py-2 transition-all flex items-center gap-2"
+                    >
+                      Appliquer →
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Sticky action bar */}
@@ -692,7 +806,7 @@ function DraftDrawer({
             <button
               onClick={onDiscardRequest}
               disabled={busy}
-              className="font-mono text-[10px] tracking-widest uppercase text-muted hover:text-rose-700 transition-colors disabled:opacity-50 py-2"
+              className="font-mono text-[10px] tracking-widest uppercase text-muted hover:text-rose-700 active:text-rose-900 active:scale-95 transition-all disabled:opacity-50 py-2"
             >
               {t("discard")}
             </button>
@@ -701,7 +815,7 @@ function DraftDrawer({
               <button
                 onClick={() => onSave(draft, subject, bodyText, toEmail, toFirstName)}
                 disabled={busy}
-                className="font-mono text-[10px] tracking-widest uppercase text-ink-2 hover:text-ink border border-rule-strong px-4 py-2.5 transition-colors disabled:opacity-50"
+                className="font-mono text-[10px] tracking-widest uppercase text-ink-2 hover:text-ink active:opacity-60 active:scale-95 border border-rule-strong px-4 py-2.5 transition-all disabled:opacity-50"
               >
                 {busy ? t("saving") : t("saveChanges")}
               </button>
@@ -709,7 +823,7 @@ function DraftDrawer({
             <button
               onClick={onSendRequest}
               disabled={busy}
-              className="font-mono text-[10px] tracking-widest uppercase bg-ink text-paper hover:bg-ember px-6 py-2.5 transition-colors disabled:opacity-50 flex items-center gap-2"
+              className="font-mono text-[10px] tracking-widest uppercase bg-ink text-paper hover:bg-ember active:bg-ember/70 active:scale-95 px-6 py-2.5 transition-all disabled:opacity-50 flex items-center gap-2"
             >
               {t("approve")}
               <span className="font-display italic text-base normal-case tracking-normal">→</span>
@@ -757,15 +871,15 @@ function ConfirmModal({
           <button
             onClick={onCancel}
             disabled={busy}
-            className="font-mono text-[10px] tracking-widest uppercase text-muted hover:text-ink transition-colors disabled:opacity-50 px-4 py-2.5"
+            className="font-mono text-[10px] tracking-widest uppercase text-muted hover:text-ink active:opacity-60 active:scale-95 transition-all disabled:opacity-50 px-4 py-2.5"
           >
             {cancelLabel}
           </button>
           <button
             onClick={onConfirm}
             disabled={busy}
-            className={`font-mono text-[10px] tracking-widest uppercase text-paper px-6 py-2.5 transition-colors disabled:opacity-50 flex items-center gap-2 ${
-              danger ? "bg-rose-700 hover:bg-rose-800" : "bg-ink hover:bg-ember"
+            className={`font-mono text-[10px] tracking-widest uppercase text-paper px-6 py-2.5 transition-all active:scale-95 disabled:opacity-50 flex items-center gap-2 ${
+              danger ? "bg-rose-700 hover:bg-rose-800 active:bg-rose-900" : "bg-ink hover:bg-ember active:bg-ember/70"
             }`}
           >
             {busy ? "…" : confirmLabel}
