@@ -1,0 +1,700 @@
+Détail du scoring optimisé,,,,,,,,,,,,,,,,,,,,,,,
+"Une ligne par marque x marketplace. Les marketplaces déjà présents ne sont pas éligibles aux 2 recommandations finales, mais leur score est conservé pour audit.",,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,
+Marque,Nom dans scoring initial,Pays,Catégorie optimisée,Marketplace,Déjà présent ?,Score optimisé,Priorité,Score initial,Fit catégorie,Fit géographique,Échelle commerciale,Readiness ops/wholesale,Fit positionnement,Incrémentalité,Story/durabilité,Pénalité risque,Score modèle brut,CA estimé utilisé ($M),Effectif min utilisé,Intl.,Durable,Positionnement,Notes data
+AGMES,AGMES,USA,Fine Jewelry,Bloomingdale's,Non,"83,5",P1 — Fort potentiel,"82,0","30,0","12,0","10,7","10,0","12,0","4,0","2,0","-2,0","83,7","5,0",5,Medium,TRUE,luxury_premium,OK
+AGMES,AGMES,USA,Fine Jewelry,Nordstrom,Oui,"83,5",P1 — Fort potentiel,,"28,0","12,0","11,5","10,0","11,0","4,0","4,0","-2,0","83,5","5,0",5,Medium,TRUE,luxury_premium,OK
+AGMES,AGMES,USA,Fine Jewelry,John Lewis,Non,"74,1",P2 — Recommandé,"82,0","19,0","9,0","10,7","11,0","11,0","5,5","4,0","-2,0","73,2","5,0",5,Medium,TRUE,luxury_premium,OK
+AGMES,AGMES,USA,Fine Jewelry,Galeries Lafayette,Non,"69,8",P3 — Test / à cadrer,"72,0","25,0","8,0","8,0","10,0","12,0","6,0","2,5","-7,0","69,5","5,0",5,Medium,TRUE,luxury_premium,OK
+AGMES,AGMES,USA,Fine Jewelry,La Redoute,Non,"56,2",Watchlist — faible fit,"67,0","16,0","8,0","12,0","11,0","8,0","6,0","4,0","-15,0","55,0","5,0",5,Medium,TRUE,luxury_premium,OK
+AGMES,AGMES,USA,Fine Jewelry,Debenhams,Non,"54,4",Watchlist — faible fit,"67,0","18,0","10,0","12,0","11,0","7,0","5,0","2,0","-17,0","53,0","5,0",5,Medium,TRUE,luxury_premium,OK
+AJE,AJE,Australia,Womenswear RTW,Nordstrom,Oui,"87,0",P1 — Fort potentiel,,"27,0","12,0","15,0","9,0","12,0","6,0","1,0","0,0","87,0","14,0",297,High,FALSE,premium_contemporary,OK
+AJE,AJE,Australia,Womenswear RTW,Bloomingdale's,Non,"85,1",P1 — Fort potentiel,"95,0","28,0","10,0","15,0","9,0","10,0","6,0","1,0","0,0","84,0","14,0",297,High,FALSE,premium_contemporary,OK
+AJE,AJE,Australia,Womenswear RTW,Debenhams,Non,"84,8",P1 — Fort potentiel,"65,0","28,0","11,0","15,0","10,0","12,0","5,0","1,0","0,0","87,0","14,0",297,High,FALSE,premium_contemporary,OK
+AJE,AJE,Australia,Womenswear RTW,John Lewis,Oui,"83,5",P1 — Fort potentiel,,"26,0","10,0","15,0","10,0","11,0","5,5","1,0","0,0","83,5","14,0",297,High,FALSE,premium_contemporary,OK
+AJE,AJE,Australia,Womenswear RTW,Galeries Lafayette,Non,"81,9",P1 — Fort potentiel,"75,0","30,0","9,0","13,7","9,0","9,0","6,0","1,0","0,0","82,7","14,0",297,High,FALSE,premium_contemporary,OK
+AJE,AJE,Australia,Womenswear RTW,La Redoute,Non,"80,6",P1 — Fort potentiel,"50,0","27,0","9,0","15,0","10,0","11,0","6,0","1,0","0,0","84,0","14,0",297,High,FALSE,premium_contemporary,OK
+ALISON LOU,ALISON LOU,USA,Fine Jewelry,Bloomingdale's,Oui,"84,4",P1 — Fort potentiel,,"30,0","12,0","11,4","10,0","12,0","3,0","1,0","0,0","84,4","5,0",11,High,FALSE,luxury_premium,OK
+ALISON LOU,ALISON LOU,USA,Fine Jewelry,Nordstrom,Oui,"82,4",P1 — Fort potentiel,,"28,0","12,0","12,4","10,0","11,0","3,0","1,0","0,0","82,4","5,0",11,High,FALSE,luxury_premium,OK
+ALISON LOU,ALISON LOU,USA,Fine Jewelry,John Lewis,Non,"72,5",P2 — Recommandé,"87,0","19,0","9,0","11,4","10,0","11,0","4,5","1,0","0,0","70,9","5,0",11,High,FALSE,luxury_premium,OK
+ALISON LOU,ALISON LOU,USA,Fine Jewelry,Galeries Lafayette,Non,"70,7",P2 — Recommandé,"72,0","25,0","8,0","9,5","10,0","12,0","5,0","1,0","-5,0","70,5","5,0",11,High,FALSE,luxury_premium,OK
+ALISON LOU,ALISON LOU,USA,Fine Jewelry,La Redoute,Non,"52,3",Watchlist — faible fit,"65,0","16,0","8,0","12,9","10,0","8,0","5,0","1,0","-15,0","50,9","5,0",11,High,FALSE,luxury_premium,OK
+ALISON LOU,ALISON LOU,USA,Fine Jewelry,Debenhams,Non,"52,3",Watchlist — faible fit,"65,0","18,0","10,0","12,9","10,0","7,0","4,0","1,0","-17,0","50,9","5,0",11,High,FALSE,luxury_premium,OK
+Adam Lippes,Adam Lippes,USA,Womenswear RTW,Bloomingdale's,Oui,"84,0",P1 — Fort potentiel,,"28,0","12,0","12,0","10,0","12,0","3,0","2,0","0,0","84,0","3,0",27,High,FALSE,luxury_premium,OK
+Adam Lippes,Adam Lippes,USA,Womenswear RTW,Nordstrom,Oui,"82,5",P1 — Fort potentiel,,"27,0","12,0","12,5","10,0","11,0","3,0","2,0","0,0","82,5","3,0",27,High,FALSE,luxury_premium,OK
+Adam Lippes,Adam Lippes,USA,Womenswear RTW,John Lewis,Non,"81,5",P1 — Fort potentiel,"90,0","26,0","9,0","12,0","10,0","12,0","4,5","2,0","0,0","80,5","3,0",27,High,FALSE,luxury_premium,OK
+Adam Lippes,Adam Lippes,USA,Womenswear RTW,Galeries Lafayette,Non,"76,7",P2 — Recommandé,"77,0","30,0","8,0","10,7","10,0","12,0","5,0","2,0","-6,0","76,7","3,0",27,High,FALSE,luxury_premium,OK
+Adam Lippes,Adam Lippes,USA,Womenswear RTW,La Redoute,Non,"74,8",P2 — Recommandé,"95,0","27,0","8,0","12,5","10,0","8,0","5,0","2,0","-5,0","72,5","3,0",27,High,FALSE,luxury_premium,OK
+Adam Lippes,Adam Lippes,USA,Womenswear RTW,Debenhams,Non,"74,8",P2 — Recommandé,"95,0","28,0","10,0","12,5","10,0","8,0","4,0","2,0","-7,0","72,5","3,0",27,High,FALSE,luxury_premium,OK
+Aimé Leon Dore,Aimé Leon Dore,USA,Footwear,Nordstrom,Oui,"88,9",P1 — Fort potentiel,,"30,0","12,0","13,9","10,0","11,0","5,0","2,0","0,0","88,9","30,0",11,Medium,FALSE,luxury_premium,OK
+Aimé Leon Dore,Aimé Leon Dore,USA,Footwear,John Lewis,Non,"88,7",P1 — Fort potentiel,"92,0","29,0","9,0","13,8","11,0","12,0","6,5","2,0","0,0","88,3","30,0",11,Medium,FALSE,luxury_premium,OK
+Aimé Leon Dore,Aimé Leon Dore,USA,Footwear,Bloomingdale's,Non,"85,5",P1 — Fort potentiel,"92,0","25,0","12,0","13,8","10,0","12,0","5,0","2,0","0,0","84,8","30,0",11,Medium,FALSE,luxury_premium,OK
+Aimé Leon Dore,Aimé Leon Dore,USA,Footwear,Galeries Lafayette,Non,"85,2",P1 — Fort potentiel,"87,0","30,0","8,0","13,0","10,0","12,0","7,0","2,0","-2,0","85,0","30,0",11,Medium,FALSE,luxury_premium,OK
+Aimé Leon Dore,Aimé Leon Dore,USA,Footwear,La Redoute,Non,"82,5",P1 — Fort potentiel,"65,0","30,0","8,0","14,4","11,0","9,0","7,0","2,0","-2,0","84,4","30,0",11,Medium,FALSE,luxury_premium,OK
+Aimé Leon Dore,Aimé Leon Dore,USA,Footwear,Debenhams,Non,"81,9",P1 — Fort potentiel,"95,0","27,0","10,0","14,4","11,0","8,0","6,0","2,0","-3,0","80,4","30,0",11,Medium,FALSE,luxury_premium,OK
+Alessandra Rich,Alessandra Rich,Italy,Womenswear RTW,Nordstrom,Non,"82,3",P1 — Fort potentiel,"87,0","27,0","11,0","10,8","11,0","11,0","5,0","1,0","0,0","81,8","2,0",10,High,FALSE,luxury_premium,OK
+Alessandra Rich,Alessandra Rich,Italy,Womenswear RTW,Bloomingdale's,Oui,"80,2",P1 — Fort potentiel,,"28,0","11,0","10,2","11,0","12,0","5,0","1,0","-3,0","80,2","2,0",10,High,FALSE,luxury_premium,OK
+Alessandra Rich,Alessandra Rich,Italy,Womenswear RTW,John Lewis,Oui,"75,7",P2 — Recommandé,,"25,0","11,0","10,2","11,0","11,0","4,5","1,0","-3,0","75,7","2,0",10,High,FALSE,luxury_premium,OK
+Alessandra Rich,Alessandra Rich,Italy,Womenswear RTW,Galeries Lafayette,Non,"72,9",P2 — Recommandé,"72,0","30,0","12,0","7,0","11,0","12,0","3,0","1,0","-8,0","73,0","2,0",10,High,FALSE,luxury_premium,OK
+Alessandra Rich,Alessandra Rich,Italy,Womenswear RTW,La Redoute,Non,"71,9",P2 — Recommandé,"60,0","27,0","12,0","11,2","11,0","8,0","3,0","1,0","-5,0","73,2","2,0",10,High,FALSE,luxury_premium,OK
+Alessandra Rich,Alessandra Rich,Italy,Womenswear RTW,Debenhams,Non,"71,0",P2 — Recommandé,"60,0","28,0","11,0","11,2","11,0","8,0","4,0","1,0","-7,0","72,2","2,0",10,High,FALSE,luxury_premium,OK
+Alix of Bohemia,Alix of Bohemia,USA,Womenswear RTW,Nordstrom,Non,"85,2",P1 — Fort potentiel,"82,0","27,0","12,0","11,5","10,0","12,0","5,0","5,0","-2,0","85,5","5,0",5,Medium,TRUE,premium_contemporary,OK
+Alix of Bohemia,Alix of Bohemia,USA,Womenswear RTW,Debenhams,Non,"84,5",P1 — Fort potentiel,"62,0","28,0","10,0","12,0","11,0","12,0","6,0","3,0","0,0","87,0","5,0",5,Medium,TRUE,premium_contemporary,OK
+Alix of Bohemia,Alix of Bohemia,USA,Womenswear RTW,La Redoute,Non,"83,6",P1 — Fort potentiel,"62,0","27,0","8,0","12,0","11,0","11,0","7,0","5,0","0,0","86,0","5,0",5,Medium,TRUE,premium_contemporary,OK
+Alix of Bohemia,Alix of Bohemia,USA,Womenswear RTW,Bloomingdale's,Non,"81,7",P1 — Fort potentiel,"82,0","28,0","12,0","10,7","10,0","10,0","5,0","3,0","-2,0","81,7","5,0",5,Medium,TRUE,premium_contemporary,OK
+Alix of Bohemia,Alix of Bohemia,USA,Womenswear RTW,John Lewis,Non,"81,3",P1 — Fort potentiel,"82,0","25,0","9,0","10,7","11,0","11,0","6,5","5,0","-2,0","81,2","5,0",5,Medium,TRUE,premium_contemporary,OK
+Alix of Bohemia,Alix of Bohemia,USA,Womenswear RTW,Galeries Lafayette,Non,"73,4",P2 — Recommandé,"72,0","30,0","8,0","8,0","10,0","9,0","7,0","3,5","-7,0","73,5","5,0",5,Medium,TRUE,premium_contemporary,OK
+Altuzarra,Altuzarra,USA,Womenswear RTW,Bloomingdale's,Oui,"84,0",P1 — Fort potentiel,,"28,0","12,0","13,0","10,0","12,0","3,0","1,0","0,0","84,0","6,0",30,High,FALSE,luxury_premium,OK
+Altuzarra,Altuzarra,USA,Womenswear RTW,Nordstrom,Oui,"83,0",P1 — Fort potentiel,,"27,0","12,0","14,0","10,0","11,0","3,0","1,0","0,0","83,0","6,0",30,High,FALSE,luxury_premium,OK
+Altuzarra,Altuzarra,USA,Womenswear RTW,Galeries Lafayette,Non,"81,9",P1 — Fort potentiel,"77,0","30,0","8,0","11,4","10,0","12,0","5,0","1,0","0,0","82,4","6,0",30,High,FALSE,luxury_premium,OK
+Altuzarra,Altuzarra,USA,Womenswear RTW,John Lewis,Non,"80,5",P1 — Fort potentiel,"90,0","26,0","9,0","13,0","10,0","11,0","4,5","1,0","0,0","79,5","6,0",30,High,FALSE,luxury_premium,OK
+Altuzarra,Altuzarra,USA,Womenswear RTW,La Redoute,Non,"72,2",P2 — Recommandé,"65,0","27,0","8,0","14,0","10,0","8,0","5,0","1,0","-5,0","73,0","6,0",30,High,FALSE,luxury_premium,OK
+Altuzarra,Altuzarra,USA,Womenswear RTW,Debenhams,Non,"72,2",P2 — Recommandé,"65,0","28,0","10,0","14,0","10,0","8,0","4,0","1,0","-7,0","73,0","6,0",30,High,FALSE,luxury_premium,OK
+Amanu Studio,Amanu Studio,USA,Footwear,Nordstrom,Non,"83,9",P1 — Fort potentiel,"87,0","30,0","12,0","8,5","11,0","11,0","5,0","5,0","-4,0","83,5","2,0",2,High,TRUE,luxury_premium,OK
+Amanu Studio,Amanu Studio,USA,Footwear,John Lewis,Non,"78,8",P2 — Recommandé,"72,0","29,0","9,0","8,0","12,0","12,0","6,5","5,0","-7,0","79,5","2,0",2,High,TRUE,luxury_premium,OK
+Amanu Studio,Amanu Studio,USA,Footwear,Bloomingdale's,Non,"76,5",P2 — Recommandé,"72,0","28,0","12,0","8,0","11,0","12,0","5,0","3,0","-7,0","77,0","2,0",2,High,TRUE,luxury_premium,OK
+Amanu Studio,Amanu Studio,USA,Footwear,Galeries Lafayette,Non,"69,3",P3 — Test / à cadrer,"72,0","30,0","8,0","5,5","11,0","12,0","7,0","3,5","-13,0","69,0","2,0",2,High,TRUE,luxury_premium,OK
+Amanu Studio,Amanu Studio,USA,Footwear,Debenhams,Non,"67,3",P3 — Test / à cadrer,"57,0","27,0","10,0","8,5","12,0","8,0","6,0","3,0","-11,0","68,5","2,0",2,High,TRUE,luxury_premium,OK
+Amanu Studio,Amanu Studio,USA,Footwear,La Redoute,Non,"66,5",P3 — Test / à cadrer,"57,0","23,0","8,0","8,5","12,0","8,0","7,0","5,0","-9,0","67,5","2,0",2,High,TRUE,luxury_premium,OK
+Ancient Greek Sandals,Ancient Greek Sandals,Greece,Footwear,Nordstrom,Oui,"83,5",P1 — Fort potentiel,,"30,0","9,0","13,5","9,0","11,0","4,0","2,0","0,0","83,5","5,0",30,Medium,FALSE,luxury_premium,OK
+Ancient Greek Sandals,Ancient Greek Sandals,Greece,Footwear,John Lewis,Oui,"83,2",P1 — Fort potentiel,,"29,0","9,0","12,7","10,0","12,0","3,5","2,0","0,0","83,2","5,0",30,Medium,FALSE,luxury_premium,OK
+Ancient Greek Sandals,Ancient Greek Sandals,Greece,Footwear,Bloomingdale's,Oui,"80,7",P1 — Fort potentiel,,"28,0","8,0","12,7","9,0","12,0","4,0","2,0","0,0","80,7","5,0",30,Medium,FALSE,luxury_premium,OK
+Ancient Greek Sandals,Ancient Greek Sandals,Greece,Footwear,Galeries Lafayette,Oui,"78,9",P2 — Recommandé,,"30,0","11,0","10,9","9,0","12,0","2,0","2,0","-3,0","78,9","5,0",30,Medium,FALSE,luxury_premium,OK
+Ancient Greek Sandals,Ancient Greek Sandals,Greece,Footwear,Debenhams,Non,"72,4",P2 — Recommandé,"80,0","28,0","9,0","13,5","10,0","8,0","3,0","2,0","-7,0","71,5","5,0",30,Medium,FALSE,luxury_premium,OK
+Ancient Greek Sandals,Ancient Greek Sandals,Greece,Footwear,La Redoute,Non,"70,2",P2 — Recommandé,"50,0","27,0","10,0","13,5","10,0","8,0","2,0","2,0","-5,0","72,5","5,0",30,Medium,FALSE,luxury_premium,OK
+Andrea Fohrman,Andrea Fohrman,USA,Fine Jewelry,Bloomingdale's,Non,"81,3",P1 — Fort potentiel,"82,0","30,0","12,0","9,2","12,0","12,0","4,0","1,0","-4,0","81,2","5,0",1,High,FALSE,luxury_premium,OK
+Andrea Fohrman,Andrea Fohrman,USA,Fine Jewelry,Nordstrom,Oui,"79,0",P2 — Recommandé,,"28,0","12,0","10,0","12,0","11,0","4,0","1,0","-4,0","79,0","5,0",1,High,FALSE,luxury_premium,OK
+Andrea Fohrman,Andrea Fohrman,USA,Fine Jewelry,Galeries Lafayette,Non,"70,2",P2 — Recommandé,"72,0","25,0","8,0","8,0","12,0","12,0","6,0","1,0","-7,0","70,0","5,0",1,High,FALSE,luxury_premium,OK
+Andrea Fohrman,Andrea Fohrman,USA,Fine Jewelry,John Lewis,Non,"70,0",P2 — Recommandé,"82,0","19,0","9,0","9,2","13,0","11,0","5,5","1,0","-4,0","68,7","5,0",1,High,FALSE,luxury_premium,OK
+Andrea Fohrman,Andrea Fohrman,USA,Fine Jewelry,La Redoute,Non,"48,9",Watchlist — faible fit,"57,0","16,0","8,0","10,0","13,0","8,0","6,0","1,0","-19,0","48,0","5,0",1,High,FALSE,luxury_premium,OK
+Andrea Fohrman,Andrea Fohrman,USA,Fine Jewelry,Debenhams,Non,"48,9",Watchlist — faible fit,"57,0","18,0","10,0","10,0","13,0","7,0","5,0","1,0","-21,0","48,0","5,0",1,High,FALSE,luxury_premium,OK
+Another Tomorrow,Another Tomorrow,USA,Womenswear RTW,Nordstrom,Oui,"83,9",P1 — Fort potentiel,,"27,0","12,0","10,9","10,0","11,0","3,0","5,0","0,0","83,9","3,0",11,Medium,TRUE,luxury_premium,OK
+Another Tomorrow,Another Tomorrow,USA,Womenswear RTW,Bloomingdale's,Oui,"83,3",P1 — Fort potentiel,,"28,0","12,0","10,3","10,0","12,0","3,0","3,0","0,0","83,3","3,0",11,Medium,TRUE,luxury_premium,OK
+Another Tomorrow,Another Tomorrow,USA,Womenswear RTW,John Lewis,Non,"82,9",P1 — Fort potentiel,"57,0","29,0","9,0","10,3","11,0","12,0","4,5","5,0","0,0","85,8","3,0",11,Medium,TRUE,luxury_premium,OK
+Another Tomorrow,Another Tomorrow,USA,Womenswear RTW,La Redoute,Non,"81,5",P1 — Fort potentiel,"100,0","30,0","8,0","11,4","11,0","9,0","5,0","5,0","-5,0","79,4","3,0",11,Medium,TRUE,luxury_premium,OK
+Another Tomorrow,Another Tomorrow,USA,Womenswear RTW,Debenhams,Non,"77,0",P2 — Recommandé,"100,0","28,0","10,0","11,4","11,0","8,0","4,0","3,0","-6,0","74,4","3,0",11,Medium,TRUE,luxury_premium,OK
+Another Tomorrow,Another Tomorrow,USA,Womenswear RTW,Galeries Lafayette,Non,"71,2",P2 — Recommandé,"42,0","30,0","8,0","9,0","10,0","12,0","5,0","3,5","-8,0","74,5","3,0",11,Medium,TRUE,luxury_premium,OK
+BODE New York,BODE New York,USA,Womenswear RTW,Nordstrom,Oui,"83,5",P1 — Fort potentiel,,"27,0","12,0","12,5","8,0","11,0","3,0","5,0","0,0","83,5","3,0",41,Medium,TRUE,luxury_premium,OK
+BODE New York,BODE New York,USA,Womenswear RTW,Bloomingdale's,Oui,"83,0",P1 — Fort potentiel,,"28,0","12,0","12,0","8,0","12,0","3,0","3,0","0,0","83,0","3,0",41,Medium,TRUE,luxury_premium,OK
+BODE New York,BODE New York,USA,Womenswear RTW,John Lewis,Non,"80,5",P1 — Fort potentiel,"90,0","25,0","9,0","12,0","8,0","11,0","4,5","5,0","0,0","79,5","3,0",41,Medium,TRUE,luxury_premium,OK
+BODE New York,BODE New York,USA,Womenswear RTW,Galeries Lafayette,Non,"77,3",P2 — Recommandé,"80,0","30,0","8,0","11,5","8,0","12,0","5,0","3,5","-6,0","77,0","3,0",41,Medium,TRUE,luxury_premium,OK
+BODE New York,BODE New York,USA,Womenswear RTW,La Redoute,Non,"70,0",P2 — Recommandé,"65,0","27,0","8,0","12,5","8,0","8,0","5,0","5,0","-8,0","70,5","3,0",41,Medium,TRUE,luxury_premium,OK
+BODE New York,BODE New York,USA,Womenswear RTW,Debenhams,Non,"68,2",P3 — Test / à cadrer,"65,0","28,0","10,0","12,5","8,0","8,0","4,0","3,0","-10,0","68,5","3,0",41,Medium,TRUE,luxury_premium,OK
+BONDI BORN,BONDI BORN,Australia,Swimwear / Resort,Nordstrom,Oui,"83,4",P1 — Fort potentiel,,"27,0","11,0","11,4","9,0","11,0","5,0","4,0","0,0","83,4","3,0",11,Medium,TRUE,luxury_premium,OK
+BONDI BORN,BONDI BORN,Australia,Swimwear / Resort,Bloomingdale's,Oui,"77,8",P2 — Recommandé,,"25,0","9,0","10,8","9,0","12,0","5,0","2,0","0,0","77,8","3,0",11,Medium,TRUE,luxury_premium,OK
+BONDI BORN,BONDI BORN,Australia,Swimwear / Resort,La Redoute,Non,"77,7",P2 — Recommandé,"85,0","26,0","8,0","11,9","10,0","9,0","5,0","4,0","-2,0","76,9","3,0",11,Medium,TRUE,luxury_premium,OK
+BONDI BORN,BONDI BORN,Australia,Swimwear / Resort,John Lewis,Non,"75,6",P2 — Recommandé,"87,0","20,0","9,0","10,8","10,0","11,0","4,5","4,0","0,0","74,3","3,0",11,Medium,TRUE,luxury_premium,OK
+BONDI BORN,BONDI BORN,Australia,Swimwear / Resort,Debenhams,Non,"75,6",P2 — Recommandé,"100,0","25,0","10,0","11,9","10,0","8,0","4,0","2,0","-3,0","72,9","3,0",11,Medium,TRUE,luxury_premium,OK
+BONDI BORN,BONDI BORN,Australia,Swimwear / Resort,Galeries Lafayette,Non,"66,9",P3 — Test / à cadrer,"57,0","22,0","8,0","9,5","9,0","12,0","5,0","2,5","-5,0","68,0","3,0",11,Medium,TRUE,luxury_premium,OK
+BPE,BPE,USA,Bridal / Occasion,Nordstrom,Non,"76,2",P2 — Recommandé,"82,0","22,0","12,0","10,5","11,0","11,0","5,0","1,0","-2,0","75,5","3,0",5,High,FALSE,luxury_premium,OK
+BPE,BPE,USA,Bridal / Occasion,John Lewis,Non,"75,2",P2 — Recommandé,"82,0","22,0","9,0","10,0","12,0","11,0","6,5","1,0","-2,0","74,5","3,0",5,High,FALSE,luxury_premium,OK
+BPE,BPE,USA,Bridal / Occasion,Debenhams,Non,"65,9",P3 — Test / à cadrer,"92,0","22,0","10,0","11,0","12,0","7,0","6,0","1,0","-11,0","63,0","3,0",5,High,FALSE,luxury_premium,OK
+BPE,BPE,USA,Bridal / Occasion,Bloomingdale's,Non,"63,7",P3 — Test / à cadrer,"52,0","14,0","12,0","10,0","11,0","12,0","5,0","1,0","-5,0","65,0","3,0",5,High,FALSE,luxury_premium,OK
+BPE,BPE,USA,Bridal / Occasion,La Redoute,Non,"59,6",Watchlist — faible fit,"92,0","16,0","8,0","11,0","12,0","8,0","7,0","1,0","-12,0","56,0","3,0",5,High,FALSE,luxury_premium,OK
+BPE,BPE,USA,Bridal / Occasion,Galeries Lafayette,Non,"50,1",Watchlist — faible fit,"42,0","12,0","8,0","8,0","11,0","12,0","7,0","1,0","-13,0","51,0","3,0",5,High,FALSE,luxury_premium,OK
+Barton Perreira,Barton Perreira,USA,Eyewear,Nordstrom,Oui,"82,9",P1 — Fort potentiel,,"20,0","12,0","13,9","12,0","11,0","4,0","5,0","0,0","82,9","10,0",11,High,TRUE,luxury_premium,OK
+Barton Perreira,Barton Perreira,USA,Eyewear,Bloomingdale's,Oui,"81,1",P1 — Fort potentiel,,"20,0","12,0","13,1","12,0","12,0","4,0","3,0","0,0","81,1","10,0",11,High,TRUE,luxury_premium,OK
+Barton Perreira,Barton Perreira,USA,Eyewear,John Lewis,Non,"76,0",P2 — Recommandé,"62,0","17,0","9,0","13,1","12,0","11,0","5,5","5,0","0,0","77,6","10,0",11,High,TRUE,luxury_premium,OK
+Barton Perreira,Barton Perreira,USA,Eyewear,Galeries Lafayette,Non,"75,8",P2 — Recommandé,"52,0","23,0","8,0","10,9","12,0","12,0","6,0","3,5","-2,0","78,4","10,0",11,High,TRUE,luxury_premium,OK
+Barton Perreira,Barton Perreira,USA,Eyewear,La Redoute,Non,"69,5",P3 — Test / à cadrer,"70,0","16,0","8,0","14,4","12,0","8,0","6,0","5,0","-5,0","69,4","10,0",11,High,TRUE,luxury_premium,OK
+Barton Perreira,Barton Perreira,USA,Eyewear,Debenhams,Non,"65,0",P3 — Test / à cadrer,"70,0","15,0","10,0","14,4","12,0","7,0","5,0","3,0","-7,0","64,4","10,0",11,High,TRUE,luxury_premium,OK
+Berceau (Almasika),Berceau,USA,Fine Jewelry,Bloomingdale's,Non,"79,8",P2 — Recommandé,"82,0","30,0","12,0","8,5","12,0","12,0","5,0","1,0","-6,0","79,5","3,0",2,High,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Berceau (Almasika),Berceau,USA,Fine Jewelry,Nordstrom,Non,"77,5",P2 — Recommandé,"82,0","28,0","12,0","9,0","12,0","11,0","5,0","1,0","-6,0","77,0","3,0",2,High,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Berceau (Almasika),Berceau,USA,Fine Jewelry,John Lewis,Non,"68,5",P3 — Test / à cadrer,"82,0","19,0","9,0","8,5","13,0","11,0","6,5","1,0","-6,0","67,0","3,0",2,High,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Berceau (Almasika),Berceau,USA,Fine Jewelry,Galeries Lafayette,Non,"66,6",P3 — Test / à cadrer,"72,0","25,0","8,0","8,0","12,0","12,0","7,0","1,0","-12,0","66,0","3,0",2,High,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Berceau (Almasika),Berceau,USA,Fine Jewelry,La Redoute,Non,"47,1",Watchlist — faible fit,"57,0","16,0","8,0","9,0","13,0","8,0","7,0","1,0","-21,0","46,0","3,0",2,High,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Berceau (Almasika),Berceau,USA,Fine Jewelry,Debenhams,Non,"47,1",Watchlist — faible fit,"57,0","18,0","10,0","9,0","13,0","7,0","6,0","1,0","-23,0","46,0","3,0",2,High,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Borgo de Nor,Borgo de Nor,UK,Swimwear / Resort,Debenhams,Non,"85,9",P1 — Fort potentiel,"90,0","28,0","12,0","11,4","12,0","12,0","4,0","1,0","0,0","85,4","2,0",11,High,FALSE,premium_contemporary,OK
+Borgo de Nor,Borgo de Nor,UK,Swimwear / Resort,La Redoute,Non,"85,0",P1 — Fort potentiel,"90,0","27,0","10,0","11,4","12,0","12,0","6,0","1,0","0,0","84,4","2,0",11,High,FALSE,premium_contemporary,OK
+Borgo de Nor,Borgo de Nor,UK,Swimwear / Resort,Nordstrom,Non,"81,8",P1 — Fort potentiel,"72,0","27,0","10,0","10,9","11,0","12,0","6,0","1,0","0,0","82,9","2,0",11,High,FALSE,premium_contemporary,OK
+Borgo de Nor,Borgo de Nor,UK,Swimwear / Resort,John Lewis,Oui,"77,3",P2 — Recommandé,,"25,0","12,0","10,3","12,0","11,0","4,0","1,0","-3,0","77,3","2,0",11,High,FALSE,premium_contemporary,OK
+Borgo de Nor,Borgo de Nor,UK,Swimwear / Resort,Bloomingdale's,Non,"75,8",P2 — Recommandé,"62,0","28,0","9,0","10,3","11,0","10,0","6,0","1,0","-3,0","77,3","2,0",11,High,FALSE,premium_contemporary,OK
+Borgo de Nor,Borgo de Nor,UK,Swimwear / Resort,Galeries Lafayette,Non,"72,9",P2 — Recommandé,"72,0","30,0","11,0","7,0","11,0","10,0","6,0","1,0","-8,0","73,0","2,0",11,High,FALSE,premium_contemporary,OK
+Brent Neale,Brent Neale,USA,Fine Jewelry,Nordstrom,Non,"78,4",P2 — Recommandé,"82,0","28,0","12,0","10,0","9,0","11,0","4,0","1,0","-2,0","78,0","2,0",5,Medium,FALSE,luxury_premium,OK
+Brent Neale,Brent Neale,USA,Fine Jewelry,Bloomingdale's,Oui,"77,5",P2 — Recommandé,,"30,0","12,0","9,5","9,0","12,0","4,0","1,0","-5,0","77,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Brent Neale,Brent Neale,USA,Fine Jewelry,John Lewis,Non,"65,7",P3 — Test / à cadrer,"72,0","19,0","9,0","9,5","10,0","11,0","5,5","1,0","-5,0","65,0","2,0",5,Medium,FALSE,luxury_premium,OK
+Brent Neale,Brent Neale,USA,Fine Jewelry,Galeries Lafayette,Non,"59,9",Watchlist — faible fit,"72,0","25,0","8,0","5,5","9,0","12,0","6,0","1,0","-13,0","58,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Brent Neale,Brent Neale,USA,Fine Jewelry,La Redoute,Non,"47,6",Watchlist — faible fit,"57,0","16,0","8,0","10,5","10,0","8,0","6,0","1,0","-18,0","46,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Brent Neale,Brent Neale,USA,Fine Jewelry,Debenhams,Non,"47,6",Watchlist — faible fit,"57,0","18,0","10,0","10,5","10,0","7,0","5,0","1,0","-20,0","46,5","2,0",5,Medium,FALSE,luxury_premium,OK
+By Pariah,By Pariah,Australia,Fine Jewelry,Nordstrom,Non,"80,7",P1 — Fort potentiel,"87,0","28,0","12,0","9,0","8,0","11,0","7,0","4,0","-4,0","80,0","3,0",2,High,TRUE,luxury_premium,OK
+By Pariah,By Pariah,Australia,Fine Jewelry,Bloomingdale's,Non,"78,9",P2 — Recommandé,"82,0","30,0","10,0","8,5","8,0","12,0","7,0","2,0","-4,0","78,5","3,0",2,High,TRUE,luxury_premium,OK
+By Pariah,By Pariah,Australia,Fine Jewelry,John Lewis,Non,"70,3",P2 — Recommandé,"82,0","19,0","10,0","8,5","9,0","11,0","6,5","4,0","-4,0","69,0","3,0",2,High,TRUE,luxury_premium,OK
+By Pariah,By Pariah,Australia,Fine Jewelry,Galeries Lafayette,Non,"68,2",P3 — Test / à cadrer,"57,0","25,0","9,0","8,0","8,0","12,0","7,0","2,5","-7,0","69,5","3,0",2,High,TRUE,luxury_premium,OK
+By Pariah,By Pariah,Australia,Fine Jewelry,La Redoute,Non,"47,9",Watchlist — faible fit,"47,0","16,0","9,0","9,0","9,0","8,0","7,0","4,0","-19,0","48,0","3,0",2,High,TRUE,luxury_premium,OK
+By Pariah,By Pariah,Australia,Fine Jewelry,Debenhams,Non,"47,6",Watchlist — faible fit,"62,0","18,0","11,0","9,0","9,0","7,0","6,0","2,0","-21,0","46,0","3,0",2,High,TRUE,luxury_premium,OK
+CARLO MORETTI (via Emporio Sirenuse),CARLO MORETTI,Italy,Home / Lifestyle,La Redoute,Non,"82,5",P1 — Fort potentiel,"83,0","30,0","11,0","10,5","11,0","12,0","5,0","1,0","-3,0","82,5",,20,Medium,FALSE,premium_contemporary,CA non disponible
+CARLO MORETTI (via Emporio Sirenuse),CARLO MORETTI,Italy,Home / Lifestyle,John Lewis,Non,"81,7",P1 — Fort potentiel,"83,0","29,0","10,0","10,1","11,0","12,0","6,5","1,0","-3,0","81,6",,20,Medium,FALSE,premium_contemporary,CA non disponible
+CARLO MORETTI (via Emporio Sirenuse),CARLO MORETTI,Italy,Home / Lifestyle,Debenhams,Non,"76,2",P2 — Recommandé,"83,0","24,0","10,0","10,5","11,0","11,0","6,0","1,0","-3,0","75,5",,20,Medium,FALSE,premium_contemporary,CA non disponible
+CARLO MORETTI (via Emporio Sirenuse),CARLO MORETTI,Italy,Home / Lifestyle,Galeries Lafayette,Non,"70,4",P2 — Recommandé,"80,0","20,0","12,0","9,3","10,0","10,0","5,0","1,0","-3,0","69,3",,20,Medium,FALSE,premium_contemporary,CA non disponible
+CARLO MORETTI (via Emporio Sirenuse),CARLO MORETTI,Italy,Home / Lifestyle,Nordstrom,Non,"68,2",P3 — Test / à cadrer,"83,0","14,0","10,0","10,5","10,0","12,0","7,0","1,0","-3,0","66,5",,20,Medium,FALSE,premium_contemporary,CA non disponible
+CARLO MORETTI (via Emporio Sirenuse),CARLO MORETTI,Italy,Home / Lifestyle,Bloomingdale's,Non,"64,2",P3 — Test / à cadrer,"83,0","12,0","10,0","10,1","10,0","10,0","7,0","1,0","-3,0","62,1",,20,Medium,FALSE,premium_contemporary,CA non disponible
+CDLP,CDLP,Sweden,Womenswear RTW,Nordstrom,Oui,"86,0",P1 — Fort potentiel,,"27,0","9,0","15,0","9,0","11,0","6,0","4,0","0,0","86,0","10,0",25,Medium,TRUE,luxury_premium,OK
+CDLP,CDLP,Sweden,Womenswear RTW,John Lewis,Non,"85,8",P1 — Fort potentiel,"95,0","25,0","10,0","14,3","10,0","11,0","5,5","4,0","0,0","84,8","10,0",25,Medium,TRUE,luxury_premium,OK
+CDLP,CDLP,Sweden,Womenswear RTW,Bloomingdale's,Oui,"84,3",P1 — Fort potentiel,,"28,0","8,0","14,3","9,0","12,0","6,0","2,0","0,0","84,3","10,0",25,Medium,TRUE,luxury_premium,OK
+CDLP,CDLP,Sweden,Womenswear RTW,Galeries Lafayette,Non,"83,2",P1 — Fort potentiel,"72,0","30,0","10,0","12,0","9,0","12,0","4,0","2,5","0,0","84,5","10,0",25,Medium,TRUE,luxury_premium,OK
+CDLP,CDLP,Sweden,Womenswear RTW,La Redoute,Non,"80,2",P1 — Fort potentiel,"100,0","27,0","10,0","15,0","10,0","8,0","4,0","4,0","-5,0","78,0","10,0",25,Medium,TRUE,luxury_premium,OK
+CDLP,CDLP,Sweden,Womenswear RTW,Debenhams,Non,"77,5",P2 — Recommandé,"100,0","28,0","9,0","15,0","10,0","8,0","5,0","2,0","-7,0","75,0","10,0",25,Medium,TRUE,luxury_premium,OK
+CHARO RUIZ,CHARO RUIZ,Spain,Swimwear / Resort,Nordstrom,Non,"89,0",P1 — Fort potentiel,"80,0","27,0","10,0","15,0","12,0","11,0","8,0","2,0","0,0","90,0","10,0",50,High,FALSE,luxury_premium,OK
+CHARO RUIZ,CHARO RUIZ,Spain,Swimwear / Resort,Bloomingdale's,Non,"86,6",P1 — Fort potentiel,"80,0","25,0","9,0","14,3","12,0","12,0","8,0","2,0","0,0","87,3","10,0",50,High,FALSE,luxury_premium,OK
+CHARO RUIZ,CHARO RUIZ,Spain,Swimwear / Resort,La Redoute,Non,"86,0",P1 — Fort potentiel,"95,0","26,0","12,0","15,0","12,0","9,0","6,0","2,0","-2,0","85,0","10,0",50,High,FALSE,luxury_premium,OK
+CHARO RUIZ,CHARO RUIZ,Spain,Swimwear / Resort,Galeries Lafayette,Non,"84,5",P1 — Fort potentiel,"90,0","22,0","12,0","12,9","12,0","12,0","6,0","2,0","0,0","83,9","10,0",50,High,FALSE,luxury_premium,OK
+CHARO RUIZ,CHARO RUIZ,Spain,Swimwear / Resort,John Lewis,Non,"82,5",P1 — Fort potentiel,"80,0","20,0","11,0","14,3","12,0","11,0","7,5","2,0","0,0","82,8","10,0",50,High,FALSE,luxury_premium,OK
+CHARO RUIZ,CHARO RUIZ,Spain,Swimwear / Resort,Debenhams,Non,"82,4",P1 — Fort potentiel,"95,0","25,0","10,0","15,0","12,0","8,0","7,0","2,0","-3,0","81,0","10,0",50,High,FALSE,luxury_premium,OK
+Cabana Magazine,Cabana Magazine,Italy,Home / Lifestyle,John Lewis,Non,"78,6",P2 — Recommandé,"50,0","29,0","11,0","9,3","11,0","12,0","6,5","1,0","-3,0","81,8",,11,High,FALSE,luxury_premium,CA non disponible
+Cabana Magazine,Cabana Magazine,Italy,Home / Lifestyle,La Redoute,Non,"78,4",P2 — Recommandé,"83,0","30,0","12,0","9,9","11,0","9,0","5,0","1,0","-5,0","77,9",,11,High,FALSE,luxury_premium,CA non disponible
+Cabana Magazine,Cabana Magazine,Italy,Home / Lifestyle,Debenhams,Non,"70,3",P2 — Recommandé,"83,0","24,0","11,0","9,9","11,0","7,0","6,0","1,0","-6,0","68,9",,11,High,FALSE,luxury_premium,CA non disponible
+Cabana Magazine,Cabana Magazine,Italy,Home / Lifestyle,Galeries Lafayette,Non,"67,1",P3 — Test / à cadrer,"45,0","20,0","12,0","8,5","11,0","12,0","5,0","1,0","-5,0","69,5",,11,High,FALSE,luxury_premium,CA non disponible
+Cabana Magazine,Cabana Magazine,Italy,Home / Lifestyle,Nordstrom,Non,"64,8",P3 — Test / à cadrer,"50,0","14,0","11,0","9,4","11,0","11,0","7,0","1,0","-3,0","66,4",,11,High,FALSE,luxury_premium,CA non disponible
+Cabana Magazine,Cabana Magazine,Italy,Home / Lifestyle,Bloomingdale's,Non,"63,8",P3 — Test / à cadrer,"50,0","12,0","11,0","9,3","11,0","12,0","7,0","1,0","-3,0","65,3",,11,High,FALSE,luxury_premium,CA non disponible
+Calle Del Mar LLC,Calle Del Mar LLC,USA,Swimwear / Resort,Nordstrom,Non,"78,9",P2 — Recommandé,"87,0","27,0","12,0","9,0","9,0","11,0","5,0","4,0","-4,0","78,0","3,0",2,Medium,TRUE,luxury_premium,OK
+Calle Del Mar LLC,Calle Del Mar LLC,USA,Swimwear / Resort,Bloomingdale's,Non,"75,2",P2 — Recommandé,"82,0","25,0","12,0","8,5","9,0","12,0","5,0","2,0","-4,0","74,5","3,0",2,Medium,TRUE,luxury_premium,OK
+Calle Del Mar LLC,Calle Del Mar LLC,USA,Swimwear / Resort,La Redoute,Non,"71,3",P2 — Recommandé,"92,0","26,0","8,0","9,0","10,0","9,0","7,0","4,0","-9,0","69,0","3,0",2,Medium,TRUE,luxury_premium,OK
+Calle Del Mar LLC,Calle Del Mar LLC,USA,Swimwear / Resort,John Lewis,Non,"71,2",P2 — Recommandé,"82,0","20,0","9,0","8,5","10,0","11,0","6,5","4,0","-4,0","70,0","3,0",2,Medium,TRUE,luxury_premium,OK
+Calle Del Mar LLC,Calle Del Mar LLC,USA,Swimwear / Resort,Debenhams,Non,"67,7",P3 — Test / à cadrer,"92,0","25,0","10,0","9,0","10,0","8,0","6,0","2,0","-10,0","65,0","3,0",2,Medium,TRUE,luxury_premium,OK
+Calle Del Mar LLC,Calle Del Mar LLC,USA,Swimwear / Resort,Galeries Lafayette,Non,"64,3",P3 — Test / à cadrer,"72,0","22,0","8,0","8,0","9,0","12,0","7,0","2,5","-10,0","63,5","3,0",2,Medium,TRUE,luxury_premium,OK
+Carolina Bucci,Carolina Bucci,Italy,Fine Jewelry,Bloomingdale's,Oui,"87,3",P1 — Fort potentiel,,"30,0","11,0","11,3","12,0","12,0","5,0","1,0","0,0","87,3","5,0",10,High,FALSE,luxury_premium,OK
+Carolina Bucci,Carolina Bucci,Italy,Fine Jewelry,Nordstrom,Oui,"85,2",P1 — Fort potentiel,,"28,0","11,0","12,2","12,0","11,0","5,0","1,0","0,0","85,2","5,0",10,High,FALSE,luxury_premium,OK
+Carolina Bucci,Carolina Bucci,Italy,Fine Jewelry,John Lewis,Non,"76,9",P2 — Recommandé,"87,0","19,0","11,0","11,3","13,0","11,0","4,5","1,0","0,0","75,8","5,0",10,High,FALSE,luxury_premium,OK
+Carolina Bucci,Carolina Bucci,Italy,Fine Jewelry,Galeries Lafayette,Non,"74,2",P2 — Recommandé,"72,0","25,0","12,0","9,5","12,0","12,0","3,0","1,0","-5,0","74,5","5,0",10,High,FALSE,luxury_premium,OK
+Carolina Bucci,Carolina Bucci,Italy,Fine Jewelry,La Redoute,Non,"56,7",Watchlist — faible fit,"65,0","16,0","12,0","12,8","13,0","8,0","3,0","1,0","-15,0","55,8","5,0",10,High,FALSE,luxury_premium,OK
+Carolina Bucci,Carolina Bucci,Italy,Fine Jewelry,Debenhams,Non,"55,8",Watchlist — faible fit,"65,0","18,0","11,0","12,8","13,0","7,0","4,0","1,0","-17,0","54,8","5,0",10,High,FALSE,luxury_premium,OK
+Christian Siriano,Christian Siriano,USA,Womenswear RTW,Bloomingdale's,Oui,"89,3",P1 — Fort potentiel,,"28,0","12,0","14,3","12,0","12,0","5,0","1,0","0,0","89,3","10,0",25,High,FALSE,luxury_premium,OK
+Christian Siriano,Christian Siriano,USA,Womenswear RTW,Nordstrom,Non,"88,7",P1 — Fort potentiel,"95,0","27,0","12,0","15,0","12,0","11,0","5,0","1,0","0,0","88,0","10,0",25,High,FALSE,luxury_premium,OK
+Christian Siriano,Christian Siriano,USA,Womenswear RTW,Galeries Lafayette,Non,"87,0",P1 — Fort potentiel,"87,0","30,0","8,0","12,0","12,0","12,0","7,0","1,0","0,0","87,0","10,0",25,High,FALSE,luxury_premium,OK
+Christian Siriano,Christian Siriano,USA,Womenswear RTW,John Lewis,Non,"85,8",P1 — Fort potentiel,"95,0","26,0","9,0","14,3","12,0","11,0","6,5","1,0","0,0","84,8","10,0",25,High,FALSE,luxury_premium,OK
+Christian Siriano,Christian Siriano,USA,Womenswear RTW,La Redoute,Non,"76,7",P2 — Recommandé,"65,0","27,0","8,0","15,0","12,0","8,0","7,0","1,0","-5,0","78,0","10,0",25,High,FALSE,luxury_premium,OK
+Christian Siriano,Christian Siriano,USA,Womenswear RTW,Debenhams,Non,"76,7",P2 — Recommandé,"65,0","28,0","10,0","15,0","12,0","8,0","6,0","1,0","-7,0","78,0","10,0",25,High,FALSE,luxury_premium,OK
+Christopher Esber,Christopher Esber,Australia,Womenswear RTW,Nordstrom,Oui,"85,4",P1 — Fort potentiel,,"27,0","12,0","12,4","12,0","11,0","5,0","1,0","0,0","85,4","5,0",11,High,FALSE,luxury_premium,OK
+Christopher Esber,Christopher Esber,Australia,Womenswear RTW,Bloomingdale's,Oui,"84,4",P1 — Fort potentiel,,"28,0","10,0","11,4","12,0","12,0","5,0","1,0","0,0","84,4","5,0",11,High,FALSE,luxury_premium,OK
+Christopher Esber,Christopher Esber,Australia,Womenswear RTW,John Lewis,Non,"83,0",P1 — Fort potentiel,"57,0","29,0","10,0","11,4","13,0","12,0","4,5","1,0","0,0","85,9","5,0",11,High,FALSE,luxury_premium,OK
+Christopher Esber,Christopher Esber,Australia,Womenswear RTW,La Redoute,Non,"82,6",P1 — Fort potentiel,"80,0","30,0","9,0","12,9","13,0","9,0","5,0","1,0","-2,0","82,9","5,0",11,High,FALSE,luxury_premium,OK
+Christopher Esber,Christopher Esber,Australia,Womenswear RTW,Debenhams,Non,"81,4",P1 — Fort potentiel,"95,0","28,0","11,0","12,9","13,0","8,0","4,0","1,0","-3,0","79,9","5,0",11,High,FALSE,luxury_premium,OK
+Christopher Esber,Christopher Esber,Australia,Womenswear RTW,Galeries Lafayette,Non,"73,4",P2 — Recommandé,"27,0","30,0","9,0","9,5","12,0","12,0","5,0","1,0","-5,0","78,5","5,0",11,High,FALSE,luxury_premium,OK
+Christopher John Rogers,Christopher John Rogers,USA,Womenswear RTW,Bloomingdale's,Oui,"81,8",P1 — Fort potentiel,,"28,0","12,0","10,8","10,0","12,0","3,0","1,0","0,0","81,8","3,0",11,High,FALSE,luxury_premium,OK
+Christopher John Rogers,Christopher John Rogers,USA,Womenswear RTW,Nordstrom,Oui,"80,4",P1 — Fort potentiel,,"27,0","12,0","11,4","10,0","11,0","3,0","1,0","0,0","80,4","3,0",11,High,FALSE,luxury_premium,OK
+Christopher John Rogers,Christopher John Rogers,USA,Womenswear RTW,John Lewis,Non,"77,4",P2 — Recommandé,"87,0","25,0","9,0","10,8","10,0","11,0","4,5","1,0","0,0","76,3","3,0",11,High,FALSE,luxury_premium,OK
+Christopher John Rogers,Christopher John Rogers,USA,Womenswear RTW,Galeries Lafayette,Non,"72,5",P2 — Recommandé,"72,0","30,0","8,0","9,5","10,0","12,0","5,0","1,0","-8,0","72,5","3,0",11,High,FALSE,luxury_premium,OK
+Christopher John Rogers,Christopher John Rogers,USA,Womenswear RTW,La Redoute,Non,"66,7",P3 — Test / à cadrer,"65,0","27,0","8,0","11,9","10,0","8,0","5,0","1,0","-9,0","66,9","3,0",11,High,FALSE,luxury_premium,OK
+Christopher John Rogers,Christopher John Rogers,USA,Womenswear RTW,Debenhams,Non,"66,7",P3 — Test / à cadrer,"65,0","28,0","10,0","11,9","10,0","8,0","4,0","1,0","-11,0","66,9","3,0",11,High,FALSE,luxury_premium,OK
+Clio Peppiatt,Clio Peppiatt,UK,Womenswear RTW,Debenhams,Non,"79,4",P2 — Recommandé,"87,0","28,0","12,0","10,0","10,0","12,0","3,5","1,0","-3,0","78,5","1,0",5,Medium,FALSE,premium_contemporary,OK
+Clio Peppiatt,Clio Peppiatt,UK,Womenswear RTW,La Redoute,Non,"77,6",P2 — Recommandé,"87,0","27,0","10,0","10,0","10,0","11,0","5,5","1,0","-3,0","76,5","1,0",5,Medium,FALSE,premium_contemporary,OK
+Clio Peppiatt,Clio Peppiatt,UK,Womenswear RTW,Nordstrom,Non,"72,3",P2 — Recommandé,"57,0","27,0","10,0","9,5","9,0","12,0","5,5","1,0","-5,0","74,0","1,0",5,Medium,FALSE,premium_contemporary,OK
+Clio Peppiatt,Clio Peppiatt,UK,Womenswear RTW,John Lewis,Oui,"68,5",P3 — Test / à cadrer,,"26,0","12,0","7,0","10,0","12,0","3,5","1,0","-8,0","68,5","1,0",5,Medium,FALSE,premium_contemporary,OK
+Clio Peppiatt,Clio Peppiatt,UK,Womenswear RTW,Galeries Lafayette,Non,"67,5",P3 — Test / à cadrer,"72,0","30,0","11,0","5,5","9,0","10,0","5,5","1,0","-10,0","67,0","1,0",5,Medium,FALSE,premium_contemporary,OK
+Clio Peppiatt,Clio Peppiatt,UK,Womenswear RTW,Bloomingdale's,Non,"65,5",P3 — Test / à cadrer,"57,0","28,0","9,0","7,0","9,0","10,0","5,5","1,0","-8,0","66,5","1,0",5,Medium,FALSE,premium_contemporary,OK
+Comme Si,Comme Si,USA,Womenswear RTW,Nordstrom,Oui,"81,5",P1 — Fort potentiel,,"27,0","12,0","9,5","11,0","11,0","4,0","4,0","-2,0","81,5","2,0",5,High,TRUE,luxury_premium,OK
+Comme Si,Comme Si,USA,Womenswear RTW,Bloomingdale's,Non,"77,4",P2 — Recommandé,"72,0","28,0","12,0","9,0","11,0","12,0","4,0","2,0","-5,0","78,0","2,0",5,High,TRUE,luxury_premium,OK
+Comme Si,Comme Si,USA,Womenswear RTW,John Lewis,Non,"77,0",P2 — Recommandé,"72,0","26,0","9,0","9,0","12,0","12,0","5,5","4,0","-5,0","77,5","2,0",5,High,TRUE,luxury_premium,OK
+Comme Si,Comme Si,USA,Womenswear RTW,La Redoute,Non,"76,7",P2 — Recommandé,"92,0","27,0","8,0","10,0","12,0","8,0","6,0","4,0","-5,0","75,0","2,0",5,High,TRUE,luxury_premium,OK
+Comme Si,Comme Si,USA,Womenswear RTW,Debenhams,Non,"74,9",P2 — Recommandé,"92,0","28,0","10,0","10,0","12,0","8,0","5,0","2,0","-7,0","73,0","2,0",5,High,TRUE,luxury_premium,OK
+Comme Si,Comme Si,USA,Womenswear RTW,Galeries Lafayette,Non,"67,0",P3 — Test / à cadrer,"72,0","30,0","8,0","5,0","11,0","12,0","6,0","2,5","-13,0","66,5","2,0",5,High,TRUE,luxury_premium,OK
+Cortana,Cortanaeshop,Spain,Womenswear RTW,Nordstrom,Non,"87,7",P1 — Fort potentiel,"80,0","27,0","10,0","12,5","11,0","11,0","7,0","5,0","0,0","88,5","3,0",20,High,TRUE,luxury_premium,OK
+Cortana,Cortanaeshop,Spain,Womenswear RTW,John Lewis,Non,"85,0",P1 — Fort potentiel,"75,0","25,0","11,0","11,6","11,0","11,0","6,5","5,0","0,0","86,1","3,0",20,High,TRUE,luxury_premium,OK
+Cortana,Cortanaeshop,Spain,Womenswear RTW,Bloomingdale's,Non,"82,4",P1 — Fort potentiel,"45,0","28,0","9,0","11,6","11,0","12,0","7,0","3,0","0,0","86,6","3,0",20,High,TRUE,luxury_premium,OK
+Cortana,Cortanaeshop,Spain,Womenswear RTW,Galeries Lafayette,Non,"81,9",P1 — Fort potentiel,"47,0","30,0","12,0","10,3","11,0","12,0","5,0","3,5","-3,0","85,8","3,0",20,High,TRUE,luxury_premium,OK
+Cortana,Cortanaeshop,Spain,Womenswear RTW,La Redoute,Non,"78,9",P2 — Recommandé,"100,0","27,0","12,0","12,5","11,0","8,0","5,0","5,0","-9,0","76,5","3,0",20,High,TRUE,luxury_premium,OK
+Cortana,Cortanaeshop,Spain,Womenswear RTW,Debenhams,Non,"75,2",P2 — Recommandé,"100,0","28,0","10,0","12,5","11,0","8,0","6,0","3,0","-11,0","72,5","3,0",20,High,TRUE,luxury_premium,OK
+Diotima,Diotima,USA,Womenswear RTW,Bloomingdale's,Non,"77,5",P2 — Recommandé,"82,0","28,0","12,0","8,0","9,0","12,0","4,0","3,0","-4,0","77,0","3,0",2,Medium,TRUE,luxury_premium,OK
+Diotima,Diotima,USA,Womenswear RTW,Nordstrom,Oui,"77,5",P2 — Recommandé,,"27,0","12,0","8,5","9,0","11,0","4,0","5,0","-4,0","77,5","3,0",2,Medium,TRUE,luxury_premium,OK
+Diotima,Diotima,USA,Womenswear RTW,John Lewis,Non,"75,2",P2 — Recommandé,"82,0","25,0","9,0","8,0","10,0","11,0","5,5","5,0","-4,0","74,5","3,0",2,Medium,TRUE,luxury_premium,OK
+Diotima,Diotima,USA,Womenswear RTW,Galeries Lafayette,Non,"71,1",P2 — Recommandé,"72,0","30,0","8,0","7,5","9,0","12,0","6,0","3,5","-10,0","71,0","3,0",2,Medium,TRUE,luxury_premium,OK
+Diotima,Diotima,USA,Womenswear RTW,La Redoute,Non,"65,2",P3 — Test / à cadrer,"62,0","27,0","8,0","8,5","10,0","8,0","6,0","5,0","-12,0","65,5","3,0",2,Medium,TRUE,luxury_premium,OK
+Diotima,Diotima,USA,Womenswear RTW,Debenhams,Non,"63,4",P3 — Test / à cadrer,"62,0","28,0","10,0","8,5","10,0","8,0","5,0","3,0","-14,0","63,5","3,0",2,Medium,TRUE,luxury_premium,OK
+Doen,Doen,USA,Womenswear RTW,Nordstrom,Oui,"91,0",P1 — Fort potentiel,,"27,0","12,0","15,0","12,0","12,0","4,0","4,0","0,0","91,0","20,0",50,High,TRUE,premium_contemporary,OK
+Doen,Doen,USA,Womenswear RTW,Debenhams,Non,"91,0",P1 — Fort potentiel,"100,0","28,0","10,0","15,0","13,0","12,0","5,0","2,0","0,0","90,0","20,0",50,High,TRUE,premium_contemporary,OK
+Doen,Doen,USA,Womenswear RTW,La Redoute,Non,"90,1",P1 — Fort potentiel,"100,0","27,0","8,0","15,0","13,0","11,0","6,0","4,0","0,0","89,0","20,0",50,High,TRUE,premium_contemporary,OK
+Doen,Doen,USA,Womenswear RTW,John Lewis,Non,"90,0",P1 — Fort potentiel,"95,0","26,0","9,0","15,0","13,0","12,0","5,5","4,0","0,0","89,5","20,0",50,High,TRUE,premium_contemporary,OK
+Doen,Doen,USA,Womenswear RTW,Bloomingdale's,Oui,"88,0",P1 — Fort potentiel,,"28,0","12,0","15,0","12,0","10,0","4,0","2,0","0,0","88,0","20,0",50,High,TRUE,premium_contemporary,OK
+Doen,Doen,USA,Womenswear RTW,Galeries Lafayette,Non,"87,8",P1 — Fort potentiel,"90,0","30,0","8,0","15,0","12,0","9,0","6,0","2,5","0,0","87,5","20,0",50,High,TRUE,premium_contemporary,OK
+DÉHANCHE,DÉHANCHE,USA,Accessories / Leather,Nordstrom,Non,"78,0",P2 — Recommandé,"87,0","25,0","12,0","9,0","9,0","11,0","5,0","5,0","-4,0","77,0","3,0",2,Medium,TRUE,luxury_premium,OK
+DÉHANCHE,DÉHANCHE,USA,Accessories / Leather,John Lewis,Non,"77,5",P2 — Recommandé,"82,0","26,0","9,0","8,5","10,0","11,0","6,5","5,0","-4,0","77,0","3,0",2,Medium,TRUE,luxury_premium,OK
+DÉHANCHE,DÉHANCHE,USA,Accessories / Leather,Bloomingdale's,Non,"76,2",P2 — Recommandé,"82,0","25,0","12,0","8,5","9,0","12,0","5,0","3,0","-4,0","75,5","3,0",2,Medium,TRUE,luxury_premium,OK
+DÉHANCHE,DÉHANCHE,USA,Accessories / Leather,Galeries Lafayette,Non,"72,5",P2 — Recommandé,"72,0","30,0","8,0","8,0","9,0","12,0","7,0","3,5","-10,0","72,5","3,0",2,Medium,TRUE,luxury_premium,OK
+DÉHANCHE,DÉHANCHE,USA,Accessories / Leather,La Redoute,Non,"65,9",P3 — Test / à cadrer,"92,0","23,0","8,0","9,0","10,0","8,0","7,0","5,0","-12,0","63,0","3,0",2,Medium,TRUE,luxury_premium,OK
+DÉHANCHE,DÉHANCHE,USA,Accessories / Leather,Debenhams,Non,"63,2",P3 — Test / à cadrer,"92,0","24,0","10,0","9,0","10,0","7,0","6,0","3,0","-14,0","60,0","3,0",2,Medium,TRUE,luxury_premium,OK
+ESCVDO,ESCVDO,USA,Womenswear RTW,Nordstrom,Non,"86,6",P1 — Fort potentiel,"87,0","27,0","12,0","11,5","11,0","12,0","5,0","5,0","-2,0","86,5","5,0",5,High,TRUE,premium_contemporary,OK
+ESCVDO,ESCVDO,USA,Womenswear RTW,Debenhams,Non,"85,9",P1 — Fort potentiel,"67,0","28,0","10,0","12,0","12,0","12,0","6,0","3,0","0,0","88,0","5,0",5,High,TRUE,premium_contemporary,OK
+ESCVDO,ESCVDO,USA,Womenswear RTW,La Redoute,Non,"85,0",P1 — Fort potentiel,"67,0","27,0","8,0","12,0","12,0","11,0","7,0","5,0","0,0","87,0","5,0",5,High,TRUE,premium_contemporary,OK
+ESCVDO,ESCVDO,USA,Womenswear RTW,Bloomingdale's,Non,"82,6",P1 — Fort potentiel,"82,0","28,0","12,0","10,7","11,0","10,0","5,0","3,0","-2,0","82,7","5,0",5,High,TRUE,premium_contemporary,OK
+ESCVDO,ESCVDO,USA,Womenswear RTW,John Lewis,Non,"82,2",P1 — Fort potentiel,"82,0","25,0","9,0","10,7","12,0","11,0","6,5","5,0","-2,0","82,2","5,0",5,High,TRUE,premium_contemporary,OK
+ESCVDO,ESCVDO,USA,Womenswear RTW,Galeries Lafayette,Non,"74,2",P2 — Recommandé,"72,0","30,0","8,0","8,0","11,0","9,0","7,0","3,5","-7,0","74,5","5,0",5,High,TRUE,premium_contemporary,OK
+Edition (Cecilie Bahnsen),Edition,Denmark,Womenswear RTW,Nordstrom,Non,"84,5",P1 — Fort potentiel,"75,0","27,0","10,0","13,5","11,0","11,0","7,0","1,0","0,0","85,5","5,0",20,High,FALSE,luxury_premium,OK
+Edition (Cecilie Bahnsen),Edition,Denmark,Womenswear RTW,Bloomingdale's,Non,"84,2",P1 — Fort potentiel,"75,0","28,0","9,0","12,2","11,0","12,0","7,0","1,0","0,0","85,2","5,0",20,High,FALSE,luxury_premium,OK
+Edition (Cecilie Bahnsen),Edition,Denmark,Womenswear RTW,John Lewis,Non,"83,4",P1 — Fort potentiel,"90,0","25,0","11,0","12,2","11,0","11,0","6,5","1,0","0,0","82,7","5,0",20,High,FALSE,luxury_premium,OK
+Edition (Cecilie Bahnsen),Edition,Denmark,Womenswear RTW,Galeries Lafayette,Non,"81,8",P1 — Fort potentiel,"77,0","30,0","11,0","10,3","11,0","12,0","5,0","1,0","-3,0","82,3","5,0",20,High,FALSE,luxury_premium,OK
+Edition (Cecilie Bahnsen),Edition,Denmark,Womenswear RTW,La Redoute,Non,"75,4",P2 — Recommandé,"65,0","27,0","11,0","13,5","11,0","8,0","5,0","1,0","-5,0","76,5","5,0",20,High,FALSE,luxury_premium,OK
+Edition (Cecilie Bahnsen),Edition,Denmark,Womenswear RTW,Debenhams,Non,"74,5",P2 — Recommandé,"65,0","28,0","10,0","13,5","11,0","8,0","6,0","1,0","-7,0","75,5","5,0",20,High,FALSE,luxury_premium,OK
+El Sol (Faithfull the Brand),El Sol,Denmark,Swimwear / Resort,John Lewis,Non,"90,0",P1 — Fort potentiel,"95,0","29,0","10,0","15,0","11,0","12,0","6,5","1,0","0,0","89,5","20,0",50,Medium,FALSE,premium_contemporary,OK
+El Sol (Faithfull the Brand),El Sol,Denmark,Swimwear / Resort,La Redoute,Non,"89,6",P1 — Fort potentiel,"95,0","30,0","10,0","15,0","11,0","12,0","5,0","1,0","0,0","89,0","20,0",50,Medium,FALSE,premium_contemporary,OK
+El Sol (Faithfull the Brand),El Sol,Denmark,Swimwear / Resort,Debenhams,Non,"87,8",P1 — Fort potentiel,"95,0","28,0","9,0","15,0","11,0","12,0","6,0","1,0","0,0","87,0","20,0",50,Medium,FALSE,premium_contemporary,OK
+El Sol (Faithfull the Brand),El Sol,Denmark,Swimwear / Resort,Galeries Lafayette,Non,"86,4",P1 — Fort potentiel,"90,0","30,0","10,0","15,0","10,0","10,0","5,0","1,0","0,0","86,0","20,0",50,Medium,FALSE,premium_contemporary,OK
+El Sol (Faithfull the Brand),El Sol,Denmark,Swimwear / Resort,Nordstrom,Oui,"85,4",P1 — Fort potentiel,"80,0","27,0","9,0","15,0","10,0","12,0","7,0","1,0","0,0","86,0","20,0",50,Medium,FALSE,premium_contemporary,OK
+El Sol (Faithfull the Brand),El Sol,Denmark,Swimwear / Resort,Bloomingdale's,Non,"83,6",P1 — Fort potentiel,"80,0","28,0","8,0","15,0","10,0","10,0","7,0","1,0","0,0","84,0","20,0",50,Medium,FALSE,premium_contemporary,OK
+Emme Parsons,Emme Parsons,USA,Footwear,Nordstrom,Oui,"83,0",P1 — Fort potentiel,,"30,0","12,0","10,0","9,0","11,0","3,0","5,0","-2,0","83,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Emme Parsons,Emme Parsons,USA,Footwear,John Lewis,Non,"78,3",P2 — Recommandé,"72,0","29,0","9,0","9,5","10,0","12,0","4,5","5,0","-5,0","79,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Emme Parsons,Emme Parsons,USA,Footwear,Bloomingdale's,Oui,"76,5",P2 — Recommandé,,"28,0","12,0","9,5","9,0","12,0","3,0","3,0","-5,0","76,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Emme Parsons,Emme Parsons,USA,Footwear,Debenhams,Non,"70,8",P2 — Recommandé,"92,0","28,0","10,0","10,5","10,0","8,0","4,0","3,0","-10,0","68,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Emme Parsons,Emme Parsons,USA,Footwear,La Redoute,Non,"69,7",P3 — Test / à cadrer,"62,0","27,0","8,0","10,5","10,0","8,0","5,0","5,0","-8,0","70,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Emme Parsons,Emme Parsons,USA,Footwear,Galeries Lafayette,Non,"65,7",P3 — Test / à cadrer,"72,0","30,0","8,0","5,5","9,0","12,0","5,0","3,5","-13,0","65,0","2,0",5,Medium,TRUE,luxury_premium,OK
+FFORME,FFORME,USA,Womenswear RTW,Nordstrom,Oui,"79,4",P2 — Recommandé,,"27,0","12,0","10,4","9,0","11,0","4,0","1,0","0,0","79,4","2,0",11,Medium,FALSE,luxury_premium,OK
+FFORME,FFORME,USA,Womenswear RTW,Bloomingdale's,Non,"77,7",P2 — Recommandé,"77,0","28,0","12,0","9,8","9,0","12,0","4,0","1,0","-3,0","77,8","2,0",11,Medium,FALSE,luxury_premium,OK
+FFORME,FFORME,USA,Womenswear RTW,John Lewis,Non,"73,7",P2 — Recommandé,"77,0","25,0","9,0","9,8","10,0","11,0","5,5","1,0","-3,0","73,3","2,0",11,Medium,FALSE,luxury_premium,OK
+FFORME,FFORME,USA,Womenswear RTW,La Redoute,Non,"67,1",P3 — Test / à cadrer,"60,0","27,0","8,0","10,9","10,0","8,0","6,0","1,0","-8,0","67,9","2,0",11,Medium,FALSE,luxury_premium,OK
+FFORME,FFORME,USA,Womenswear RTW,Debenhams,Non,"67,1",P3 — Test / à cadrer,"60,0","28,0","10,0","10,9","10,0","8,0","5,0","1,0","-10,0","67,9","2,0",11,Medium,FALSE,luxury_premium,OK
+FFORME,FFORME,USA,Womenswear RTW,Galeries Lafayette,Non,"67,0",P3 — Test / à cadrer,"72,0","30,0","8,0","6,5","9,0","12,0","6,0","1,0","-11,0","66,5","2,0",11,Medium,FALSE,luxury_premium,OK
+Fabergé,Faberge,Other,Fine Jewelry,Galeries Lafayette,Oui,"65,0",P3 — Test / à cadrer,,"25,0","6,0","11,0","4,0","11,0","6,0","2,0","-5,0","65,0","50,0",,Low,FALSE,ultra_luxury,Effectif non disponible; Données enrichies absentes du CSV; complétées par recherche web
+Fabergé,Faberge,Other,Fine Jewelry,Bloomingdale's,Oui,"63,0",P3 — Test / à cadrer,,"30,0","6,0","11,0","2,0","10,0","6,0","2,0","-9,0","63,0","50,0",,Low,FALSE,ultra_luxury,Effectif non disponible; Données enrichies absentes du CSV; complétées par recherche web
+Fabergé,Faberge,Other,Fine Jewelry,Nordstrom,Non,"61,2",P3 — Test / à cadrer,"63,0","28,0","7,0","11,0","2,0","9,0","6,0","2,0","-9,0","61,0","50,0",,Low,FALSE,ultra_luxury,Effectif non disponible; Données enrichies absentes du CSV; complétées par recherche web
+Fabergé,Faberge,Other,Fine Jewelry,John Lewis,Non,"56,2",Watchlist — faible fit,"63,0","19,0","6,0","11,0","4,0","8,0","5,5","2,0","-5,0","55,5","50,0",,Low,FALSE,ultra_luxury,Effectif non disponible; Données enrichies absentes du CSV; complétées par recherche web
+Fabergé,Faberge,Other,Fine Jewelry,La Redoute,Non,"34,5",Watchlist — faible fit,"75,0","16,0","6,0","11,0","4,0","5,0","6,0","2,0","-25,0","30,0","50,0",,Low,FALSE,ultra_luxury,Effectif non disponible; Données enrichies absentes du CSV; complétées par recherche web
+Fabergé,Faberge,Other,Fine Jewelry,Debenhams,Non,"32,7",Watchlist — faible fit,"75,0","18,0","6,0","11,0","4,0","4,0","5,0","2,0","-27,0","28,0","50,0",,Low,FALSE,ultra_luxury,Effectif non disponible; Données enrichies absentes du CSV; complétées par recherche web
+FoundRae,FoundRae,USA,Fine Jewelry,Bloomingdale's,Oui,"85,7",P1 — Fort potentiel,,"30,0","12,0","12,7","10,0","12,0","3,0","1,0","0,0","85,7","5,0",25,Medium,FALSE,luxury_premium,OK
+FoundRae,FoundRae,USA,Fine Jewelry,Nordstrom,Oui,"83,5",P1 — Fort potentiel,,"28,0","12,0","13,5","10,0","11,0","3,0","1,0","0,0","83,5","5,0",25,Medium,FALSE,luxury_premium,OK
+FoundRae,FoundRae,USA,Fine Jewelry,John Lewis,Non,"74,9",P2 — Recommandé,"90,0","19,0","9,0","12,7","11,0","11,0","4,5","1,0","0,0","73,2","5,0",25,Medium,FALSE,luxury_premium,OK
+FoundRae,FoundRae,USA,Fine Jewelry,Galeries Lafayette,Non,"73,9",P2 — Recommandé,"77,0","25,0","8,0","10,6","10,0","12,0","5,0","1,0","-3,0","73,6","5,0",25,Medium,FALSE,luxury_premium,OK
+FoundRae,FoundRae,USA,Fine Jewelry,La Redoute,Non,"53,8",Watchlist — faible fit,"65,0","16,0","8,0","13,5","11,0","8,0","5,0","1,0","-15,0","52,5","5,0",25,Medium,FALSE,luxury_premium,OK
+FoundRae,FoundRae,USA,Fine Jewelry,Debenhams,Non,"53,8",Watchlist — faible fit,"65,0","18,0","10,0","13,5","11,0","7,0","4,0","1,0","-17,0","52,5","5,0",25,Medium,FALSE,luxury_premium,OK
+GABRIELA HEARST,GABRIELA HEARST,USA,Womenswear RTW,Galeries Lafayette,Oui,"86,5",P1 — Fort potentiel,,"30,0","8,0","15,0","8,0","12,0","5,0","3,5","0,0","86,5","20,0",50,Medium,TRUE,luxury_premium,OK
+GABRIELA HEARST,GABRIELA HEARST,USA,Womenswear RTW,Bloomingdale's,Oui,"86,0",P1 — Fort potentiel,,"28,0","12,0","15,0","8,0","12,0","3,0","3,0","0,0","86,0","20,0",50,Medium,TRUE,luxury_premium,OK
+GABRIELA HEARST,GABRIELA HEARST,USA,Womenswear RTW,Nordstrom,Oui,"86,0",P1 — Fort potentiel,,"27,0","12,0","15,0","8,0","11,0","3,0","5,0","0,0","86,0","20,0",50,Medium,TRUE,luxury_premium,OK
+GABRIELA HEARST,GABRIELA HEARST,USA,Womenswear RTW,John Lewis,Non,"85,5",P1 — Fort potentiel,"95,0","26,0","9,0","15,0","8,0","12,0","4,5","5,0","0,0","84,5","20,0",50,Medium,TRUE,luxury_premium,OK
+GABRIELA HEARST,GABRIELA HEARST,USA,Womenswear RTW,La Redoute,Non,"78,4",P2 — Recommandé,"100,0","27,0","8,0","15,0","8,0","8,0","5,0","5,0","-5,0","76,0","20,0",50,Medium,TRUE,luxury_premium,OK
+GABRIELA HEARST,GABRIELA HEARST,USA,Womenswear RTW,Debenhams,Non,"76,6",P2 — Recommandé,"100,0","28,0","10,0","15,0","8,0","8,0","4,0","3,0","-7,0","74,0","20,0",50,Medium,TRUE,luxury_premium,OK
+GALVAN,GALVAN,UK,Womenswear RTW,Nordstrom,Oui,"80,4",P1 — Fort potentiel,,"27,0","10,0","12,4","9,0","11,0","5,0","1,0","0,0","80,4","5,0",11,Medium,FALSE,luxury_premium,OK
+GALVAN,GALVAN,UK,Womenswear RTW,Bloomingdale's,Non,"79,6",P2 — Recommandé,"72,0","28,0","9,0","11,4","9,0","12,0","5,0","1,0","0,0","80,4","5,0",11,Medium,FALSE,luxury_premium,OK
+GALVAN,GALVAN,UK,Womenswear RTW,John Lewis,Oui,"78,4",P2 — Recommandé,,"25,0","12,0","11,4","10,0","11,0","3,0","1,0","0,0","78,4","5,0",11,Medium,FALSE,luxury_premium,OK
+GALVAN,GALVAN,UK,Womenswear RTW,Galeries Lafayette,Non,"77,0",P2 — Recommandé,"72,0","30,0","11,0","9,5","9,0","12,0","5,0","1,0","-5,0","77,5","5,0",11,Medium,FALSE,luxury_premium,OK
+GALVAN,GALVAN,UK,Womenswear RTW,La Redoute,Non,"73,0",P2 — Recommandé,"65,0","27,0","10,0","12,9","10,0","8,0","5,0","1,0","-5,0","73,9","5,0",11,Medium,FALSE,luxury_premium,OK
+GALVAN,GALVAN,UK,Womenswear RTW,Debenhams,Non,"72,1",P2 — Recommandé,"65,0","28,0","12,0","12,9","10,0","8,0","3,0","1,0","-7,0","72,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Gigi Burris,Gigi Burris,USA,Bridal / Occasion,Nordstrom,Oui,"73,0",P2 — Recommandé,,"22,0","12,0","9,0","9,0","11,0","4,0","5,0","-4,0","73,0","3,0",2,High,TRUE,luxury_premium,OK
+Gigi Burris,Gigi Burris,USA,Bridal / Occasion,John Lewis,Non,"72,1",P2 — Recommandé,"82,0","22,0","9,0","8,5","9,0","11,0","5,5","5,0","-4,0","71,0","3,0",2,High,TRUE,luxury_premium,OK
+Gigi Burris,Gigi Burris,USA,Bridal / Occasion,Bloomingdale's,Non,"59,7",Watchlist — faible fit,"52,0","14,0","12,0","8,5","9,0","12,0","4,0","3,0","-7,0","60,5","3,0",2,High,TRUE,luxury_premium,OK
+Gigi Burris,Gigi Burris,USA,Bridal / Occasion,Debenhams,Non,"58,7",Watchlist — faible fit,"92,0","22,0","10,0","9,0","9,0","7,0","5,0","3,0","-15,0","55,0","3,0",2,High,TRUE,luxury_premium,OK
+Gigi Burris,Gigi Burris,USA,Bridal / Occasion,Galeries Lafayette,Non,"55,1",Watchlist — faible fit,"42,0","18,0","8,0","8,0","9,0","12,0","6,0","3,5","-13,0","56,5","3,0",2,High,TRUE,luxury_premium,OK
+Gigi Burris,Gigi Burris,USA,Bridal / Occasion,La Redoute,Non,"54,2",Watchlist — faible fit,"92,0","16,0","8,0","9,0","9,0","8,0","6,0","5,0","-16,0","50,0","3,0",2,High,TRUE,luxury_premium,OK
+God's True Cashmere,God's True Cashmere,USA,Knitwear / Cashmere,Nordstrom,Non,"82,5",P1 — Fort potentiel,"87,0","25,0","12,0","10,0","11,0","11,0","5,0","5,0","-2,0","82,0","2,0",5,High,TRUE,luxury_premium,OK
+God's True Cashmere,God's True Cashmere,USA,Knitwear / Cashmere,Bloomingdale's,Non,"79,7",P2 — Recommandé,"72,0","28,0","12,0","9,5","11,0","12,0","5,0","3,0","-5,0","80,5","2,0",5,High,TRUE,luxury_premium,OK
+God's True Cashmere,God's True Cashmere,USA,Knitwear / Cashmere,John Lewis,Non,"79,2",P2 — Recommandé,"72,0","26,0","9,0","9,5","12,0","12,0","6,5","5,0","-5,0","80,0","2,0",5,High,TRUE,luxury_premium,OK
+God's True Cashmere,God's True Cashmere,USA,Knitwear / Cashmere,La Redoute,Non,"78,1",P2 — Recommandé,"92,0","26,0","8,0","10,5","12,0","8,0","7,0","5,0","-5,0","76,5","2,0",5,High,TRUE,luxury_premium,OK
+God's True Cashmere,God's True Cashmere,USA,Knitwear / Cashmere,Debenhams,Non,"70,8",P2 — Recommandé,"92,0","22,0","10,0","10,5","12,0","7,0","6,0","3,0","-7,0","68,5","2,0",5,High,TRUE,luxury_premium,OK
+God's True Cashmere,God's True Cashmere,USA,Knitwear / Cashmere,Galeries Lafayette,Non,"66,6",P3 — Test / à cadrer,"72,0","27,0","8,0","5,5","11,0","12,0","7,0","3,5","-13,0","66,0","2,0",5,High,TRUE,luxury_premium,OK
+Hunting Season,Hunting Season,USA,Accessories / Leather,Nordstrom,Oui,"74,0",P2 — Recommandé,,"25,0","12,0","10,0","9,0","11,0","3,0","1,0","-2,0","74,0","2,0",5,Medium,FALSE,luxury_premium,OK
+Hunting Season,Hunting Season,USA,Accessories / Leather,Bloomingdale's,Oui,"71,5",P2 — Recommandé,,"25,0","12,0","9,5","9,0","12,0","3,0","1,0","-5,0","71,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Hunting Season,Hunting Season,USA,Accessories / Leather,John Lewis,Non,"71,1",P2 — Recommandé,"72,0","26,0","9,0","9,5","10,0","11,0","4,5","1,0","-5,0","71,0","2,0",5,Medium,FALSE,luxury_premium,OK
+Hunting Season,Hunting Season,USA,Accessories / Leather,La Redoute,Non,"65,0",P3 — Test / à cadrer,"87,0","23,0","8,0","10,5","10,0","8,0","5,0","1,0","-8,0","62,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Hunting Season,Hunting Season,USA,Accessories / Leather,Debenhams,Non,"64,0",P3 — Test / à cadrer,"87,0","24,0","10,0","10,5","10,0","7,0","4,0","1,0","-10,0","61,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Hunting Season,Hunting Season,USA,Accessories / Leather,Galeries Lafayette,Non,"63,5",P3 — Test / à cadrer,"72,0","30,0","8,0","5,5","9,0","12,0","5,0","1,0","-13,0","62,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Jacques Marie Mage,Jacques Marie Mage,USA,Eyewear,Nordstrom,Oui,"78,0",P2 — Recommandé,,"20,0","12,0","15,0","7,0","11,0","4,0","4,0","0,0","78,0","10,0",20,High,TRUE,luxury_premium,OK
+Jacques Marie Mage,Jacques Marie Mage,USA,Eyewear,Bloomingdale's,Oui,"75,9",P2 — Recommandé,,"20,0","12,0","13,9","7,0","12,0","4,0","2,0","0,0","75,9","10,0",20,High,TRUE,luxury_premium,OK
+Jacques Marie Mage,Jacques Marie Mage,USA,Eyewear,Galeries Lafayette,Non,"73,4",P2 — Recommandé,"57,0","23,0","8,0","11,7","7,0","12,0","6,0","2,5","0,0","75,2","10,0",20,High,TRUE,luxury_premium,OK
+Jacques Marie Mage,Jacques Marie Mage,USA,Eyewear,John Lewis,Non,"71,7",P2 — Recommandé,"65,0","17,0","9,0","13,9","7,0","11,0","5,5","4,0","0,0","72,4","10,0",20,High,TRUE,luxury_premium,OK
+Jacques Marie Mage,Jacques Marie Mage,USA,Eyewear,La Redoute,Non,"64,1",P3 — Test / à cadrer,"65,0","16,0","8,0","15,0","7,0","8,0","6,0","4,0","-5,0","64,0","10,0",20,High,TRUE,luxury_premium,OK
+Jacques Marie Mage,Jacques Marie Mage,USA,Eyewear,Debenhams,Non,"59,6",Watchlist — faible fit,"65,0","15,0","10,0","15,0","7,0","7,0","5,0","2,0","-7,0","59,0","10,0",20,High,TRUE,luxury_premium,OK
+Jacquie Aiche,Jacquie Aiche,USA,Fine Jewelry,Bloomingdale's,Oui,"84,4",P1 — Fort potentiel,,"30,0","12,0","11,4","10,0","12,0","3,0","1,0","0,0","84,4","5,0",11,Medium,FALSE,luxury_premium,OK
+Jacquie Aiche,Jacquie Aiche,USA,Fine Jewelry,Nordstrom,Oui,"82,4",P1 — Fort potentiel,,"28,0","12,0","12,4","10,0","11,0","3,0","1,0","0,0","82,4","5,0",11,Medium,FALSE,luxury_premium,OK
+Jacquie Aiche,Jacquie Aiche,USA,Fine Jewelry,John Lewis,Non,"73,4",P2 — Recommandé,"87,0","19,0","9,0","11,4","11,0","11,0","4,5","1,0","0,0","71,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Jacquie Aiche,Jacquie Aiche,USA,Fine Jewelry,Galeries Lafayette,Non,"70,7",P2 — Recommandé,"72,0","25,0","8,0","9,5","10,0","12,0","5,0","1,0","-5,0","70,5","5,0",11,Medium,FALSE,luxury_premium,OK
+Jacquie Aiche,Jacquie Aiche,USA,Fine Jewelry,La Redoute,Non,"53,2",Watchlist — faible fit,"65,0","16,0","8,0","12,9","11,0","8,0","5,0","1,0","-15,0","51,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Jacquie Aiche,Jacquie Aiche,USA,Fine Jewelry,Debenhams,Non,"53,2",Watchlist — faible fit,"65,0","18,0","10,0","12,9","11,0","7,0","4,0","1,0","-17,0","51,9","5,0",11,Medium,FALSE,luxury_premium,OK
+James Perse,James Perse,USA,Womenswear RTW,Bloomingdale's,Oui,"87,0",P1 — Fort potentiel,,"28,0","12,0","15,0","10,0","12,0","4,0","1,0","0,0","87,0","50,0",200,Medium,FALSE,luxury_premium,OK
+James Perse,James Perse,USA,Womenswear RTW,John Lewis,Non,"85,2",P1 — Fort potentiel,"65,0","29,0","9,0","15,0","11,0","12,0","5,5","1,0","0,0","87,5","50,0",200,Medium,FALSE,luxury_premium,OK
+James Perse,James Perse,USA,Womenswear RTW,Nordstrom,Oui,"85,0",P1 — Fort potentiel,,"27,0","12,0","15,0","10,0","11,0","4,0","1,0","0,0","85,0","50,0",200,Medium,FALSE,luxury_premium,OK
+James Perse,James Perse,USA,Womenswear RTW,Galeries Lafayette,Non,"84,8",P1 — Fort potentiel,"65,0","30,0","8,0","15,0","10,0","12,0","6,0","1,0","0,0","87,0","50,0",200,Medium,FALSE,luxury_premium,OK
+James Perse,James Perse,USA,Womenswear RTW,La Redoute,Non,"84,2",P1 — Fort potentiel,"95,0","30,0","8,0","15,0","11,0","9,0","6,0","1,0","-2,0","83,0","50,0",200,Medium,FALSE,luxury_premium,OK
+James Perse,James Perse,USA,Womenswear RTW,Debenhams,Non,"81,5",P1 — Fort potentiel,"95,0","28,0","10,0","15,0","11,0","8,0","5,0","1,0","-3,0","80,0","50,0",200,Medium,FALSE,luxury_premium,OK
+Jennifer Chamandi,Jennifer Chamandi,UK,Womenswear RTW,Nordstrom,Non,"78,7",P2 — Recommandé,"67,0","30,0","10,0","10,0","9,0","11,0","6,0","1,0","-2,0","80,0","2,0",5,Medium,FALSE,luxury_premium,OK
+Jennifer Chamandi,Jennifer Chamandi,UK,Womenswear RTW,John Lewis,Oui,"77,5",P2 — Recommandé,,"29,0","12,0","9,5","10,0","12,0","4,0","1,0","-5,0","77,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Jennifer Chamandi,Jennifer Chamandi,UK,Womenswear RTW,Debenhams,Non,"73,1",P2 — Recommandé,"87,0","28,0","12,0","10,5","10,0","8,0","4,0","1,0","-7,0","71,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Jennifer Chamandi,Jennifer Chamandi,UK,Womenswear RTW,Bloomingdale's,Non,"72,8",P2 — Recommandé,"57,0","28,0","9,0","9,5","9,0","12,0","6,0","1,0","-5,0","74,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Jennifer Chamandi,Jennifer Chamandi,UK,Womenswear RTW,La Redoute,Non,"71,0",P2 — Recommandé,"57,0","27,0","10,0","10,5","10,0","8,0","6,0","1,0","-5,0","72,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Jennifer Chamandi,Jennifer Chamandi,UK,Womenswear RTW,Galeries Lafayette,Non,"69,8",P3 — Test / à cadrer,"72,0","30,0","11,0","5,5","9,0","12,0","6,0","1,0","-10,0","69,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Jennifer Meyer,Jennifer Meyer,USA,Fine Jewelry,Bloomingdale's,Oui,"87,1",P1 — Fort potentiel,,"30,0","12,0","13,1","10,0","12,0","4,0","1,0","0,0","87,1","10,0",11,Medium,FALSE,luxury_premium,OK
+Jennifer Meyer,Jennifer Meyer,USA,Fine Jewelry,Nordstrom,Oui,"84,9",P1 — Fort potentiel,,"28,0","12,0","13,9","10,0","11,0","4,0","1,0","0,0","84,9","10,0",11,Medium,FALSE,luxury_premium,OK
+Jennifer Meyer,Jennifer Meyer,USA,Fine Jewelry,Galeries Lafayette,Non,"76,5",P2 — Recommandé,"82,0","25,0","8,0","10,9","10,0","12,0","6,0","1,0","-2,0","75,9","10,0",11,Medium,FALSE,luxury_premium,OK
+Jennifer Meyer,Jennifer Meyer,USA,Fine Jewelry,John Lewis,Non,"76,3",P2 — Recommandé,"92,0","19,0","9,0","13,1","11,0","11,0","5,5","1,0","0,0","74,6","10,0",11,Medium,FALSE,luxury_premium,OK
+Jennifer Meyer,Jennifer Meyer,USA,Fine Jewelry,La Redoute,Non,"55,5",Watchlist — faible fit,"65,0","16,0","8,0","14,4","11,0","8,0","6,0","1,0","-15,0","54,4","10,0",11,Medium,FALSE,luxury_premium,OK
+Jennifer Meyer,Jennifer Meyer,USA,Fine Jewelry,Debenhams,Non,"55,5",Watchlist — faible fit,"65,0","18,0","10,0","14,4","11,0","7,0","5,0","1,0","-17,0","54,4","10,0",11,Medium,FALSE,luxury_premium,OK
+Judith Leiber Couture,Judith Leiber Couture,USA,Accessories / Leather,John Lewis,Non,"88,2",P1 — Fort potentiel,"95,0","29,0","9,0","15,0","12,0","12,0","4,5","1,0","0,0","87,5","20,0",50,High,FALSE,luxury_premium,OK
+Judith Leiber Couture,Judith Leiber Couture,USA,Accessories / Leather,Galeries Lafayette,Oui,"88,0",P1 — Fort potentiel,,"30,0","8,0","15,0","12,0","12,0","5,0","1,0","0,0","88,0","20,0",50,High,FALSE,luxury_premium,OK
+Judith Leiber Couture,Judith Leiber Couture,USA,Accessories / Leather,Bloomingdale's,Oui,"85,0",P1 — Fort potentiel,,"25,0","12,0","15,0","12,0","12,0","3,0","1,0","0,0","85,0","20,0",50,High,FALSE,luxury_premium,OK
+Judith Leiber Couture,Judith Leiber Couture,USA,Accessories / Leather,La Redoute,Non,"84,2",P1 — Fort potentiel,"95,0","30,0","8,0","15,0","12,0","9,0","5,0","1,0","-2,0","83,0","20,0",50,High,FALSE,luxury_premium,OK
+Judith Leiber Couture,Judith Leiber Couture,USA,Accessories / Leather,Nordstrom,Oui,"84,0",P1 — Fort potentiel,,"25,0","12,0","15,0","12,0","11,0","3,0","1,0","0,0","84,0","20,0",50,High,FALSE,luxury_premium,OK
+Judith Leiber Couture,Judith Leiber Couture,USA,Accessories / Leather,Debenhams,Non,"77,0",P2 — Recommandé,"95,0","24,0","10,0","15,0","12,0","7,0","4,0","1,0","-3,0","75,0","20,0",50,High,FALSE,luxury_premium,OK
+Juliette (Shopjulietta),Juliette,USA,Swimwear / Resort,Debenhams,Non,"84,4",P1 — Fort potentiel,"92,0","28,0","10,0","11,5","10,0","12,0","6,0","1,0","0,0","83,5","5,0",5,Medium,FALSE,premium_contemporary,OK
+Juliette (Shopjulietta),Juliette,USA,Swimwear / Resort,La Redoute,Non,"82,6",P1 — Fort potentiel,"92,0","27,0","8,0","11,5","10,0","12,0","7,0","1,0","0,0","81,5","5,0",5,Medium,FALSE,premium_contemporary,OK
+Juliette (Shopjulietta),Juliette,USA,Swimwear / Resort,Nordstrom,Non,"80,2",P1 — Fort potentiel,"82,0","27,0","12,0","11,0","9,0","12,0","5,0","1,0","-2,0","80,0","5,0",5,Medium,FALSE,premium_contemporary,OK
+Juliette (Shopjulietta),Juliette,USA,Swimwear / Resort,Bloomingdale's,Non,"78,6",P2 — Recommandé,"82,0","28,0","12,0","10,2","9,0","10,0","5,0","1,0","-2,0","78,2","5,0",5,Medium,FALSE,premium_contemporary,OK
+Juliette (Shopjulietta),Juliette,USA,Swimwear / Resort,John Lewis,Non,"76,3",P2 — Recommandé,"82,0","25,0","9,0","10,2","10,0","11,0","6,5","1,0","-2,0","75,7","5,0",5,Medium,FALSE,premium_contemporary,OK
+Juliette (Shopjulietta),Juliette,USA,Swimwear / Resort,Galeries Lafayette,Non,"69,8",P3 — Test / à cadrer,"72,0","30,0","8,0","7,5","9,0","9,0","7,0","1,0","-7,0","69,5","5,0",5,Medium,FALSE,premium_contemporary,OK
+Kall Meyer,Kall Meyer,USA,Womenswear RTW,Nordstrom,Non,"79,7",P2 — Recommandé,"77,0","27,0","12,0","9,5","11,0","12,0","4,5","4,0","-5,0","80,0","1,0",5,High,TRUE,premium_contemporary,OK
+Kall Meyer,Kall Meyer,USA,Womenswear RTW,Debenhams,Non,"79,6",P2 — Recommandé,"62,0","28,0","10,0","10,0","12,0","12,0","5,5","2,0","-3,0","81,5","1,0",5,High,TRUE,premium_contemporary,OK
+Kall Meyer,Kall Meyer,USA,Womenswear RTW,La Redoute,Non,"78,7",P2 — Recommandé,"62,0","27,0","8,0","10,0","12,0","11,0","6,5","4,0","-3,0","80,5","1,0",5,High,TRUE,premium_contemporary,OK
+Kall Meyer,Kall Meyer,USA,Womenswear RTW,Bloomingdale's,Non,"71,6",P2 — Recommandé,"72,0","28,0","12,0","7,0","11,0","10,0","4,5","2,0","-8,0","71,5","1,0",5,High,TRUE,premium_contemporary,OK
+Kall Meyer,Kall Meyer,USA,Womenswear RTW,John Lewis,Non,"71,1",P2 — Recommandé,"72,0","25,0","9,0","7,0","12,0","11,0","6,0","4,0","-8,0","71,0","1,0",5,High,TRUE,premium_contemporary,OK
+Kall Meyer,Kall Meyer,USA,Womenswear RTW,Galeries Lafayette,Non,"65,2",P3 — Test / à cadrer,"72,0","30,0","8,0","5,5","11,0","9,0","6,5","2,5","-13,0","64,5","1,0",5,High,TRUE,premium_contemporary,OK
+Kika Vargas,Kika Vargas,Colombia,Womenswear RTW,Nordstrom,Oui,"89,5",P1 — Fort potentiel,,"27,0","11,0","12,5","12,0","11,0","6,0","5,0","0,0","89,5","3,0",20,High,TRUE,luxury_premium,OK
+Kika Vargas,Kika Vargas,Colombia,Womenswear RTW,Bloomingdale's,Non,"87,8",P1 — Fort potentiel,"90,0","28,0","10,0","11,6","12,0","12,0","6,0","3,0","0,0","87,6","3,0",20,High,TRUE,luxury_premium,OK
+Kika Vargas,Kika Vargas,Colombia,Womenswear RTW,John Lewis,Non,"83,2",P1 — Fort potentiel,"75,0","25,0","8,0","11,6","13,0","11,0","5,5","5,0","0,0","84,1","3,0",20,High,TRUE,luxury_premium,OK
+Kika Vargas,Kika Vargas,Colombia,Womenswear RTW,Galeries Lafayette,Non,"81,6",P1 — Fort potentiel,"62,0","30,0","8,0","10,3","12,0","12,0","6,0","3,5","-3,0","83,8","3,0",20,High,TRUE,luxury_premium,OK
+Kika Vargas,Kika Vargas,Colombia,Womenswear RTW,La Redoute,Non,"78,5",P2 — Recommandé,"70,0","27,0","8,0","12,5","13,0","8,0","6,0","5,0","-5,0","79,5","3,0",20,High,TRUE,luxury_premium,OK
+Kika Vargas,Kika Vargas,Colombia,Womenswear RTW,Debenhams,Non,"75,0",P2 — Recommandé,"70,0","28,0","8,0","12,5","13,0","8,0","5,0","3,0","-7,0","75,5","3,0",20,High,TRUE,luxury_premium,OK
+Laura Lombardi,Laura Lombardi,USA,Fine Jewelry,Nordstrom,Oui,"80,0",P1 — Fort potentiel,,"28,0","12,0","10,0","9,0","11,0","3,0","4,0","-2,0","80,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Laura Lombardi,Laura Lombardi,USA,Fine Jewelry,Bloomingdale's,Oui,"77,5",P2 — Recommandé,,"30,0","12,0","9,5","9,0","12,0","3,0","2,0","-5,0","77,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Laura Lombardi,Laura Lombardi,USA,Fine Jewelry,John Lewis,Non,"67,5",P3 — Test / à cadrer,"72,0","19,0","9,0","9,5","10,0","11,0","4,5","4,0","-5,0","67,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Laura Lombardi,Laura Lombardi,USA,Fine Jewelry,Galeries Lafayette,Non,"60,3",P3 — Test / à cadrer,"72,0","25,0","8,0","5,5","9,0","12,0","5,0","2,5","-13,0","59,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Laura Lombardi,Laura Lombardi,USA,Fine Jewelry,La Redoute,Non,"49,9",Watchlist — faible fit,"62,0","16,0","8,0","10,5","10,0","8,0","5,0","4,0","-18,0","48,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Laura Lombardi,Laura Lombardi,USA,Fine Jewelry,Debenhams,Non,"48,1",Watchlist — faible fit,"62,0","18,0","10,0","10,5","10,0","7,0","4,0","2,0","-20,0","46,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Les Tien,Les Tien,USA,Womenswear RTW,Bloomingdale's,Oui,"80,8",P1 — Fort potentiel,,"28,0","12,0","10,8","9,0","12,0","3,0","1,0","0,0","80,8","3,0",11,Medium,FALSE,luxury_premium,OK
+Les Tien,Les Tien,USA,Womenswear RTW,Nordstrom,Oui,"79,4",P2 — Recommandé,,"27,0","12,0","11,4","9,0","11,0","3,0","1,0","0,0","79,4","3,0",11,Medium,FALSE,luxury_premium,OK
+Les Tien,Les Tien,USA,Womenswear RTW,John Lewis,Non,"77,4",P2 — Recommandé,"87,0","25,0","9,0","10,8","10,0","11,0","4,5","1,0","0,0","76,3","3,0",11,Medium,FALSE,luxury_premium,OK
+Les Tien,Les Tien,USA,Womenswear RTW,Galeries Lafayette,Non,"71,6",P2 — Recommandé,"72,0","30,0","8,0","9,5","9,0","12,0","5,0","1,0","-8,0","71,5","3,0",11,Medium,FALSE,luxury_premium,OK
+Les Tien,Les Tien,USA,Womenswear RTW,La Redoute,Non,"70,6",P2 — Recommandé,"95,0","27,0","8,0","11,9","10,0","8,0","5,0","1,0","-8,0","67,9","3,0",11,Medium,FALSE,luxury_premium,OK
+Les Tien,Les Tien,USA,Womenswear RTW,Debenhams,Non,"70,6",P2 — Recommandé,"95,0","28,0","10,0","11,9","10,0","8,0","4,0","1,0","-10,0","67,9","3,0",11,Medium,FALSE,luxury_premium,OK
+Lie Studio,Lie Studio,Denmark,Womenswear RTW,Debenhams,Non,"84,7",P1 — Fort potentiel,"65,0","28,0","10,0","11,9","13,0","12,0","6,0","1,0","0,0","86,9","3,0",11,High,FALSE,premium_contemporary,OK
+Lie Studio,Lie Studio,Denmark,Womenswear RTW,Nordstrom,Non,"84,1",P1 — Fort potentiel,"72,0","27,0","10,0","11,4","12,0","12,0","7,0","1,0","0,0","85,4","3,0",11,High,FALSE,premium_contemporary,OK
+Lie Studio,Lie Studio,Denmark,Womenswear RTW,John Lewis,Non,"83,7",P1 — Fort potentiel,"87,0","25,0","11,0","10,8","13,0","11,0","6,5","1,0","0,0","83,3","3,0",11,High,FALSE,premium_contemporary,OK
+Lie Studio,Lie Studio,Denmark,Womenswear RTW,La Redoute,Non,"82,9",P1 — Fort potentiel,"65,0","27,0","11,0","11,9","13,0","11,0","5,0","1,0","0,0","84,9","3,0",11,High,FALSE,premium_contemporary,OK
+Lie Studio,Lie Studio,Denmark,Womenswear RTW,Bloomingdale's,Non,"81,7",P1 — Fort potentiel,"72,0","28,0","9,0","10,8","12,0","10,0","7,0","1,0","0,0","82,8","3,0",11,High,FALSE,premium_contemporary,OK
+Lie Studio,Lie Studio,Denmark,Womenswear RTW,Galeries Lafayette,Non,"77,9",P2 — Recommandé,"72,0","30,0","11,0","9,5","12,0","10,0","5,0","1,0","-5,0","78,5","3,0",11,High,FALSE,premium_contemporary,OK
+Lisa Yang,Lisa Yang,Sweden,Womenswear RTW,John Lewis,Oui,"83,4",P1 — Fort potentiel,,"26,0","11,0","10,9","12,0","12,0","5,5","1,0","0,0","83,4","5,0",11,High,FALSE,luxury_premium,OK
+Lisa Yang,Lisa Yang,Sweden,Womenswear RTW,Nordstrom,Non,"83,3",P1 — Fort potentiel,"87,0","27,0","10,0","11,9","11,0","11,0","6,0","1,0","0,0","82,9","5,0",11,High,FALSE,luxury_premium,OK
+Lisa Yang,Lisa Yang,Sweden,Womenswear RTW,Bloomingdale's,Non,"81,8",P1 — Fort potentiel,"72,0","28,0","9,0","10,9","11,0","12,0","6,0","1,0","0,0","82,9","5,0",11,High,FALSE,luxury_premium,OK
+Lisa Yang,Lisa Yang,Sweden,Womenswear RTW,La Redoute,Non,"77,4",P2 — Recommandé,"95,0","27,0","11,0","12,4","12,0","8,0","4,0","1,0","-5,0","75,4","5,0",11,High,FALSE,luxury_premium,OK
+Lisa Yang,Lisa Yang,Sweden,Womenswear RTW,Debenhams,Non,"76,5",P2 — Recommandé,"95,0","28,0","10,0","12,4","12,0","8,0","5,0","1,0","-7,0","74,4","5,0",11,High,FALSE,luxury_premium,OK
+Lisa Yang,Lisa Yang,Sweden,Womenswear RTW,Galeries Lafayette,Non,"75,9",P2 — Recommandé,"57,0","30,0","11,0","9,0","11,0","12,0","4,0","1,0","-5,0","78,0","5,0",11,High,FALSE,luxury_premium,OK
+Lizzie Fortunato,Lizzie Fortunato,USA,Fine Jewelry,Bloomingdale's,Oui,"84,8",P1 — Fort potentiel,,"30,0","12,0","10,8","9,0","12,0","3,0","3,0","0,0","84,8","3,0",11,Medium,TRUE,luxury_premium,OK
+Lizzie Fortunato,Lizzie Fortunato,USA,Fine Jewelry,Nordstrom,Oui,"84,4",P1 — Fort potentiel,,"28,0","12,0","11,4","9,0","11,0","3,0","5,0","0,0","84,4","3,0",11,Medium,TRUE,luxury_premium,OK
+Lizzie Fortunato,Lizzie Fortunato,USA,Fine Jewelry,John Lewis,Non,"75,6",P2 — Recommandé,"87,0","19,0","9,0","10,8","10,0","11,0","4,5","5,0","0,0","74,3","3,0",11,Medium,TRUE,luxury_premium,OK
+Lizzie Fortunato,Lizzie Fortunato,USA,Fine Jewelry,Galeries Lafayette,Non,"69,3",P3 — Test / à cadrer,"72,0","25,0","8,0","9,5","9,0","12,0","5,0","3,5","-8,0","69,0","3,0",11,Medium,TRUE,luxury_premium,OK
+Lizzie Fortunato,Lizzie Fortunato,USA,Fine Jewelry,La Redoute,Non,"56,4",Watchlist — faible fit,"70,0","16,0","8,0","11,9","10,0","8,0","5,0","5,0","-14,0","54,9","3,0",11,Medium,TRUE,luxury_premium,OK
+Lizzie Fortunato,Lizzie Fortunato,USA,Fine Jewelry,Debenhams,Non,"54,6",Watchlist — faible fit,"70,0","18,0","10,0","11,9","10,0","7,0","4,0","3,0","-16,0","52,9","3,0",11,Medium,TRUE,luxury_premium,OK
+Loren Stewart,Loren Stewart,USA,Fine Jewelry,Bloomingdale's,Oui,"81,8",P1 — Fort potentiel,,"30,0","12,0","10,8","8,0","12,0","3,0","1,0","0,0","81,8","3,0",11,Medium,FALSE,luxury_premium,OK
+Loren Stewart,Loren Stewart,USA,Fine Jewelry,Nordstrom,Oui,"79,4",P2 — Recommandé,,"28,0","12,0","11,4","8,0","11,0","3,0","1,0","0,0","79,4","3,0",11,Medium,FALSE,luxury_premium,OK
+Loren Stewart,Loren Stewart,USA,Fine Jewelry,John Lewis,Non,"70,2",P2 — Recommandé,"87,0","19,0","9,0","10,8","8,0","11,0","4,5","1,0","0,0","68,3","3,0",11,Medium,FALSE,luxury_premium,OK
+Loren Stewart,Loren Stewart,USA,Fine Jewelry,Galeries Lafayette,Non,"66,2",P3 — Test / à cadrer,"72,0","25,0","8,0","9,5","8,0","12,0","5,0","1,0","-8,0","65,5","3,0",11,Medium,FALSE,luxury_premium,OK
+Loren Stewart,Loren Stewart,USA,Fine Jewelry,La Redoute,Non,"46,9",Watchlist — faible fit,"65,0","16,0","8,0","11,9","8,0","8,0","5,0","1,0","-18,0","44,9","3,0",11,Medium,FALSE,luxury_premium,OK
+Loren Stewart,Loren Stewart,USA,Fine Jewelry,Debenhams,Non,"46,9",Watchlist — faible fit,"65,0","18,0","10,0","11,9","8,0","7,0","4,0","1,0","-20,0","44,9","3,0",11,Medium,FALSE,luxury_premium,OK
+MAISON MAYLE,MAISON MAYLE,USA,Womenswear RTW,Nordstrom,Oui,"74,5",P2 — Recommandé,,"27,0","12,0","8,5","9,0","12,0","4,0","1,0","-4,0","74,5","2,0",2,Medium,FALSE,premium_contemporary,OK
+MAISON MAYLE,MAISON MAYLE,USA,Womenswear RTW,Debenhams,Non,"73,2",P2 — Recommandé,"52,0","28,0","10,0","8,5","10,0","12,0","5,0","1,0","-4,0","75,5","2,0",2,Medium,FALSE,premium_contemporary,OK
+MAISON MAYLE,MAISON MAYLE,USA,Womenswear RTW,La Redoute,Non,"70,5",P2 — Recommandé,"52,0","27,0","8,0","8,5","10,0","11,0","6,0","1,0","-4,0","72,5","2,0",2,Medium,FALSE,premium_contemporary,OK
+MAISON MAYLE,MAISON MAYLE,USA,Womenswear RTW,Bloomingdale's,Non,"70,2",P2 — Recommandé,"72,0","28,0","12,0","8,0","9,0","10,0","4,0","1,0","-7,0","70,0","2,0",2,Medium,FALSE,premium_contemporary,OK
+MAISON MAYLE,MAISON MAYLE,USA,Womenswear RTW,John Lewis,Non,"68,0",P3 — Test / à cadrer,"72,0","25,0","9,0","8,0","10,0","11,0","5,5","1,0","-7,0","67,5","2,0",2,Medium,FALSE,premium_contemporary,OK
+MAISON MAYLE,MAISON MAYLE,USA,Womenswear RTW,Galeries Lafayette,Non,"61,7",P3 — Test / à cadrer,"72,0","30,0","8,0","5,5","9,0","9,0","6,0","1,0","-13,0","60,5","2,0",2,Medium,FALSE,premium_contemporary,OK
+MARRAKSHI LIFE,MARRAKSHI LIFE,Morocco,Swimwear / Resort,La Redoute,Non,"86,9",P1 — Fort potentiel,"95,0","30,0","8,0","11,5","11,0","12,0","6,5","5,0","-3,0","86,0","1,0",20,Medium,TRUE,premium_contemporary,OK
+MARRAKSHI LIFE,MARRAKSHI LIFE,Morocco,Swimwear / Resort,Nordstrom,Non,"79,9",P2 — Recommandé,"70,0","27,0","7,0","11,5","10,0","12,0","6,5","5,0","-3,0","81,0","1,0",20,Medium,TRUE,premium_contemporary,OK
+MARRAKSHI LIFE,MARRAKSHI LIFE,Morocco,Swimwear / Resort,Debenhams,Non,"78,8",P2 — Recommandé,"95,0","25,0","7,0","11,5","11,0","12,0","5,5","3,0","-3,0","77,0","1,0",20,Medium,TRUE,premium_contemporary,OK
+MARRAKSHI LIFE,MARRAKSHI LIFE,Morocco,Swimwear / Resort,John Lewis,Non,"76,3",P2 — Recommandé,"65,0","29,0","7,0","8,6","11,0","12,0","6,0","5,0","-6,0","77,6","1,0",20,Medium,TRUE,premium_contemporary,OK
+MARRAKSHI LIFE,MARRAKSHI LIFE,Morocco,Swimwear / Resort,Bloomingdale's,Non,"67,8",P3 — Test / à cadrer,"65,0","25,0","6,0","8,6","10,0","10,0","6,5","3,0","-6,0","68,1","1,0",20,Medium,TRUE,premium_contemporary,OK
+MARRAKSHI LIFE,MARRAKSHI LIFE,Morocco,Swimwear / Resort,Galeries Lafayette,Non,"65,4",P3 — Test / à cadrer,"62,0","22,0","8,0","7,8","10,0","9,0","6,5","3,5","-6,0","65,8","1,0",20,Medium,TRUE,premium_contemporary,OK
+Maria McManus,Maria McManus,USA,Womenswear RTW,Nordstrom,Oui,"80,0",P1 — Fort potentiel,,"27,0","12,0","10,0","9,0","11,0","4,0","4,0","-2,0","80,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Maria McManus,Maria McManus,USA,Womenswear RTW,Bloomingdale's,Non,"76,1",P2 — Recommandé,"72,0","28,0","12,0","9,5","9,0","12,0","4,0","2,0","-5,0","76,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Maria McManus,Maria McManus,USA,Womenswear RTW,John Lewis,Non,"73,8",P2 — Recommandé,"72,0","25,0","9,0","9,5","10,0","11,0","5,5","4,0","-5,0","74,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Maria McManus,Maria McManus,USA,Womenswear RTW,La Redoute,Non,"69,7",P3 — Test / à cadrer,"62,0","27,0","8,0","10,5","10,0","8,0","6,0","4,0","-8,0","70,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Maria McManus,Maria McManus,USA,Womenswear RTW,Debenhams,Non,"67,8",P3 — Test / à cadrer,"62,0","28,0","10,0","10,5","10,0","8,0","5,0","2,0","-10,0","68,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Maria McManus,Maria McManus,USA,Womenswear RTW,Galeries Lafayette,Non,"65,7",P3 — Test / à cadrer,"72,0","30,0","8,0","5,5","9,0","12,0","6,0","2,5","-13,0","65,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Marla Aaron,Marla Aaron,Other,Fine Jewelry,John Lewis,Non,"76,1",P2 — Recommandé,"63,0","29,0","6,0","13,1","9,0","12,0","5,5","1,0","-3,0","77,6","10,0",11,Low,FALSE,luxury_premium,Données enrichies absentes du CSV; complétées par recherche web
+Marla Aaron,Marla Aaron,Other,Fine Jewelry,Bloomingdale's,Oui,"72,1",P2 — Recommandé,,"30,0","6,0","13,1","6,0","12,0","6,0","1,0","-7,0","72,1","10,0",11,Low,FALSE,luxury_premium,Données enrichies absentes du CSV; complétées par recherche web
+Marla Aaron,Marla Aaron,Other,Fine Jewelry,Nordstrom,Oui,"70,9",P2 — Recommandé,,"28,0","7,0","13,9","6,0","11,0","6,0","1,0","-7,0","70,9","10,0",11,Low,FALSE,luxury_premium,Données enrichies absentes du CSV; complétées par recherche web
+Marla Aaron,Marla Aaron,Other,Fine Jewelry,Galeries Lafayette,Non,"68,3",P3 — Test / à cadrer,"63,0","25,0","6,0","10,9","8,0","12,0","6,0","1,0","-5,0","68,9","10,0",11,Low,FALSE,luxury_premium,Données enrichies absentes du CSV; complétées par recherche web
+Marla Aaron,Marla Aaron,Other,Fine Jewelry,La Redoute,Non,"66,4",P3 — Test / à cadrer,"75,0","30,0","6,0","14,4","9,0","9,0","6,0","1,0","-15,0","65,4","10,0",11,Low,FALSE,luxury_premium,Données enrichies absentes du CSV; complétées par recherche web
+Marla Aaron,Marla Aaron,Other,Fine Jewelry,Debenhams,Non,"57,4",Watchlist — faible fit,"75,0","24,0","6,0","14,4","9,0","7,0","5,0","1,0","-16,0","55,4","10,0",11,Low,FALSE,luxury_premium,Données enrichies absentes du CSV; complétées par recherche web
+Marlo Laz,Marlo Laz,USA,Fine Jewelry,Nordstrom,Oui,"77,0",P2 — Recommandé,,"28,0","12,0","10,0","9,0","11,0","3,0","1,0","-2,0","77,0","2,0",5,Medium,FALSE,luxury_premium,OK
+Marlo Laz,Marlo Laz,USA,Fine Jewelry,Bloomingdale's,Oui,"76,5",P2 — Recommandé,,"30,0","12,0","9,5","9,0","12,0","3,0","1,0","-5,0","76,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Marlo Laz,Marlo Laz,USA,Fine Jewelry,John Lewis,Non,"64,8",P3 — Test / à cadrer,"72,0","19,0","9,0","9,5","10,0","11,0","4,5","1,0","-5,0","64,0","2,0",5,Medium,FALSE,luxury_premium,OK
+Marlo Laz,Marlo Laz,USA,Fine Jewelry,Galeries Lafayette,Non,"59,0",Watchlist — faible fit,"72,0","25,0","8,0","5,5","9,0","12,0","5,0","1,0","-13,0","57,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Marlo Laz,Marlo Laz,USA,Fine Jewelry,La Redoute,Non,"46,7",Watchlist — faible fit,"57,0","16,0","8,0","10,5","10,0","8,0","5,0","1,0","-18,0","45,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Marlo Laz,Marlo Laz,USA,Fine Jewelry,Debenhams,Non,"46,7",Watchlist — faible fit,"57,0","18,0","10,0","10,5","10,0","7,0","4,0","1,0","-20,0","45,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Marta Ferri,Marta Ferri,Italy,Swimwear / Resort,La Redoute,Non,"88,0",P1 — Fort potentiel,"95,0","27,0","11,0","11,2","11,0","12,0","5,0","5,0","0,0","87,2","2,0",10,Medium,TRUE,premium_contemporary,OK
+Marta Ferri,Marta Ferri,Italy,Swimwear / Resort,Nordstrom,Non,"87,3",P1 — Fort potentiel,"92,0","27,0","10,0","10,8","10,0","12,0","7,0","5,0","0,0","86,8","2,0",10,Medium,TRUE,premium_contemporary,OK
+Marta Ferri,Marta Ferri,Italy,Swimwear / Resort,Debenhams,Non,"87,1",P1 — Fort potentiel,"95,0","28,0","10,0","11,2","11,0","12,0","6,0","3,0","0,0","86,2","2,0",10,Medium,TRUE,premium_contemporary,OK
+Marta Ferri,Marta Ferri,Italy,Swimwear / Resort,John Lewis,Non,"80,3",P1 — Fort potentiel,"77,0","25,0","10,0","10,2","11,0","11,0","6,5","5,0","-3,0","80,7","2,0",10,Medium,TRUE,premium_contemporary,OK
+Marta Ferri,Marta Ferri,Italy,Swimwear / Resort,Bloomingdale's,Non,"79,9",P2 — Recommandé,"77,0","28,0","10,0","10,2","10,0","10,0","7,0","3,0","-3,0","80,2","2,0",10,Medium,TRUE,premium_contemporary,OK
+Marta Ferri,Marta Ferri,Italy,Swimwear / Resort,Galeries Lafayette,Non,"74,2",P2 — Recommandé,"72,0","30,0","12,0","7,0","10,0","10,0","5,0","3,5","-8,0","74,5","2,0",10,Medium,TRUE,premium_contemporary,OK
+Martha Calvo,Martha Calvo,USA,Fine Jewelry,Nordstrom,Oui,"77,0",P2 — Recommandé,,"28,0","12,0","10,0","9,0","11,0","3,0","1,0","-2,0","77,0","2,0",5,Medium,FALSE,luxury_premium,OK
+Martha Calvo,Martha Calvo,USA,Fine Jewelry,Bloomingdale's,Oui,"76,5",P2 — Recommandé,,"30,0","12,0","9,5","9,0","12,0","3,0","1,0","-5,0","76,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Martha Calvo,Martha Calvo,USA,Fine Jewelry,John Lewis,Non,"64,8",P3 — Test / à cadrer,"72,0","19,0","9,0","9,5","10,0","11,0","4,5","1,0","-5,0","64,0","2,0",5,Medium,FALSE,luxury_premium,OK
+Martha Calvo,Martha Calvo,USA,Fine Jewelry,Galeries Lafayette,Non,"59,0",Watchlist — faible fit,"72,0","25,0","8,0","5,5","9,0","12,0","5,0","1,0","-13,0","57,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Martha Calvo,Martha Calvo,USA,Fine Jewelry,La Redoute,Non,"46,7",Watchlist — faible fit,"57,0","16,0","8,0","10,5","10,0","8,0","5,0","1,0","-18,0","45,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Martha Calvo,Martha Calvo,USA,Fine Jewelry,Debenhams,Non,"46,7",Watchlist — faible fit,"57,0","18,0","10,0","10,5","10,0","7,0","4,0","1,0","-20,0","45,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Mary Katrantzou,Mary Katrantzou,UK,Womenswear RTW,Galeries Lafayette,Oui,"87,0",P1 — Fort potentiel,,"30,0","11,0","12,0","11,0","12,0","5,0","1,0","0,0","87,0","10,0",25,High,FALSE,luxury_premium,OK
+Mary Katrantzou,Mary Katrantzou,UK,Womenswear RTW,Bloomingdale's,Oui,"85,3",P1 — Fort potentiel,,"28,0","9,0","14,3","11,0","12,0","5,0","1,0","0,0","85,3","10,0",25,High,FALSE,luxury_premium,OK
+Mary Katrantzou,Mary Katrantzou,UK,Womenswear RTW,Nordstrom,Non,"84,5",P1 — Fort potentiel,"80,0","27,0","10,0","15,0","11,0","11,0","5,0","1,0","0,0","85,0","10,0",25,High,FALSE,luxury_premium,OK
+Mary Katrantzou,Mary Katrantzou,UK,Womenswear RTW,John Lewis,Oui,"82,3",P1 — Fort potentiel,,"25,0","12,0","14,3","11,0","11,0","3,0","1,0","0,0","82,3","10,0",25,High,FALSE,luxury_premium,OK
+Mary Katrantzou,Mary Katrantzou,UK,Womenswear RTW,La Redoute,Non,"72,2",P2 — Recommandé,"65,0","27,0","10,0","15,0","11,0","8,0","5,0","1,0","-9,0","73,0","10,0",25,High,FALSE,luxury_premium,OK
+Mary Katrantzou,Mary Katrantzou,UK,Womenswear RTW,Debenhams,Non,"71,3",P2 — Recommandé,"65,0","28,0","12,0","15,0","11,0","8,0","3,0","1,0","-11,0","72,0","10,0",25,High,FALSE,luxury_premium,OK
+Marysia,Marysia,USA,Swimwear / Resort,Nordstrom,Oui,"88,0",P1 — Fort potentiel,,"27,0","12,0","15,0","10,0","11,0","4,0","4,0","0,0","88,0","10,0",25,High,TRUE,luxury_premium,OK
+Marysia,Marysia,USA,Swimwear / Resort,Bloomingdale's,Oui,"84,3",P1 — Fort potentiel,,"25,0","12,0","14,3","10,0","12,0","4,0","2,0","0,0","84,3","10,0",25,High,TRUE,luxury_premium,OK
+Marysia,Marysia,USA,Swimwear / Resort,La Redoute,Non,"82,9",P1 — Fort potentiel,"100,0","26,0","8,0","15,0","10,0","9,0","6,0","4,0","-2,0","81,0","10,0",25,High,TRUE,luxury_premium,OK
+Marysia,Marysia,USA,Swimwear / Resort,John Lewis,Non,"80,4",P1 — Fort potentiel,"95,0","20,0","9,0","14,3","10,0","11,0","5,5","4,0","0,0","78,8","10,0",25,High,TRUE,luxury_premium,OK
+Marysia,Marysia,USA,Swimwear / Resort,Debenhams,Non,"79,3",P2 — Recommandé,"100,0","25,0","10,0","15,0","10,0","8,0","5,0","2,0","-3,0","77,0","10,0",25,High,TRUE,luxury_premium,OK
+Marysia,Marysia,USA,Swimwear / Resort,Galeries Lafayette,Non,"78,5",P2 — Recommandé,"87,0","22,0","8,0","12,0","10,0","12,0","6,0","2,5","0,0","77,5","10,0",25,High,TRUE,luxury_premium,OK
+Matteo (Matteo LA),Matteo,USA,Home / Lifestyle,La Redoute,Non,"80,5",P1 — Fort potentiel,"95,0","30,0","8,0","12,9","10,0","9,0","5,0","1,0","-2,0","78,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Matteo (Matteo LA),Matteo,USA,Home / Lifestyle,John Lewis,Non,"79,4",P2 — Recommandé,"57,0","29,0","9,0","11,4","10,0","12,0","4,5","1,0","0,0","81,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Matteo (Matteo LA),Matteo,USA,Home / Lifestyle,Debenhams,Non,"73,3",P2 — Recommandé,"95,0","24,0","10,0","12,9","10,0","7,0","4,0","1,0","-3,0","70,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Matteo (Matteo LA),Matteo,USA,Home / Lifestyle,Nordstrom,Oui,"66,4",P3 — Test / à cadrer,"57,0","14,0","12,0","12,4","9,0","11,0","3,0","1,0","0,0","67,4","5,0",11,Medium,FALSE,luxury_premium,OK
+Matteo (Matteo LA),Matteo,USA,Home / Lifestyle,Bloomingdale's,Oui,"64,6",P3 — Test / à cadrer,"57,0","12,0","12,0","11,4","9,0","12,0","3,0","1,0","0,0","65,4","5,0",11,Medium,FALSE,luxury_premium,OK
+Matteo (Matteo LA),Matteo,USA,Home / Lifestyle,Galeries Lafayette,Non,"62,3",P3 — Test / à cadrer,"42,0","20,0","8,0","9,5","9,0","12,0","5,0","1,0","-5,0","64,5","5,0",11,Medium,FALSE,luxury_premium,OK
+Maygel Coronel,Maygel Coronel,Colombia,Swimwear / Resort,Nordstrom,Oui,"84,5",P1 — Fort potentiel,,"27,0","10,0","12,5","9,0","11,0","5,0","5,0","0,0","84,5","3,0",20,Medium,TRUE,luxury_premium,OK
+Maygel Coronel,Maygel Coronel,Colombia,Swimwear / Resort,La Redoute,Non,"79,8",P2 — Recommandé,"100,0","26,0","7,0","12,5","10,0","9,0","5,0","5,0","-2,0","77,5","3,0",20,Medium,TRUE,luxury_premium,OK
+Maygel Coronel,Maygel Coronel,Colombia,Swimwear / Resort,Bloomingdale's,Oui,"79,6",P2 — Recommandé,,"25,0","9,0","11,6","9,0","12,0","5,0","3,0","0,0","79,6","3,0",20,Medium,TRUE,luxury_premium,OK
+Maygel Coronel,Maygel Coronel,Colombia,Swimwear / Resort,Debenhams,Non,"74,4",P2 — Recommandé,"100,0","25,0","7,0","12,5","10,0","8,0","4,0","3,0","-3,0","71,5","3,0",20,Medium,TRUE,luxury_premium,OK
+Maygel Coronel,Maygel Coronel,Colombia,Swimwear / Resort,John Lewis,Non,"74,2",P2 — Recommandé,"75,0","20,0","7,0","11,6","10,0","11,0","4,5","5,0","0,0","74,1","3,0",20,Medium,TRUE,luxury_premium,OK
+Maygel Coronel,Maygel Coronel,Colombia,Swimwear / Resort,Galeries Lafayette,Non,"69,9",P3 — Test / à cadrer,"62,0","22,0","7,0","10,3","9,0","12,0","5,0","3,5","-3,0","70,8","3,0",20,Medium,TRUE,luxury_premium,OK
+Melissa Joy Manning,Melissa Joy Manning,USA,Fine Jewelry,Bloomingdale's,Oui,"82,8",P1 — Fort potentiel,,"30,0","12,0","10,8","8,0","12,0","3,0","2,0","0,0","82,8","3,0",11,Medium,TRUE,luxury_premium,OK
+Melissa Joy Manning,Melissa Joy Manning,USA,Fine Jewelry,Nordstrom,Oui,"82,4",P1 — Fort potentiel,,"28,0","12,0","11,4","8,0","11,0","3,0","4,0","0,0","82,4","3,0",11,Medium,TRUE,luxury_premium,OK
+Melissa Joy Manning,Melissa Joy Manning,USA,Fine Jewelry,John Lewis,Non,"72,9",P2 — Recommandé,"87,0","19,0","9,0","10,8","8,0","11,0","4,5","4,0","0,0","71,3","3,0",11,Medium,TRUE,luxury_premium,OK
+Melissa Joy Manning,Melissa Joy Manning,USA,Fine Jewelry,Galeries Lafayette,Non,"67,5",P3 — Test / à cadrer,"72,0","25,0","8,0","9,5","8,0","12,0","5,0","2,5","-8,0","67,0","3,0",11,Medium,TRUE,luxury_premium,OK
+Melissa Joy Manning,Melissa Joy Manning,USA,Fine Jewelry,La Redoute,Non,"50,1",Watchlist — faible fit,"70,0","16,0","8,0","11,9","8,0","8,0","5,0","4,0","-18,0","47,9","3,0",11,Medium,TRUE,luxury_premium,OK
+Melissa Joy Manning,Melissa Joy Manning,USA,Fine Jewelry,Debenhams,Non,"48,3",Watchlist — faible fit,"70,0","18,0","10,0","11,9","8,0","7,0","4,0","2,0","-20,0","45,9","3,0",11,Medium,TRUE,luxury_premium,OK
+Mizuki,Mizuki,USA,Fine Jewelry,Nordstrom,Oui,"77,0",P2 — Recommandé,,"28,0","12,0","10,0","9,0","11,0","3,0","1,0","-2,0","77,0","2,0",5,Medium,FALSE,luxury_premium,OK
+Mizuki,Mizuki,USA,Fine Jewelry,Bloomingdale's,Oui,"76,5",P2 — Recommandé,,"30,0","12,0","9,5","9,0","12,0","3,0","1,0","-5,0","76,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Mizuki,Mizuki,USA,Fine Jewelry,John Lewis,Non,"64,8",P3 — Test / à cadrer,"72,0","19,0","9,0","9,5","10,0","11,0","4,5","1,0","-5,0","64,0","2,0",5,Medium,FALSE,luxury_premium,OK
+Mizuki,Mizuki,USA,Fine Jewelry,Galeries Lafayette,Non,"59,0",Watchlist — faible fit,"72,0","25,0","8,0","5,5","9,0","12,0","5,0","1,0","-13,0","57,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Mizuki,Mizuki,USA,Fine Jewelry,La Redoute,Non,"46,7",Watchlist — faible fit,"57,0","16,0","8,0","10,5","10,0","8,0","5,0","1,0","-18,0","45,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Mizuki,Mizuki,USA,Fine Jewelry,Debenhams,Non,"46,7",Watchlist — faible fit,"57,0","18,0","10,0","10,5","10,0","7,0","4,0","1,0","-20,0","45,5","2,0",5,Medium,FALSE,luxury_premium,OK
+Mothers Day (Agua by Agua Bendita),Mothers Day,Colombia,Swimwear / Resort,Nordstrom,Non,"93,7",P1 — Fort potentiel,"100,0","27,0","11,0","15,0","11,0","11,0","8,0","5,0","0,0","93,0","10,0",50,High,TRUE,luxury_premium,OK
+Mothers Day (Agua by Agua Bendita),Mothers Day,Colombia,Swimwear / Resort,Bloomingdale's,Non,"89,0",P1 — Fort potentiel,"95,0","25,0","10,0","14,3","11,0","12,0","8,0","3,0","0,0","88,3","10,0",50,High,TRUE,luxury_premium,OK
+Mothers Day (Agua by Agua Bendita),Mothers Day,Colombia,Swimwear / Resort,La Redoute,Non,"86,5",P1 — Fort potentiel,"100,0","26,0","8,0","15,0","11,0","9,0","8,0","5,0","-2,0","85,0","10,0",50,High,TRUE,luxury_premium,OK
+Mothers Day (Agua by Agua Bendita),Mothers Day,Colombia,Swimwear / Resort,Galeries Lafayette,Non,"81,7",P1 — Fort potentiel,"75,0","22,0","8,0","12,9","11,0","12,0","8,0","3,5","0,0","82,4","10,0",50,High,TRUE,luxury_premium,OK
+Mothers Day (Agua by Agua Bendita),Mothers Day,Colombia,Swimwear / Resort,John Lewis,Non,"81,6",P1 — Fort potentiel,"80,0","20,0","8,0","14,3","11,0","11,0","7,5","5,0","0,0","81,8","10,0",50,High,TRUE,luxury_premium,OK
+Mothers Day (Agua by Agua Bendita),Mothers Day,Colombia,Swimwear / Resort,Debenhams,Non,"81,1",P1 — Fort potentiel,"100,0","25,0","8,0","15,0","11,0","8,0","7,0","3,0","-3,0","79,0","10,0",50,High,TRUE,luxury_premium,OK
+Nili Lotan,Nili Lotan,USA,Womenswear RTW,John Lewis,Non,"90,0",P1 — Fort potentiel,"95,0","29,0","9,0","15,0","13,0","12,0","5,5","1,0","0,0","89,5","20,0",50,High,FALSE,luxury_premium,OK
+Nili Lotan,Nili Lotan,USA,Womenswear RTW,Galeries Lafayette,Non,"89,1",P1 — Fort potentiel,"90,0","30,0","8,0","15,0","12,0","12,0","6,0","1,0","0,0","89,0","20,0",50,High,FALSE,luxury_premium,OK
+Nili Lotan,Nili Lotan,USA,Womenswear RTW,Bloomingdale's,Oui,"89,0",P1 — Fort potentiel,,"28,0","12,0","15,0","12,0","12,0","4,0","1,0","0,0","89,0","20,0",50,High,FALSE,luxury_premium,OK
+Nili Lotan,Nili Lotan,USA,Womenswear RTW,Nordstrom,Oui,"87,0",P1 — Fort potentiel,,"27,0","12,0","15,0","12,0","11,0","4,0","1,0","0,0","87,0","20,0",50,High,FALSE,luxury_premium,OK
+Nili Lotan,Nili Lotan,USA,Womenswear RTW,La Redoute,Non,"86,0",P1 — Fort potentiel,"95,0","30,0","8,0","15,0","13,0","9,0","6,0","1,0","-2,0","85,0","20,0",50,High,FALSE,luxury_premium,OK
+Nili Lotan,Nili Lotan,USA,Womenswear RTW,Debenhams,Non,"83,3",P1 — Fort potentiel,"95,0","28,0","10,0","15,0","13,0","8,0","5,0","1,0","-3,0","82,0","20,0",50,High,FALSE,luxury_premium,OK
+Olympia Le-Tan,Olympia Le-Tan,France,Accessories / Leather,Nordstrom,Non,"75,1",P2 — Recommandé,"67,0","25,0","10,0","10,0","11,0","11,0","5,0","1,0","-2,0","76,0","2,0",5,High,FALSE,luxury_premium,OK
+Olympia Le-Tan,Olympia Le-Tan,France,Accessories / Leather,Bloomingdale's,Oui,"73,5",P2 — Recommandé,,"25,0","10,0","9,5","11,0","12,0","5,0","1,0","-5,0","73,5","2,0",5,High,FALSE,luxury_premium,OK
+Olympia Le-Tan,Olympia Le-Tan,France,Accessories / Leather,John Lewis,Non,"71,4",P2 — Recommandé,"57,0","26,0","10,0","9,5","11,0","11,0","4,5","1,0","-5,0","73,0","2,0",5,High,FALSE,luxury_premium,OK
+Olympia Le-Tan,Olympia Le-Tan,France,Accessories / Leather,Galeries Lafayette,Oui,"69,5",P3 — Test / à cadrer,,"30,0","12,0","5,5","11,0","12,0","3,0","1,0","-10,0","69,5","2,0",5,High,FALSE,luxury_premium,OK
+Olympia Le-Tan,Olympia Le-Tan,France,Accessories / Leather,La Redoute,Non,"66,8",P3 — Test / à cadrer,"87,0","23,0","12,0","10,5","11,0","8,0","3,0","1,0","-9,0","64,5","2,0",5,High,FALSE,luxury_premium,OK
+Olympia Le-Tan,Olympia Le-Tan,France,Accessories / Leather,Debenhams,Non,"62,6",P3 — Test / à cadrer,"72,0","24,0","10,0","10,5","11,0","7,0","4,0","1,0","-11,0","61,5","2,0",5,High,FALSE,luxury_premium,OK
+Ortovox (Aztech Mountain),Ortovox,USA,Womenswear RTW,Bloomingdale's,Non,"82,0",P1 — Fort potentiel,"87,0","28,0","12,0","11,4","9,0","12,0","4,0","2,0","-2,0","81,4","5,0",11,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Ortovox (Aztech Mountain),Ortovox,USA,Womenswear RTW,Nordstrom,Non,"82,0",P1 — Fort potentiel,"87,0","27,0","12,0","12,4","9,0","12,0","4,0","2,0","-2,0","81,4","5,0",11,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Ortovox (Aztech Mountain),Ortovox,USA,Womenswear RTW,Debenhams,Non,"77,8",P2 — Recommandé,"95,0","28,0","10,0","12,9","10,0","8,0","5,0","2,0","-5,0","75,9","5,0",11,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Ortovox (Aztech Mountain),Ortovox,USA,Womenswear RTW,John Lewis,Oui,"76,9",P2 — Recommandé,,"25,0","9,0","11,4","10,0","11,0","5,5","2,0","-2,0","76,9","5,0",11,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Ortovox (Aztech Mountain),Ortovox,USA,Womenswear RTW,La Redoute,Non,"76,9",P2 — Recommandé,"95,0","27,0","8,0","12,9","10,0","8,0","6,0","2,0","-4,0","74,9","5,0",11,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Ortovox (Aztech Mountain),Ortovox,USA,Womenswear RTW,Galeries Lafayette,Non,"74,2",P2 — Recommandé,"72,0","30,0","8,0","9,5","9,0","12,0","6,0","2,0","-7,0","74,5","5,0",11,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Oseree,Oseree,Italy,Swimwear / Resort,Nordstrom,Oui,"80,4",P1 — Fort potentiel,,"27,0","10,0","12,4","9,0","11,0","5,0","1,0","0,0","80,4","5,0",11,Medium,FALSE,luxury_premium,OK
+Oseree,Oseree,Italy,Swimwear / Resort,Bloomingdale's,Oui,"78,4",P2 — Recommandé,,"25,0","10,0","11,4","9,0","12,0","5,0","1,0","0,0","78,4","5,0",11,Medium,FALSE,luxury_premium,OK
+Oseree,Oseree,Italy,Swimwear / Resort,La Redoute,Non,"77,8",P2 — Recommandé,"95,0","26,0","11,0","12,9","10,0","9,0","3,0","1,0","-2,0","75,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Oseree,Oseree,Italy,Swimwear / Resort,Debenhams,Non,"75,1",P2 — Recommandé,"95,0","25,0","10,0","12,9","10,0","8,0","4,0","1,0","-3,0","72,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Oseree,Oseree,Italy,Swimwear / Resort,John Lewis,Non,"74,3",P2 — Recommandé,"87,0","20,0","10,0","11,4","10,0","11,0","4,5","1,0","0,0","72,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Oseree,Oseree,Italy,Swimwear / Resort,Galeries Lafayette,Non,"68,8",P3 — Test / à cadrer,"72,0","22,0","12,0","9,5","9,0","12,0","3,0","1,0","-5,0","68,5","5,0",11,Medium,FALSE,luxury_premium,OK
+PF24 (Alex Perry),PF24,Australia,Bridal / Occasion,Nordstrom,Non,"84,2",P1 — Fort potentiel,"90,0","27,0","11,0","13,5","8,0","11,0","7,0","1,0","0,0","83,5","5,0",25,Medium,FALSE,luxury_premium,OK
+PF24 (Alex Perry),PF24,Australia,Bridal / Occasion,Bloomingdale's,Non,"83,4",P1 — Fort potentiel,"90,0","28,0","9,0","12,7","8,0","12,0","7,0","1,0","0,0","82,7","5,0",25,Medium,FALSE,luxury_premium,OK
+PF24 (Alex Perry),PF24,Australia,Bridal / Occasion,John Lewis,Non,"79,4",P2 — Recommandé,"90,0","25,0","9,0","12,7","8,0","11,0","6,5","1,0","0,0","78,2","5,0",25,Medium,FALSE,luxury_premium,OK
+PF24 (Alex Perry),PF24,Australia,Bridal / Occasion,Galeries Lafayette,Non,"76,9",P2 — Recommandé,"62,0","30,0","8,0","10,6","8,0","12,0","7,0","1,0","-3,0","78,6","5,0",25,Medium,FALSE,luxury_premium,OK
+PF24 (Alex Perry),PF24,Australia,Bridal / Occasion,Debenhams,Non,"74,8",P2 — Recommandé,"95,0","28,0","10,0","13,5","8,0","8,0","6,0","1,0","-7,0","72,5","5,0",25,Medium,FALSE,luxury_premium,OK
+PF24 (Alex Perry),PF24,Australia,Bridal / Occasion,La Redoute,Non,"73,2",P2 — Recommandé,"80,0","27,0","8,0","13,5","8,0","8,0","7,0","1,0","-5,0","72,5","5,0",25,Medium,FALSE,luxury_premium,OK
+Paris Texas,Paris Texas,Italy,Footwear,Nordstrom,Oui,"85,9",P1 — Fort potentiel,,"30,0","11,0","10,9","11,0","12,0","5,0","1,0","0,0","85,9","3,0",11,High,FALSE,premium_contemporary,OK
+Paris Texas,Paris Texas,Italy,Footwear,John Lewis,Non,"85,0",P1 — Fort potentiel,"87,0","29,0","11,0","10,3","12,0","12,0","4,5","1,0","0,0","84,8","3,0",11,High,FALSE,premium_contemporary,OK
+Paris Texas,Paris Texas,Italy,Footwear,Debenhams,Non,"84,6",P1 — Fort potentiel,"95,0","27,0","11,0","11,4","12,0","12,0","4,0","1,0","0,0","83,4","3,0",11,High,FALSE,premium_contemporary,OK
+Paris Texas,Paris Texas,Italy,Footwear,Bloomingdale's,Oui,"78,3",P2 — Recommandé,,"25,0","11,0","10,3","11,0","10,0","5,0","1,0","0,0","78,3","3,0",11,High,FALSE,premium_contemporary,OK
+Paris Texas,Paris Texas,Italy,Footwear,La Redoute,Non,"77,1",P2 — Recommandé,"65,0","23,0","12,0","11,4","12,0","11,0","3,0","1,0","0,0","78,4","3,0",11,High,FALSE,premium_contemporary,OK
+Paris Texas,Paris Texas,Italy,Footwear,Galeries Lafayette,Non,"75,6",P2 — Recommandé,"72,0","30,0","12,0","9,0","11,0","10,0","3,0","1,0","-5,0","76,0","3,0",11,High,FALSE,premium_contemporary,OK
+R13,R13,USA,Womenswear RTW,Bloomingdale's,Oui,"89,0",P1 — Fort potentiel,,"28,0","12,0","15,0","12,0","12,0","4,0","1,0","0,0","89,0","20,0",50,High,FALSE,luxury_premium,OK
+R13,R13,USA,Womenswear RTW,Nordstrom,Oui,"88,0",P1 — Fort potentiel,,"27,0","12,0","15,0","12,0","12,0","4,0","1,0","0,0","88,0","20,0",50,High,FALSE,luxury_premium,OK
+R13,R13,USA,Womenswear RTW,Galeries Lafayette,Non,"86,1",P1 — Fort potentiel,"60,0","30,0","8,0","15,0","12,0","12,0","6,0","1,0","0,0","89,0","20,0",50,High,FALSE,luxury_premium,OK
+R13,R13,USA,Womenswear RTW,John Lewis,Non,"83,5",P1 — Fort potentiel,"65,0","26,0","9,0","15,0","13,0","11,0","5,5","1,0","0,0","85,5","20,0",50,High,FALSE,luxury_premium,OK
+R13,R13,USA,Womenswear RTW,La Redoute,Non,"83,3",P1 — Fort potentiel,"95,0","27,0","8,0","15,0","13,0","9,0","6,0","1,0","-2,0","82,0","20,0",50,High,FALSE,luxury_premium,OK
+R13,R13,USA,Womenswear RTW,Debenhams,Non,"83,3",P1 — Fort potentiel,"95,0","28,0","10,0","15,0","13,0","8,0","5,0","1,0","-3,0","82,0","20,0",50,High,FALSE,luxury_premium,OK
+Ready to Wear (Elie Saab),Ready to Wear,Other,Womenswear RTW,Galeries Lafayette,Non,"82,1",P1 — Fort potentiel,"65,0","30,0","7,0","15,0","7,0","11,0","8,0","1,0","0,0","84,0","100,0",500,High,FALSE,ultra_luxury,OK
+Ready to Wear (Elie Saab),Ready to Wear,Other,Womenswear RTW,Nordstrom,Non,"81,5",P1 — Fort potentiel,"95,0","27,0","8,0","15,0","7,0","9,0","8,0","1,0","0,0","80,0","100,0",500,High,FALSE,ultra_luxury,OK
+Ready to Wear (Elie Saab),Ready to Wear,Other,Womenswear RTW,Bloomingdale's,Non,"79,4",P2 — Recommandé,"65,0","28,0","7,0","15,0","7,0","10,0","8,0","1,0","0,0","81,0","100,0",500,High,FALSE,ultra_luxury,OK
+Ready to Wear (Elie Saab),Ready to Wear,Other,Womenswear RTW,John Lewis,Non,"77,5",P2 — Recommandé,"95,0","25,0","7,0","15,0","7,0","8,0","7,5","1,0","0,0","75,5","100,0",500,High,FALSE,ultra_luxury,OK
+Ready to Wear (Elie Saab),Ready to Wear,Other,Womenswear RTW,La Redoute,Non,"64,4",P3 — Test / à cadrer,"95,0","27,0","7,0","15,0","7,0","5,0","8,0","1,0","-14,0","61,0","100,0",500,High,FALSE,ultra_luxury,OK
+Ready to Wear (Elie Saab),Ready to Wear,Other,Womenswear RTW,Debenhams,Non,"62,6",P3 — Test / à cadrer,"95,0","28,0","7,0","15,0","7,0","5,0","7,0","1,0","-16,0","59,0","100,0",500,High,FALSE,ultra_luxury,OK
+Retrofete,Retrofete,USA,Womenswear RTW,Nordstrom,Oui,"88,0",P1 — Fort potentiel,,"27,0","12,0","15,0","12,0","12,0","4,0","1,0","0,0","88,0","20,0",25,High,FALSE,premium_contemporary,OK
+Retrofete,Retrofete,USA,Womenswear RTW,Bloomingdale's,Oui,"87,0",P1 — Fort potentiel,,"28,0","12,0","15,0","12,0","10,0","4,0","1,0","0,0","87,0","20,0",25,High,FALSE,premium_contemporary,OK
+Retrofete,Retrofete,USA,Womenswear RTW,Debenhams,Non,"86,6",P1 — Fort potentiel,"65,0","28,0","10,0","15,0","13,0","12,0","5,0","1,0","0,0","89,0","20,0",25,High,FALSE,premium_contemporary,OK
+Retrofete,Retrofete,USA,Womenswear RTW,John Lewis,Non,"85,5",P1 — Fort potentiel,"95,0","25,0","9,0","15,0","13,0","11,0","5,5","1,0","0,0","84,5","20,0",25,High,FALSE,premium_contemporary,OK
+Retrofete,Retrofete,USA,Womenswear RTW,Galeries Lafayette,Non,"85,3",P1 — Fort potentiel,"87,0","30,0","8,0","14,1","12,0","9,0","6,0","1,0","0,0","85,1","20,0",25,High,FALSE,premium_contemporary,OK
+Retrofete,Retrofete,USA,Womenswear RTW,La Redoute,Non,"83,9",P1 — Fort potentiel,"65,0","27,0","8,0","15,0","13,0","11,0","6,0","1,0","0,0","86,0","20,0",25,High,FALSE,premium_contemporary,OK
+Robinson Pelham,Robinson Pelham,UK,Fine Jewelry,Bloomingdale's,Non,"83,1",P1 — Fort potentiel,"72,0","30,0","9,0","11,3","10,0","12,0","6,0","1,0","0,0","84,3","5,0",10,Medium,FALSE,luxury_premium,OK
+Robinson Pelham,Robinson Pelham,UK,Fine Jewelry,Nordstrom,Non,"82,1",P1 — Fort potentiel,"72,0","28,0","10,0","12,2","10,0","11,0","6,0","1,0","0,0","83,2","5,0",10,Medium,FALSE,luxury_premium,OK
+Robinson Pelham,Robinson Pelham,UK,Fine Jewelry,Galeries Lafayette,Non,"74,2",P2 — Recommandé,"72,0","25,0","11,0","9,5","10,0","12,0","6,0","1,0","-5,0","74,5","5,0",10,Medium,FALSE,luxury_premium,OK
+Robinson Pelham,Robinson Pelham,UK,Fine Jewelry,John Lewis,Oui,"73,3",P2 — Recommandé,,"19,0","12,0","11,3","10,0","11,0","4,0","1,0","0,0","73,3","5,0",10,Medium,FALSE,luxury_premium,OK
+Robinson Pelham,Robinson Pelham,UK,Fine Jewelry,La Redoute,Non,"54,9",Watchlist — faible fit,"65,0","16,0","10,0","12,8","10,0","8,0","6,0","1,0","-15,0","53,8","5,0",10,Medium,FALSE,luxury_premium,OK
+Robinson Pelham,Robinson Pelham,UK,Fine Jewelry,Debenhams,Non,"54,0",Watchlist — faible fit,"65,0","18,0","12,0","12,8","10,0","7,0","4,0","1,0","-17,0","52,8","5,0",10,Medium,FALSE,luxury_premium,OK
+Rodarte,Rodarte,USA,Womenswear RTW,Bloomingdale's,Oui,"84,3",P1 — Fort potentiel,,"28,0","12,0","14,3","10,0","10,0","4,0","1,0","0,0","84,3","10,0",25,High,FALSE,ultra_luxury,OK
+Rodarte,Rodarte,USA,Womenswear RTW,Galeries Lafayette,Non,"83,4",P1 — Fort potentiel,"87,0","30,0","8,0","12,0","10,0","11,0","6,0","1,0","0,0","83,0","10,0",25,High,FALSE,ultra_luxury,OK
+Rodarte,Rodarte,USA,Womenswear RTW,Nordstrom,Oui,"83,0",P1 — Fort potentiel,,"27,0","12,0","15,0","10,0","9,0","4,0","1,0","0,0","83,0","10,0",25,High,FALSE,ultra_luxury,OK
+Rodarte,Rodarte,USA,Womenswear RTW,John Lewis,Non,"79,5",P2 — Recommandé,"95,0","25,0","9,0","14,3","10,0","8,0","5,5","1,0","0,0","77,8","10,0",25,High,FALSE,ultra_luxury,OK
+Rodarte,Rodarte,USA,Womenswear RTW,La Redoute,Non,"66,2",P3 — Test / à cadrer,"95,0","27,0","8,0","15,0","10,0","5,0","6,0","1,0","-14,0","63,0","10,0",25,High,FALSE,ultra_luxury,OK
+Rodarte,Rodarte,USA,Womenswear RTW,Debenhams,Non,"66,2",P3 — Test / à cadrer,"95,0","28,0","10,0","15,0","10,0","5,0","5,0","1,0","-16,0","63,0","10,0",25,High,FALSE,ultra_luxury,OK
+Rosie Assoulin,Rosie Assoulin,USA,Womenswear RTW,Bloomingdale's,Oui,"80,4",P1 — Fort potentiel,,"28,0","12,0","11,4","8,0","12,0","3,0","1,0","0,0","80,4","5,0",11,Medium,FALSE,luxury_premium,OK
+Rosie Assoulin,Rosie Assoulin,USA,Womenswear RTW,Nordstrom,Oui,"79,4",P2 — Recommandé,,"27,0","12,0","12,4","8,0","11,0","3,0","1,0","0,0","79,4","5,0",11,Medium,FALSE,luxury_premium,OK
+Rosie Assoulin,Rosie Assoulin,USA,Womenswear RTW,John Lewis,Non,"76,1",P2 — Recommandé,"87,0","25,0","9,0","11,4","8,0","11,0","4,5","1,0","0,0","74,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Rosie Assoulin,Rosie Assoulin,USA,Womenswear RTW,Galeries Lafayette,Non,"73,4",P2 — Recommandé,"72,0","30,0","8,0","9,5","8,0","12,0","5,0","1,0","-5,0","73,5","5,0",11,Medium,FALSE,luxury_premium,OK
+Rosie Assoulin,Rosie Assoulin,USA,Womenswear RTW,La Redoute,Non,"69,4",P3 — Test / à cadrer,"65,0","27,0","8,0","12,9","8,0","8,0","5,0","1,0","-5,0","69,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Rosie Assoulin,Rosie Assoulin,USA,Womenswear RTW,Debenhams,Non,"69,4",P3 — Test / à cadrer,"65,0","28,0","10,0","12,9","8,0","8,0","4,0","1,0","-7,0","69,9","5,0",11,Medium,FALSE,luxury_premium,OK
+Ruslan Baginskiy,Ruslan Baginskiy,Other,Accessories / Leather,Galeries Lafayette,Oui,"72,3",P2 — Recommandé,,"30,0","6,0","10,3","7,0","12,0","4,0","1,0","-3,0","72,3","5,0",20,Low,FALSE,luxury_premium,OK
+Ruslan Baginskiy,Ruslan Baginskiy,Other,Accessories / Leather,John Lewis,Non,"70,2",P2 — Recommandé,"48,0","26,0","6,0","12,2","8,0","11,0","3,5","1,0","0,0","72,7","5,0",20,Low,FALSE,luxury_premium,OK
+Ruslan Baginskiy,Ruslan Baginskiy,Other,Accessories / Leather,Nordstrom,Oui,"67,5",P3 — Test / à cadrer,,"25,0","7,0","13,5","5,0","11,0","4,0","1,0","-4,0","67,5","5,0",20,Low,FALSE,luxury_premium,OK
+Ruslan Baginskiy,Ruslan Baginskiy,Other,Accessories / Leather,Bloomingdale's,Oui,"66,2",P3 — Test / à cadrer,,"25,0","6,0","12,2","5,0","12,0","4,0","1,0","-4,0","66,2","5,0",20,Low,FALSE,luxury_premium,OK
+Ruslan Baginskiy,Ruslan Baginskiy,Other,Accessories / Leather,La Redoute,Non,"63,6",P3 — Test / à cadrer,"65,0","23,0","6,0","13,5","8,0","8,0","4,0","1,0","-5,0","63,5","5,0",20,Low,FALSE,luxury_premium,OK
+Ruslan Baginskiy,Ruslan Baginskiy,Other,Accessories / Leather,Debenhams,Non,"61,0",P3 — Test / à cadrer,"65,0","24,0","6,0","13,5","8,0","7,0","3,0","1,0","-7,0","60,5","5,0",20,Low,FALSE,luxury_premium,OK
+S.S. Daley,S.S. Daley,UK,Womenswear RTW,Nordstrom,Non,"77,8",P2 — Recommandé,"72,0","27,0","10,0","10,4","7,0","11,0","6,0","2,0","0,0","78,4","2,0",11,Medium,FALSE,luxury_premium,OK
+S.S. Daley,S.S. Daley,UK,Womenswear RTW,Bloomingdale's,Non,"74,4",P2 — Recommandé,"62,0","28,0","9,0","9,8","7,0","12,0","6,0","2,0","-3,0","75,8","2,0",11,Medium,FALSE,luxury_premium,OK
+S.S. Daley,S.S. Daley,UK,Womenswear RTW,John Lewis,Oui,"72,8",P2 — Recommandé,,"25,0","12,0","9,8","7,0","11,0","4,0","2,0","-3,0","72,8","2,0",11,Medium,FALSE,luxury_premium,OK
+S.S. Daley,S.S. Daley,UK,Womenswear RTW,Galeries Lafayette,Non,"71,6",P2 — Recommandé,"72,0","30,0","11,0","6,5","7,0","12,0","6,0","2,0","-8,0","71,5","2,0",11,Medium,FALSE,luxury_premium,OK
+S.S. Daley,S.S. Daley,UK,Womenswear RTW,La Redoute,Non,"69,8",P3 — Test / à cadrer,"60,0","27,0","10,0","10,9","7,0","8,0","6,0","2,0","-5,0","70,9","2,0",11,Medium,FALSE,luxury_premium,OK
+S.S. Daley,S.S. Daley,UK,Womenswear RTW,Debenhams,Non,"68,9",P3 — Test / à cadrer,"60,0","28,0","12,0","10,9","7,0","8,0","4,0","2,0","-7,0","69,9","2,0",11,Medium,FALSE,luxury_premium,OK
+SASUPHI,SASUPHI,Italy,Footwear,Nordstrom,Non,"83,4",P1 — Fort potentiel,"82,0","30,0","11,0","9,5","11,0","11,0","7,0","1,0","-2,0","83,5","2,0",5,High,FALSE,luxury_premium,OK
+SASUPHI,SASUPHI,Italy,Footwear,John Lewis,Non,"79,7",P2 — Recommandé,"72,0","29,0","11,0","9,0","12,0","12,0","6,5","1,0","-5,0","80,5","2,0",5,High,FALSE,luxury_premium,OK
+SASUPHI,SASUPHI,Italy,Footwear,Bloomingdale's,Non,"78,3",P2 — Recommandé,"72,0","28,0","11,0","9,0","11,0","12,0","7,0","1,0","-5,0","79,0","2,0",5,High,FALSE,luxury_premium,OK
+SASUPHI,SASUPHI,Italy,Footwear,Debenhams,Non,"75,3",P2 — Recommandé,"87,0","28,0","11,0","10,0","12,0","8,0","6,0","1,0","-7,0","74,0","2,0",5,High,FALSE,luxury_premium,OK
+SASUPHI,SASUPHI,Italy,Footwear,La Redoute,Non,"73,2",P2 — Recommandé,"57,0","27,0","12,0","10,0","12,0","8,0","5,0","1,0","-5,0","75,0","2,0",5,High,FALSE,luxury_premium,OK
+SASUPHI,SASUPHI,Italy,Footwear,Galeries Lafayette,Non,"71,1",P2 — Recommandé,"72,0","30,0","12,0","5,0","11,0","12,0","5,0","1,0","-10,0","71,0","2,0",5,High,FALSE,luxury_premium,OK
+SENSI STUDIO,SENSI STUDIO,Other,Swimwear / Resort,Nordstrom,Oui,"81,5",P1 — Fort potentiel,,"27,0","7,0","12,5","9,0","11,0","5,0","5,0","0,0","81,5","3,0",20,Medium,TRUE,luxury_premium,OK
+SENSI STUDIO,SENSI STUDIO,Other,Swimwear / Resort,John Lewis,Non,"80,2",P1 — Fort potentiel,"90,0","26,0","6,0","11,6","10,0","11,0","4,5","5,0","0,0","79,1","3,0",20,Medium,TRUE,luxury_premium,OK
+SENSI STUDIO,SENSI STUDIO,Other,Swimwear / Resort,La Redoute,Non,"78,4",P2 — Recommandé,"95,0","26,0","6,0","12,5","10,0","9,0","5,0","5,0","-2,0","76,5","3,0",20,Medium,TRUE,luxury_premium,OK
+SENSI STUDIO,SENSI STUDIO,Other,Swimwear / Resort,Galeries Lafayette,Non,"77,7",P2 — Recommandé,"77,0","30,0","6,0","10,3","9,0","12,0","5,0","3,5","-3,0","77,8","3,0",20,Medium,TRUE,luxury_premium,OK
+SENSI STUDIO,SENSI STUDIO,Other,Swimwear / Resort,Bloomingdale's,Oui,"76,6",P2 — Recommandé,,"25,0","6,0","11,6","9,0","12,0","5,0","3,0","0,0","76,6","3,0",20,Medium,TRUE,luxury_premium,OK
+SENSI STUDIO,SENSI STUDIO,Other,Swimwear / Resort,Debenhams,Non,"73,0",P2 — Recommandé,"95,0","25,0","6,0","12,5","10,0","8,0","4,0","3,0","-3,0","70,5","3,0",20,Medium,TRUE,luxury_premium,OK
+SOPHIE BUHAI,SOPHIE BUHAI,USA,Fine Jewelry,Nordstrom,Oui,"77,0",P2 — Recommandé,,"28,0","12,0","10,0","9,0","11,0","3,0","1,0","-2,0","77,0","2,0",5,Medium,FALSE,luxury_premium,OK
+SOPHIE BUHAI,SOPHIE BUHAI,USA,Fine Jewelry,Bloomingdale's,Oui,"76,5",P2 — Recommandé,,"30,0","12,0","9,5","9,0","12,0","3,0","1,0","-5,0","76,5","2,0",5,Medium,FALSE,luxury_premium,OK
+SOPHIE BUHAI,SOPHIE BUHAI,USA,Fine Jewelry,John Lewis,Non,"71,1",P2 — Recommandé,"72,0","26,0","9,0","9,5","10,0","11,0","4,5","1,0","-5,0","71,0","2,0",5,Medium,FALSE,luxury_premium,OK
+SOPHIE BUHAI,SOPHIE BUHAI,USA,Fine Jewelry,Galeries Lafayette,Non,"63,5",P3 — Test / à cadrer,"72,0","30,0","8,0","5,5","9,0","12,0","5,0","1,0","-13,0","62,5","2,0",5,Medium,FALSE,luxury_premium,OK
+SOPHIE BUHAI,SOPHIE BUHAI,USA,Fine Jewelry,La Redoute,Non,"53,0",Watchlist — faible fit,"57,0","23,0","8,0","10,5","10,0","8,0","5,0","1,0","-18,0","52,5","2,0",5,Medium,FALSE,luxury_premium,OK
+SOPHIE BUHAI,SOPHIE BUHAI,USA,Fine Jewelry,Debenhams,Non,"52,1",Watchlist — faible fit,"57,0","24,0","10,0","10,5","10,0","7,0","4,0","1,0","-20,0","51,5","2,0",5,Medium,FALSE,luxury_premium,OK
+STONE AND STRAND,STONE AND STRAND,USA,Fine Jewelry,Nordstrom,Oui,"83,2",P1 — Fort potentiel,"90,0","28,0","12,0","13,5","9,0","11,0","3,0","1,0","0,0","82,5","5,0",25,Medium,FALSE,luxury_premium,OK
+STONE AND STRAND,STONE AND STRAND,USA,Fine Jewelry,Bloomingdale's,Oui,"81,7",P1 — Fort potentiel,,"30,0","12,0","12,7","9,0","12,0","3,0","1,0","-3,0","81,7","5,0",25,Medium,FALSE,luxury_premium,OK
+STONE AND STRAND,STONE AND STRAND,USA,Fine Jewelry,John Lewis,Non,"76,7",P2 — Recommandé,"90,0","22,0","9,0","12,7","10,0","11,0","4,5","1,0","0,0","75,2","5,0",25,Medium,FALSE,luxury_premium,OK
+STONE AND STRAND,STONE AND STRAND,USA,Fine Jewelry,Galeries Lafayette,Non,"70,3",P2 — Recommandé,"77,0","25,0","8,0","10,6","9,0","12,0","5,0","1,0","-6,0","69,6","5,0",25,Medium,FALSE,luxury_premium,OK
+STONE AND STRAND,STONE AND STRAND,USA,Fine Jewelry,Debenhams,Non,"56,5",Watchlist — faible fit,"65,0","22,0","10,0","13,5","10,0","7,0","4,0","1,0","-17,0","55,5","5,0",25,Medium,FALSE,luxury_premium,OK
+STONE AND STRAND,STONE AND STRAND,USA,Fine Jewelry,La Redoute,Non,"50,1",Watchlist — faible fit,"65,0","16,0","8,0","13,5","10,0","8,0","5,0","1,0","-18,0","48,5","5,0",25,Medium,FALSE,luxury_premium,OK
+Sacai,Sacai,Japan,Womenswear RTW,Nordstrom,Oui,"84,0",P1 — Fort potentiel,,"30,0","10,0","15,0","7,0","11,0","5,0","1,0","0,0","84,0","16,0",67,High,FALSE,luxury_premium,OK
+Sacai,Sacai,Japan,Womenswear RTW,Galeries Lafayette,Oui,"83,1",P1 — Fort potentiel,,"30,0","9,0","14,1","7,0","12,0","5,0","1,0","0,0","83,1","16,0",67,High,FALSE,luxury_premium,OK
+Sacai,Sacai,Japan,Womenswear RTW,John Lewis,Non,"82,2",P1 — Fort potentiel,"80,0","29,0","9,0","15,0","7,0","12,0","4,5","1,0","0,0","82,5","16,0",67,High,FALSE,luxury_premium,OK
+Sacai,Sacai,Japan,Womenswear RTW,Bloomingdale's,Oui,"81,0",P1 — Fort potentiel,,"28,0","8,0","15,0","7,0","12,0","5,0","1,0","0,0","81,0","16,0",67,High,FALSE,luxury_premium,OK
+Sacai,Sacai,Japan,Womenswear RTW,Debenhams,Non,"71,0",P2 — Recommandé,"80,0","28,0","9,0","15,0","7,0","8,0","4,0","1,0","-7,0","70,0","16,0",67,High,FALSE,luxury_premium,OK
+Sacai,Sacai,Japan,Womenswear RTW,La Redoute,Non,"68,9",P3 — Test / à cadrer,"50,0","27,0","8,0","15,0","7,0","8,0","5,0","1,0","-5,0","71,0","16,0",67,High,FALSE,luxury_premium,OK
+Serapian,Serapian,Italy,Accessories / Leather,Galeries Lafayette,Oui,"87,9",P1 — Fort potentiel,,"30,0","12,0","13,9","8,0","12,0","5,0","2,0","0,0","87,9","15,0",50,Medium,FALSE,ultra_luxury,OK
+Serapian,Serapian,Italy,Accessories / Leather,Bloomingdale's,Non,"83,3",P1 — Fort potentiel,"95,0","25,0","10,0","15,0","8,0","10,0","7,0","2,0","0,0","82,0","15,0",50,Medium,FALSE,ultra_luxury,OK
+Serapian,Serapian,Italy,Accessories / Leather,Nordstrom,Non,"82,4",P1 — Fort potentiel,"95,0","25,0","10,0","15,0","8,0","9,0","7,0","2,0","0,0","81,0","15,0",50,Medium,FALSE,ultra_luxury,OK
+Serapian,Serapian,Italy,Accessories / Leather,John Lewis,Non,"82,0",P1 — Fort potentiel,"95,0","26,0","10,0","15,0","8,0","8,0","6,5","2,0","0,0","80,5","15,0",50,Medium,FALSE,ultra_luxury,OK
+Serapian,Serapian,Italy,Accessories / Leather,La Redoute,Non,"67,1",P3 — Test / à cadrer,"95,0","23,0","11,0","15,0","8,0","5,0","5,0","2,0","-10,0","64,0","15,0",50,Medium,FALSE,ultra_luxury,OK
+Serapian,Serapian,Italy,Accessories / Leather,Debenhams,Non,"65,3",P3 — Test / à cadrer,"95,0","24,0","10,0","15,0","8,0","4,0","6,0","2,0","-12,0","62,0","15,0",50,Medium,FALSE,ultra_luxury,OK
+Shay Furniture (Shay),Shay Furniture,USA,Fine Jewelry,Nordstrom,Non,"77,5",P2 — Recommandé,"82,0","28,0","12,0","10,0","9,0","11,0","5,0","1,0","-4,0","77,0","2,0",5,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Shay Furniture (Shay),Shay Furniture,USA,Fine Jewelry,Bloomingdale's,Non,"76,1",P2 — Recommandé,"72,0","30,0","12,0","9,5","9,0","12,0","5,0","1,0","-7,0","76,5","2,0",5,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Shay Furniture (Shay),Shay Furniture,USA,Fine Jewelry,John Lewis,Non,"64,8",P3 — Test / à cadrer,"72,0","19,0","9,0","9,5","10,0","11,0","6,5","1,0","-7,0","64,0","2,0",5,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Shay Furniture (Shay),Shay Furniture,USA,Fine Jewelry,Galeries Lafayette,Non,"59,0",Watchlist — faible fit,"72,0","25,0","8,0","5,5","9,0","12,0","7,0","1,0","-15,0","57,5","2,0",5,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Shay Furniture (Shay),Shay Furniture,USA,Fine Jewelry,La Redoute,Non,"46,7",Watchlist — faible fit,"57,0","16,0","8,0","10,5","10,0","8,0","7,0","1,0","-20,0","45,5","2,0",5,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Shay Furniture (Shay),Shay Furniture,USA,Fine Jewelry,Debenhams,Non,"46,7",Watchlist — faible fit,"57,0","18,0","10,0","10,5","10,0","7,0","6,0","1,0","-22,0","45,5","2,0",5,Medium,FALSE,luxury_premium,Mapping URL/marque à vérifier
+Simone Rocha,Simone Rocha,UK,Womenswear RTW,Galeries Lafayette,Oui,"86,0",P1 — Fort potentiel,,"30,0","11,0","12,0","10,0","12,0","5,0","1,0","0,0","86,0","10,0",25,High,FALSE,luxury_premium,OK
+Simone Rocha,Simone Rocha,UK,Womenswear RTW,Bloomingdale's,Oui,"84,3",P1 — Fort potentiel,,"28,0","9,0","14,3","10,0","12,0","5,0","1,0","0,0","84,3","10,0",25,High,FALSE,luxury_premium,OK
+Simone Rocha,Simone Rocha,UK,Womenswear RTW,Nordstrom,Oui,"84,0",P1 — Fort potentiel,,"27,0","10,0","15,0","10,0","11,0","5,0","1,0","0,0","84,0","10,0",25,High,FALSE,luxury_premium,OK
+Simone Rocha,Simone Rocha,UK,Womenswear RTW,John Lewis,Oui,"81,3",P1 — Fort potentiel,,"25,0","12,0","14,3","10,0","11,0","3,0","1,0","0,0","81,3","10,0",25,High,FALSE,luxury_premium,OK
+Simone Rocha,Simone Rocha,UK,Womenswear RTW,La Redoute,Non,"74,9",P2 — Recommandé,"65,0","27,0","10,0","15,0","10,0","8,0","5,0","1,0","-5,0","76,0","10,0",25,High,FALSE,luxury_premium,OK
+Simone Rocha,Simone Rocha,UK,Womenswear RTW,Debenhams,Non,"74,0",P2 — Recommandé,"65,0","28,0","12,0","15,0","10,0","8,0","3,0","1,0","-7,0","75,0","10,0",25,High,FALSE,luxury_premium,OK
+Skin Worldwide,Skin Worldwide,USA,Womenswear RTW,Debenhams,Non,"84,1",P1 — Fort potentiel,"95,0","28,0","10,0","11,9","10,0","12,0","5,0","1,0","0,0","82,9","3,0",11,Medium,FALSE,premium_contemporary,OK
+Skin Worldwide,Skin Worldwide,USA,Womenswear RTW,Nordstrom,Oui,"82,0",P1 — Fort potentiel,"87,0","27,0","12,0","11,4","9,0","12,0","4,0","1,0","0,0","81,4","3,0",11,Medium,FALSE,premium_contemporary,OK
+Skin Worldwide,Skin Worldwide,USA,Womenswear RTW,La Redoute,Non,"81,4",P1 — Fort potentiel,"95,0","27,0","8,0","11,9","10,0","11,0","6,0","1,0","0,0","79,9","3,0",11,Medium,FALSE,premium_contemporary,OK
+Skin Worldwide,Skin Worldwide,USA,Womenswear RTW,Bloomingdale's,Non,"80,5",P1 — Fort potentiel,"87,0","28,0","12,0","10,8","9,0","10,0","4,0","1,0","0,0","79,8","3,0",11,Medium,FALSE,premium_contemporary,OK
+Skin Worldwide,Skin Worldwide,USA,Womenswear RTW,John Lewis,Non,"78,3",P2 — Recommandé,"87,0","25,0","9,0","10,8","10,0","11,0","5,5","1,0","0,0","77,3","3,0",11,Medium,FALSE,premium_contemporary,OK
+Skin Worldwide,Skin Worldwide,USA,Womenswear RTW,Galeries Lafayette,Non,"69,8",P3 — Test / à cadrer,"72,0","30,0","8,0","9,5","9,0","9,0","6,0","1,0","-8,0","69,5","3,0",11,Medium,FALSE,premium_contemporary,OK
+Sophie Lou Jacobsen,Sophie Lou Jacobsen,USA,Fine Jewelry,Bloomingdale's,Oui,"76,5",P2 — Recommandé,,"30,0","12,0","8,5","9,0","12,0","3,0","1,0","-4,0","76,5","3,0",2,Medium,FALSE,luxury_premium,OK
+Sophie Lou Jacobsen,Sophie Lou Jacobsen,USA,Fine Jewelry,Nordstrom,Oui,"74,0",P2 — Recommandé,,"28,0","12,0","9,0","9,0","11,0","3,0","1,0","-4,0","74,0","3,0",2,Medium,FALSE,luxury_premium,OK
+Sophie Lou Jacobsen,Sophie Lou Jacobsen,USA,Fine Jewelry,John Lewis,Non,"65,8",P3 — Test / à cadrer,"82,0","19,0","9,0","8,5","10,0","11,0","4,5","1,0","-4,0","64,0","3,0",2,Medium,FALSE,luxury_premium,OK
+Sophie Lou Jacobsen,Sophie Lou Jacobsen,USA,Fine Jewelry,Galeries Lafayette,Non,"63,9",P3 — Test / à cadrer,"72,0","25,0","8,0","8,0","9,0","12,0","5,0","1,0","-10,0","63,0","3,0",2,Medium,FALSE,luxury_premium,OK
+Sophie Lou Jacobsen,Sophie Lou Jacobsen,USA,Fine Jewelry,La Redoute,Non,"41,7",Watchlist — faible fit,"57,0","16,0","8,0","9,0","10,0","8,0","5,0","1,0","-22,0","40,0","3,0",2,Medium,FALSE,luxury_premium,OK
+Sophie Lou Jacobsen,Sophie Lou Jacobsen,USA,Fine Jewelry,Debenhams,Non,"41,7",Watchlist — faible fit,"57,0","18,0","10,0","9,0","10,0","7,0","4,0","1,0","-24,0","40,0","3,0",2,Medium,FALSE,luxury_premium,OK
+Sporty & Rich,Sporty & Rich,USA,Active / Lifestyle,La Redoute,Non,"88,2",P1 — Fort potentiel,"95,0","30,0","8,0","14,4","11,0","12,0","6,0","1,0","0,0","87,4","10,0",11,Medium,FALSE,premium_contemporary,OK
+Sporty & Rich,Sporty & Rich,USA,Active / Lifestyle,John Lewis,Non,"86,2",P1 — Fort potentiel,"92,0","29,0","9,0","13,1","11,0","12,0","5,5","1,0","0,0","85,6","10,0",11,Medium,FALSE,premium_contemporary,OK
+Sporty & Rich,Sporty & Rich,USA,Active / Lifestyle,Nordstrom,Oui,"82,9",P1 — Fort potentiel,,"25,0","12,0","13,9","10,0","12,0","4,0","1,0","0,0","82,9","10,0",11,Medium,FALSE,premium_contemporary,OK
+Sporty & Rich,Sporty & Rich,USA,Active / Lifestyle,Debenhams,Non,"82,8",P1 — Fort potentiel,"95,0","24,0","10,0","14,4","11,0","11,0","5,0","1,0","0,0","81,4","10,0",11,Medium,FALSE,premium_contemporary,OK
+Sporty & Rich,Sporty & Rich,USA,Active / Lifestyle,Bloomingdale's,Oui,"73,1",P2 — Recommandé,,"18,0","12,0","13,1","10,0","10,0","4,0","1,0","0,0","73,1","10,0",11,Medium,FALSE,premium_contemporary,OK
+Sporty & Rich,Sporty & Rich,USA,Active / Lifestyle,Galeries Lafayette,Non,"72,9",P2 — Recommandé,"82,0","24,0","8,0","10,9","10,0","9,0","6,0","1,0","-2,0","71,9","10,0",11,Medium,FALSE,premium_contemporary,OK
+Suzie Kondi,Suzie Kondi,USA,Swimwear / Resort,Nordstrom,Oui,"73,0",P2 — Recommandé,,"27,0","12,0","9,5","9,0","11,0","3,5","1,0","-5,0","73,0","1,0",5,Medium,FALSE,luxury_premium,OK
+Suzie Kondi,Suzie Kondi,USA,Swimwear / Resort,La Redoute,Non,"72,2",P2 — Recommandé,"87,0","30,0","8,0","10,0","10,0","9,0","5,5","1,0","-8,0","70,5","1,0",5,Medium,FALSE,luxury_premium,OK
+Suzie Kondi,Suzie Kondi,USA,Swimwear / Resort,John Lewis,Non,"70,2",P2 — Recommandé,"72,0","29,0","9,0","7,0","10,0","12,0","5,0","1,0","-8,0","70,0","1,0",5,Medium,FALSE,luxury_premium,OK
+Suzie Kondi,Suzie Kondi,USA,Swimwear / Resort,Bloomingdale's,Non,"67,0",P3 — Test / à cadrer,"72,0","25,0","12,0","7,0","9,0","12,0","3,5","1,0","-8,0","66,5","1,0",5,Medium,FALSE,luxury_premium,OK
+Suzie Kondi,Suzie Kondi,USA,Swimwear / Resort,Debenhams,Non,"66,8",P3 — Test / à cadrer,"87,0","25,0","10,0","10,0","10,0","8,0","4,5","1,0","-9,0","64,5","1,0",5,Medium,FALSE,luxury_premium,OK
+Suzie Kondi,Suzie Kondi,USA,Swimwear / Resort,Galeries Lafayette,Non,"56,7",Watchlist — faible fit,"72,0","22,0","8,0","5,5","9,0","12,0","5,5","1,0","-13,0","55,0","1,0",5,Medium,FALSE,luxury_premium,OK
+Taller Marmo,Taller Marmo,France,Swimwear / Resort,La Redoute,Non,"83,2",P1 — Fort potentiel,"95,0","27,0","12,0","12,9","10,0","12,0","2,0","1,0","0,0","81,9","5,0",11,Medium,FALSE,premium_contemporary,OK
+Taller Marmo,Taller Marmo,France,Swimwear / Resort,Debenhams,Non,"81,7",P1 — Fort potentiel,"80,0","28,0","10,0","12,9","10,0","12,0","3,0","1,0","0,0","81,9","5,0",11,Medium,FALSE,premium_contemporary,OK
+Taller Marmo,Taller Marmo,France,Swimwear / Resort,Nordstrom,Oui,"80,4",P1 — Fort potentiel,,"27,0","10,0","12,4","9,0","12,0","4,0","1,0","0,0","80,4","5,0",11,Medium,FALSE,premium_contemporary,OK
+Taller Marmo,Taller Marmo,France,Swimwear / Resort,Bloomingdale's,Oui,"78,4",P2 — Recommandé,,"28,0","10,0","11,4","9,0","10,0","4,0","1,0","0,0","78,4","5,0",11,Medium,FALSE,premium_contemporary,OK
+Taller Marmo,Taller Marmo,France,Swimwear / Resort,John Lewis,Non,"76,4",P2 — Recommandé,"72,0","25,0","10,0","11,4","10,0","11,0","3,5","1,0","0,0","76,9","5,0",11,Medium,FALSE,premium_contemporary,OK
+Taller Marmo,Taller Marmo,France,Swimwear / Resort,Galeries Lafayette,Oui,"73,5",P2 — Recommandé,,"30,0","12,0","9,5","9,0","10,0","2,0","1,0","-5,0","73,5","5,0",11,Medium,FALSE,premium_contemporary,OK
+The Elder Statesman,The Elder Statesman,USA,Knitwear / Cashmere,Bloomingdale's,Oui,"84,3",P1 — Fort potentiel,,"28,0","12,0","14,3","8,0","12,0","4,0","1,0","0,0","84,3","10,0",25,Medium,FALSE,luxury_premium,OK
+The Elder Statesman,The Elder Statesman,USA,Knitwear / Cashmere,John Lewis,Non,"82,2",P1 — Fort potentiel,"95,0","26,0","9,0","14,3","8,0","12,0","5,5","1,0","0,0","80,8","10,0",25,Medium,FALSE,luxury_premium,OK
+The Elder Statesman,The Elder Statesman,USA,Knitwear / Cashmere,Nordstrom,Oui,"81,0",P1 — Fort potentiel,,"25,0","12,0","15,0","8,0","11,0","4,0","1,0","0,0","81,0","10,0",25,Medium,FALSE,luxury_premium,OK
+The Elder Statesman,The Elder Statesman,USA,Knitwear / Cashmere,Galeries Lafayette,Non,"79,8",P2 — Recommandé,"87,0","27,0","8,0","12,0","8,0","12,0","6,0","1,0","0,0","79,0","10,0",25,Medium,FALSE,luxury_premium,OK
+The Elder Statesman,The Elder Statesman,USA,Knitwear / Cashmere,La Redoute,Non,"74,3",P2 — Recommandé,"95,0","26,0","8,0","15,0","8,0","8,0","6,0","1,0","-5,0","72,0","10,0",25,Medium,FALSE,luxury_premium,OK
+The Elder Statesman,The Elder Statesman,USA,Knitwear / Cashmere,Debenhams,Non,"68,9",P3 — Test / à cadrer,"95,0","22,0","10,0","15,0","8,0","7,0","5,0","1,0","-7,0","66,0","10,0",25,Medium,FALSE,luxury_premium,OK
+The Frankie Shop,The Frankie Shop,USA,Womenswear RTW,Nordstrom,Non,"86,9",P1 — Fort potentiel,"95,0","27,0","12,0","15,0","10,0","12,0","4,0","1,0","0,0","86,0","10,0",25,Medium,FALSE,premium_contemporary,OK
+The Frankie Shop,The Frankie Shop,USA,Womenswear RTW,Debenhams,Non,"84,8",P1 — Fort potentiel,"65,0","28,0","10,0","15,0","11,0","12,0","5,0","1,0","0,0","87,0","10,0",25,Medium,FALSE,premium_contemporary,OK
+The Frankie Shop,The Frankie Shop,USA,Womenswear RTW,Bloomingdale's,Oui,"84,3",P1 — Fort potentiel,,"28,0","12,0","14,3","10,0","10,0","4,0","1,0","0,0","84,3","10,0",25,Medium,FALSE,premium_contemporary,OK
+The Frankie Shop,The Frankie Shop,USA,Womenswear RTW,John Lewis,Non,"83,1",P1 — Fort potentiel,"95,0","25,0","9,0","14,3","11,0","11,0","5,5","1,0","0,0","81,8","10,0",25,Medium,FALSE,premium_contemporary,OK
+The Frankie Shop,The Frankie Shop,USA,Womenswear RTW,La Redoute,Non,"82,1",P1 — Fort potentiel,"65,0","27,0","8,0","15,0","11,0","11,0","6,0","1,0","0,0","84,0","10,0",25,Medium,FALSE,premium_contemporary,OK
+The Frankie Shop,The Frankie Shop,USA,Womenswear RTW,Galeries Lafayette,Oui,"81,0",P1 — Fort potentiel,,"30,0","8,0","12,0","10,0","9,0","6,0","1,0","0,0","81,0","10,0",25,Medium,FALSE,premium_contemporary,OK
+The Row,The Row,USA,Womenswear RTW,Nordstrom,Oui,"84,0",P1 — Fort potentiel,,"30,0","12,0","15,0","7,0","11,0","3,0","1,0","0,0","84,0","250,0",482,High,FALSE,luxury_premium,OK
+The Row,The Row,USA,Womenswear RTW,John Lewis,Non,"83,8",P1 — Fort potentiel,"95,0","29,0","9,0","15,0","7,0","12,0","4,5","1,0","0,0","82,5","250,0",482,High,FALSE,luxury_premium,OK
+The Row,The Row,USA,Womenswear RTW,Bloomingdale's,Oui,"83,0",P1 — Fort potentiel,,"28,0","12,0","15,0","7,0","12,0","3,0","1,0","0,0","83,0","250,0",482,High,FALSE,luxury_premium,OK
+The Row,The Row,USA,Womenswear RTW,Galeries Lafayette,Oui,"83,0",P1 — Fort potentiel,,"30,0","8,0","15,0","7,0","12,0","5,0","1,0","0,0","83,0","250,0",482,High,FALSE,luxury_premium,OK
+The Row,The Row,USA,Womenswear RTW,Debenhams,Non,"73,4",P2 — Recommandé,"95,0","28,0","10,0","15,0","7,0","8,0","4,0","1,0","-7,0","71,0","250,0",482,High,FALSE,luxury_premium,OK
+The Row,The Row,USA,Womenswear RTW,La Redoute,Non,"70,4",P2 — Recommandé,"65,0","27,0","8,0","15,0","7,0","8,0","5,0","1,0","-5,0","71,0","250,0",482,High,FALSE,luxury_premium,OK
+Tibi,Tibi,USA,Womenswear RTW,Debenhams,Non,"86,9",P1 — Fort potentiel,"95,0","28,0","10,0","15,0","10,0","12,0","5,0","1,0","0,0","86,0","20,0",50,High,FALSE,premium_contemporary,OK
+Tibi,Tibi,USA,Womenswear RTW,Nordstrom,Oui,"86,0",P1 — Fort potentiel,,"27,0","12,0","15,0","10,0","12,0","4,0","1,0","0,0","86,0","20,0",50,High,FALSE,premium_contemporary,OK
+Tibi,Tibi,USA,Womenswear RTW,Bloomingdale's,Oui,"85,0",P1 — Fort potentiel,,"28,0","12,0","15,0","10,0","10,0","4,0","1,0","0,0","85,0","20,0",50,High,FALSE,premium_contemporary,OK
+Tibi,Tibi,USA,Womenswear RTW,John Lewis,Non,"84,7",P1 — Fort potentiel,"95,0","26,0","9,0","15,0","10,0","12,0","5,5","1,0","0,0","83,5","20,0",50,High,FALSE,premium_contemporary,OK
+Tibi,Tibi,USA,Womenswear RTW,Galeries Lafayette,Non,"84,6",P1 — Fort potentiel,"90,0","30,0","8,0","15,0","10,0","9,0","6,0","1,0","0,0","84,0","20,0",50,High,FALSE,premium_contemporary,OK
+Tibi,Tibi,USA,Womenswear RTW,La Redoute,Non,"84,2",P1 — Fort potentiel,"95,0","27,0","8,0","15,0","10,0","11,0","6,0","1,0","0,0","83,0","20,0",50,High,FALSE,premium_contemporary,OK
+Tohum Designs,Tohum Designs,USA,Fine Jewelry,Nordstrom,Oui,"79,0",P2 — Recommandé,,"28,0","12,0","10,0","7,0","11,0","3,0","5,0","-2,0","79,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Tohum Designs,Tohum Designs,USA,Fine Jewelry,Bloomingdale's,Oui,"76,5",P2 — Recommandé,,"30,0","12,0","9,5","7,0","12,0","3,0","3,0","-5,0","76,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Tohum Designs,Tohum Designs,USA,Fine Jewelry,John Lewis,Non,"65,7",P3 — Test / à cadrer,"72,0","19,0","9,0","9,5","7,0","11,0","4,5","5,0","-5,0","65,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Tohum Designs,Tohum Designs,USA,Fine Jewelry,Galeries Lafayette,Non,"59,4",Watchlist — faible fit,"72,0","25,0","8,0","5,5","7,0","12,0","5,0","3,5","-13,0","58,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Tohum Designs,Tohum Designs,USA,Fine Jewelry,La Redoute,Non,"48,1",Watchlist — faible fit,"62,0","16,0","8,0","10,5","7,0","8,0","5,0","5,0","-18,0","46,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Tohum Designs,Tohum Designs,USA,Fine Jewelry,Debenhams,Non,"46,3",Watchlist — faible fit,"62,0","18,0","10,0","10,5","7,0","7,0","4,0","3,0","-20,0","44,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Tove Studio,Tove Studio,UK,Womenswear RTW,John Lewis,Oui,"86,4",P1 — Fort potentiel,,"29,0","12,0","11,4","12,0","12,0","4,0","1,0","0,0","86,4","5,0",11,High,FALSE,luxury_premium,OK
+Tove Studio,Tove Studio,UK,Womenswear RTW,La Redoute,Non,"85,0",P1 — Fort potentiel,"95,0","30,0","10,0","12,9","12,0","9,0","6,0","1,0","-2,0","83,9","5,0",11,High,FALSE,luxury_premium,OK
+Tove Studio,Tove Studio,UK,Womenswear RTW,Debenhams,Non,"81,4",P1 — Fort potentiel,"95,0","28,0","12,0","12,9","12,0","8,0","4,0","1,0","-3,0","79,9","5,0",11,High,FALSE,luxury_premium,OK
+Tove Studio,Tove Studio,UK,Womenswear RTW,Bloomingdale's,Non,"79,3",P2 — Recommandé,"42,0","28,0","9,0","11,4","11,0","12,0","6,0","1,0","0,0","83,4","5,0",11,High,FALSE,luxury_premium,OK
+Tove Studio,Tove Studio,UK,Womenswear RTW,Nordstrom,Non,"79,3",P2 — Recommandé,"42,0","27,0","10,0","12,4","11,0","11,0","6,0","1,0","0,0","83,4","5,0",11,High,FALSE,luxury_premium,OK
+Tove Studio,Tove Studio,UK,Womenswear RTW,Galeries Lafayette,Non,"76,7",P2 — Recommandé,"42,0","30,0","11,0","9,5","11,0","12,0","6,0","1,0","-5,0","80,5","5,0",11,High,FALSE,luxury_premium,OK
+Ulla Johnson,Ulla Johnson,USA,Womenswear RTW,Nordstrom,Oui,"91,0",P1 — Fort potentiel,,"30,0","12,0","15,0","8,0","12,0","4,0","5,0","0,0","91,0","50,0",90,Medium,TRUE,luxury_premium,OK
+Ulla Johnson,Ulla Johnson,USA,Womenswear RTW,John Lewis,Non,"90,0",P1 — Fort potentiel,"95,0","29,0","9,0","15,0","9,0","12,0","5,5","5,0","0,0","89,5","50,0",90,Medium,TRUE,luxury_premium,OK
+Ulla Johnson,Ulla Johnson,USA,Womenswear RTW,Galeries Lafayette,Non,"88,2",P1 — Fort potentiel,"95,0","30,0","8,0","15,0","8,0","12,0","6,0","3,5","0,0","87,5","50,0",90,Medium,TRUE,luxury_premium,OK
+Ulla Johnson,Ulla Johnson,USA,Womenswear RTW,Bloomingdale's,Oui,"87,0",P1 — Fort potentiel,,"28,0","12,0","15,0","8,0","12,0","4,0","3,0","0,0","87,0","50,0",90,Medium,TRUE,luxury_premium,OK
+Ulla Johnson,Ulla Johnson,USA,Womenswear RTW,Debenhams,Non,"82,0",P1 — Fort potentiel,"100,0","28,0","10,0","15,0","9,0","8,0","5,0","3,0","-3,0","80,0","50,0",90,Medium,TRUE,luxury_premium,OK
+Ulla Johnson,Ulla Johnson,USA,Womenswear RTW,La Redoute,Non,"80,8",P1 — Fort potentiel,"70,0","27,0","8,0","15,0","9,0","9,0","6,0","5,0","-2,0","82,0","50,0",90,Medium,TRUE,luxury_premium,OK
+Womens (B-Sides Jeans),Womens,USA,Denim,Nordstrom,Non,"78,9",P2 — Recommandé,"87,0","22,0","12,0","10,0","10,0","12,0","5,0","4,0","-2,0","78,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Womens (B-Sides Jeans),Womens,USA,Denim,La Redoute,Non,"76,2",P2 — Recommandé,"92,0","25,0","8,0","10,5","11,0","9,0","7,0","4,0","-5,0","74,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Womens (B-Sides Jeans),Womens,USA,Denim,John Lewis,Non,"69,0",P3 — Test / à cadrer,"42,0","21,0","9,0","9,5","11,0","11,0","6,5","4,0","-5,0","72,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Womens (B-Sides Jeans),Womens,USA,Denim,Bloomingdale's,Non,"68,8",P3 — Test / à cadrer,"72,0","18,0","12,0","9,5","10,0","12,0","5,0","2,0","-5,0","68,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Womens (B-Sides Jeans),Womens,USA,Denim,Debenhams,Non,"68,2",P3 — Test / à cadrer,"92,0","20,0","10,0","10,5","11,0","7,0","6,0","2,0","-6,0","65,5","2,0",5,Medium,TRUE,luxury_premium,OK
+Womens (B-Sides Jeans),Womens,USA,Denim,Galeries Lafayette,Non,"52,8",Watchlist — faible fit,"42,0","17,0","8,0","5,5","10,0","12,0","7,0","2,5","-13,0","54,0","2,0",5,Medium,TRUE,luxury_premium,OK
+Yves Salomon,Yves Salomon,France,Womenswear RTW,Galeries Lafayette,Oui,"91,5",P1 — Fort potentiel,,"30,0","12,0","15,0","10,0","12,0","4,0","3,5","0,0","91,5","20,0",50,High,TRUE,ultra_luxury,OK
+Yves Salomon,Yves Salomon,France,Womenswear RTW,Bloomingdale's,Oui,"87,0",P1 — Fort potentiel,,"28,0","10,0","15,0","10,0","10,0","6,0","3,0","0,0","87,0","20,0",50,High,TRUE,ultra_luxury,OK
+Yves Salomon,Yves Salomon,France,Womenswear RTW,Nordstrom,Non,"86,3",P1 — Fort potentiel,"80,0","27,0","10,0","15,0","10,0","9,0","6,0","5,0","0,0","87,0","20,0",50,High,TRUE,ultra_luxury,OK
+Yves Salomon,Yves Salomon,France,Womenswear RTW,John Lewis,Non,"84,0",P1 — Fort potentiel,"80,0","26,0","10,0","15,0","10,0","8,0","5,5","5,0","0,0","84,5","20,0",50,High,TRUE,ultra_luxury,OK
+Yves Salomon,Yves Salomon,France,Womenswear RTW,La Redoute,Non,"75,2",P2 — Recommandé,"95,0","27,0","12,0","15,0","10,0","5,0","4,0","5,0","-10,0","73,0","20,0",50,High,TRUE,ultra_luxury,OK
+Yves Salomon,Yves Salomon,France,Womenswear RTW,Debenhams,Non,"70,1",P2 — Recommandé,"80,0","28,0","10,0","15,0","10,0","5,0","5,0","3,0","-12,0","69,0","20,0",50,High,TRUE,ultra_luxury,OK
+arch4,arch4,UK,Knitwear / Cashmere,John Lewis,Oui,"79,0",P2 — Recommandé,,"26,0","12,0","9,0","12,0","12,0","4,0","4,0","-5,0","79,0","2,0",5,High,TRUE,luxury_premium,OK
+arch4,arch4,UK,Knitwear / Cashmere,Nordstrom,Non,"78,8",P2 — Recommandé,"72,0","25,0","10,0","9,5","11,0","11,0","6,0","4,0","-2,0","79,5","2,0",5,High,TRUE,luxury_premium,OK
+arch4,arch4,UK,Knitwear / Cashmere,La Redoute,Non,"77,6",P2 — Recommandé,"92,0","26,0","10,0","10,0","12,0","8,0","6,0","4,0","-5,0","76,0","2,0",5,High,TRUE,luxury_premium,OK
+arch4,arch4,UK,Knitwear / Cashmere,Bloomingdale's,Non,"75,0",P2 — Recommandé,"57,0","28,0","9,0","9,0","11,0","12,0","6,0","2,0","-5,0","77,0","2,0",5,High,TRUE,luxury_premium,OK
+arch4,arch4,UK,Knitwear / Cashmere,Galeries Lafayette,Non,"69,8",P3 — Test / à cadrer,"72,0","27,0","11,0","5,0","11,0","12,0","6,0","2,5","-10,0","69,5","2,0",5,High,TRUE,luxury_premium,OK
+arch4,arch4,UK,Knitwear / Cashmere,Debenhams,Non,"69,5",P3 — Test / à cadrer,"92,0","22,0","12,0","10,0","12,0","7,0","4,0","2,0","-7,0","67,0","2,0",5,High,TRUE,luxury_premium,OK
+lemlem,lemlem,USA,Swimwear / Resort,Nordstrom,Oui,"86,5",P1 — Fort potentiel,,"27,0","12,0","13,5","9,0","12,0","3,0","5,0","0,0","86,5","5,0",25,Medium,TRUE,premium_contemporary,OK
+lemlem,lemlem,USA,Swimwear / Resort,La Redoute,Non,"86,0",P1 — Fort potentiel,"100,0","26,0","8,0","13,5","10,0","12,0","5,0","5,0","0,0","84,5","5,0",25,Medium,TRUE,premium_contemporary,OK
+lemlem,lemlem,USA,Swimwear / Resort,Debenhams,Non,"84,2",P1 — Fort potentiel,"100,0","25,0","10,0","13,5","10,0","12,0","4,0","3,0","0,0","82,5","5,0",25,Medium,TRUE,premium_contemporary,OK
+lemlem,lemlem,USA,Swimwear / Resort,John Lewis,Non,"83,9",P1 — Fort potentiel,"90,0","26,0","9,0","12,7","10,0","11,0","4,5","5,0","0,0","83,2","5,0",25,Medium,TRUE,premium_contemporary,OK
+lemlem,lemlem,USA,Swimwear / Resort,Bloomingdale's,Oui,"79,7",P2 — Recommandé,,"25,0","12,0","12,7","9,0","10,0","3,0","3,0","0,0","79,7","5,0",25,Medium,TRUE,premium_contemporary,OK
+lemlem,lemlem,USA,Swimwear / Resort,Galeries Lafayette,Non,"77,1",P2 — Recommandé,"77,0","30,0","8,0","10,6","9,0","9,0","5,0","3,5","-3,0","77,1","5,0",25,Medium,TRUE,premium_contemporary,OK
+sorellina Jewellery,sorellina Jewellery,USA,Fine Jewelry,Nordstrom,Oui,"77,0",P2 — Recommandé,,"28,0","12,0","10,0","9,0","11,0","3,0","1,0","-2,0","77,0","2,0",5,Medium,FALSE,luxury_premium,OK
+sorellina Jewellery,sorellina Jewellery,USA,Fine Jewelry,Bloomingdale's,Oui,"76,5",P2 — Recommandé,,"30,0","12,0","9,5","9,0","12,0","3,0","1,0","-5,0","76,5","2,0",5,Medium,FALSE,luxury_premium,OK
+sorellina Jewellery,sorellina Jewellery,USA,Fine Jewelry,John Lewis,Non,"64,8",P3 — Test / à cadrer,"72,0","19,0","9,0","9,5","10,0","11,0","4,5","1,0","-5,0","64,0","2,0",5,Medium,FALSE,luxury_premium,OK
+sorellina Jewellery,sorellina Jewellery,USA,Fine Jewelry,Galeries Lafayette,Non,"59,0",Watchlist — faible fit,"72,0","25,0","8,0","5,5","9,0","12,0","5,0","1,0","-13,0","57,5","2,0",5,Medium,FALSE,luxury_premium,OK
+sorellina Jewellery,sorellina Jewellery,USA,Fine Jewelry,La Redoute,Non,"46,7",Watchlist — faible fit,"57,0","16,0","8,0","10,5","10,0","8,0","5,0","1,0","-18,0","45,5","2,0",5,Medium,FALSE,luxury_premium,OK
+sorellina Jewellery,sorellina Jewellery,USA,Fine Jewelry,Debenhams,Non,"46,7",Watchlist — faible fit,"57,0","18,0","10,0","10,5","10,0","7,0","4,0","1,0","-20,0","45,5","2,0",5,Medium,FALSE,luxury_premium,OK
+ÉTERNE,ÉTERNE,USA,Womenswear RTW,Bloomingdale's,Oui,"82,8",P1 — Fort potentiel,,"28,0","12,0","10,8","11,0","12,0","3,0","1,0","0,0","82,8","3,0",11,High,FALSE,luxury_premium,OK
+ÉTERNE,ÉTERNE,USA,Womenswear RTW,Nordstrom,Oui,"81,4",P1 — Fort potentiel,,"27,0","12,0","11,4","11,0","11,0","3,0","1,0","0,0","81,4","3,0",11,High,FALSE,luxury_premium,OK
+ÉTERNE,ÉTERNE,USA,Womenswear RTW,John Lewis,Non,"81,0",P1 — Fort potentiel,"87,0","26,0","9,0","10,8","12,0","12,0","4,5","1,0","0,0","80,3","3,0",11,High,FALSE,luxury_premium,OK
+ÉTERNE,ÉTERNE,USA,Womenswear RTW,La Redoute,Non,"75,1",P2 — Recommandé,"95,0","27,0","8,0","11,9","12,0","8,0","5,0","1,0","-5,0","72,9","3,0",11,High,FALSE,luxury_premium,OK
+ÉTERNE,ÉTERNE,USA,Womenswear RTW,Debenhams,Non,"75,1",P2 — Recommandé,"95,0","28,0","10,0","11,9","12,0","8,0","4,0","1,0","-7,0","72,9","3,0",11,High,FALSE,luxury_premium,OK
+ÉTERNE,ÉTERNE,USA,Womenswear RTW,Galeries Lafayette,Non,"73,4",P2 — Recommandé,"72,0","30,0","8,0","9,5","11,0","12,0","5,0","1,0","-8,0","73,5","3,0",11,High,FALSE,luxury_premium,OK
