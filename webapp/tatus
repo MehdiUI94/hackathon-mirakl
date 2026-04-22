@@ -1,0 +1,44 @@
+[33m61a6083[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m resolve bugs
+ .gitignore                                         |    3 [32m+[m
+ app/[locale]/brands/[id]/page.tsx                  |  154 [32m+[m
+ app/[locale]/brands/new/page.tsx                   |   33 [32m+[m
+ app/[locale]/brands/page.tsx                       |   33 [32m+[m
+ app/[locale]/campaigns/page.tsx                    |   20 [32m+[m
+ app/[locale]/layout.tsx                            |   53 [32m+[m
+ app/[locale]/page.tsx                              |  130 [32m+[m
+ app/[locale]/settings/page.tsx                     |   18 [32m+[m
+ app/api/brands/[id]/route.ts                       |   41 [32m+[m
+ app/api/brands/[id]/score/route.ts                 |   56 [32m+[m
+ app/api/brands/enrich/route.ts                     |  216 [32m+[m
+ app/api/brands/route.ts                            |   84 [32m+[m
+ app/api/campaigns/route.ts                         |   56 [32m+[m
+ app/api/kpi/route.ts                               |   65 [32m+[m
+ app/api/outreach/route.ts                          |  126 [32m+[m
+ app/api/scoring-weights/route.ts                   |    9 [32m+[m
+ app/api/settings/route.ts                          |   63 [32m+[m
+ app/api/webhooks/n8n/route.ts                      |   68 [32m+[m
+ app/layout.tsx                                     |   33 [32m+[m[31m-[m
+ app/page.tsx                                       |   67 [32m+[m[31m-[m
+ components/AddBrandClient.tsx                      |  280 [32m+[m
+ components/BrandDetailClient.tsx                   |  473 [32m++[m
+ components/BrandsClient.tsx                        |  232 [32m+[m
+ components/CampaignsDashboard.tsx                  |  181 [32m+[m
+ components/SettingsForm.tsx                        |  101 [32m+[m
+ components/Sidebar.tsx                             |   84 [32m+[m
+ dev.db                                             |  Bin [31m0[m -> [32m2387968[m bytes
+ i18n/request.ts                                    |   13 [32m+[m
+ i18n/routing.ts                                    |    6 [32m+[m
+ lib/db.ts                                          |   21 [32m+[m
+ lib/scoring.ts                                     |   90 [32m+[m
+ messages/en.json                                   |  103 [32m+[m
+ messages/fr.json                                   |  103 [32m+[m
+ next.config.ts                                     |   10 [32m+[m[31m-[m
+ package-lock.json                                  | 6023 [32m+++++++++++++++++[m[31m---[m
+ package.json                                       |   32 [32m+[m[31m-[m
+ prisma.config.ts                                   |   12 [32m+[m
+ .../migrations/20260421191830_init/migration.sql   |  192 [32m+[m
+ prisma/migrations/migration_lock.toml              |    3 [32m+[m
+ prisma/schema.prisma                               |  186 [32m+[m
+ proxy.ts                                           |   14 [32m+[m
+ scripts/seed.ts                                    |  670 [32m+++[m
+ 42 files changed, 9421 insertions(+), 736 deletions(-)
