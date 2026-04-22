@@ -44,29 +44,30 @@ export function computeScore(
     initialPrior,
   } = components;
 
-  const totalWeight =
-    weights.wCategory +
-    weights.wGeo +
-    weights.wScale +
-    weights.wOps +
-    weights.wPositioning +
-    weights.wIncrementality +
-    weights.wStory;
+  const contributionScale =
+    fitCategory > 10 ||
+    fitGeo > 10 ||
+    commercialScale > 10 ||
+    opsReadiness > 10 ||
+    fitPositioning > 10;
 
-  // Normalize weights so they sum to 100
-  const norm = totalWeight > 0 ? 100 / totalWeight : 1;
+  const ratio = (value: number, referenceWeight: number) => {
+    const denominator = contributionScale ? referenceWeight : 10;
+    return Math.max(0, Math.min(1, denominator > 0 ? value / denominator : 0));
+  };
 
   const weightedSum =
-    fitCategory * weights.wCategory * norm +
-    fitGeo * weights.wGeo * norm +
-    commercialScale * weights.wScale * norm +
-    opsReadiness * weights.wOps * norm +
-    fitPositioning * weights.wPositioning * norm +
-    incrementality * weights.wIncrementality * norm +
-    sustainabilityStory * weights.wStory * norm;
+    ratio(fitCategory, BALANCED_WEIGHTS.wCategory) * weights.wCategory +
+    ratio(fitGeo, BALANCED_WEIGHTS.wGeo) * weights.wGeo +
+    ratio(commercialScale, BALANCED_WEIGHTS.wScale) * weights.wScale +
+    ratio(opsReadiness, BALANCED_WEIGHTS.wOps) * weights.wOps +
+    ratio(fitPositioning, BALANCED_WEIGHTS.wPositioning) * weights.wPositioning +
+    ratio(incrementality, BALANCED_WEIGHTS.wIncrementality) * weights.wIncrementality +
+    ratio(sustainabilityStory, BALANCED_WEIGHTS.wStory) * weights.wStory;
 
-  const modelScore = (weightedSum + baseCompletion - penalty) / 10;
-  const score = 0.9 * modelScore + 0.1 * initialPrior;
+  const priorBonus = (Math.max(0, Math.min(100, initialPrior)) / 100) * (weights.wPrior / 10);
+  const penaltyMultiplier = 1 + Math.abs(weights.wPenalty) / 20;
+  const score = weightedSum + baseCompletion - penalty * penaltyMultiplier + priorBonus;
   return Math.round(Math.max(0, Math.min(100, score)) * 10) / 10;
 }
 

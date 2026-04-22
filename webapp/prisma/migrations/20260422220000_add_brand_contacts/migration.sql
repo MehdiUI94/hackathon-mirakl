@@ -1,0 +1,10 @@
+ALTER TABLE "Brand" ADD COLUMN "contactEmail" TEXT;
+ALTER TABLE "Brand" ADD COLUMN "contactType" TEXT;
+ALTER TABLE "Brand" ADD COLUMN "contactRole" TEXT;
+ALTER TABLE "Brand" ADD COLUMN "contactPersona" TEXT;
+ALTER TABLE "Brand" ADD COLUMN "contactSubjectHint" TEXT;
+ALTER TABLE "Brand" ADD COLUMN "contactStatus" TEXT;
+ALTER TABLE "Brand" ADD COLUMN "contactConfidence" REAL;
+ALTER TABLE "Brand" ADD COLUMN "contactRecommendation" TEXT;
+ALTER TABLE "Brand" ADD COLUMN "contactSourceUrl" TEXT;
+ALTER TABLE "Brand" ADD COLUMN "contactNotes" TEXT;

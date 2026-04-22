@@ -24,7 +24,7 @@ export default async function HomePage({
   const replyRate = emailsSent > 0 ? Math.round((replies / emailsSent) * 1000) / 10 : 0;
 
   const topBrands = await prisma.scoringLine.findMany({
-    where: { priority: { startsWith: "P1" } },
+    where: { priority: { startsWith: "P1" }, alreadyPresent: false },
     orderBy: { finalScore: "desc" },
     take: 8,
     include: { brand: true, marketplace: true },

@@ -10,7 +10,7 @@ export async function POST(
   const weights: ScoringWeightsInput = await req.json();
 
   const scoringLines = await prisma.scoringLine.findMany({
-    where: { brandId: id },
+    where: { brandId: id, alreadyPresent: false },
     include: { marketplace: true },
   });
 

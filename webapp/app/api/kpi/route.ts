@@ -16,7 +16,7 @@ export async function GET() {
 
   // Top P1 brands by best scoring line
   const topBrands = await prisma.scoringLine.findMany({
-    where: { priority: { startsWith: "P1" } },
+    where: { priority: { startsWith: "P1" }, alreadyPresent: false },
     orderBy: { finalScore: "desc" },
     take: 8,
     include: { brand: true, marketplace: true },

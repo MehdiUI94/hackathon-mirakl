@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { computeScore, priorityFromScore, type ScoringWeightsInput } from "@/lib/scoring";
 
@@ -96,7 +96,6 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
 
   const [selectedProfileId, setSelectedProfileId] = useState(defaultProfile?.id ?? "");
   const [tab, setTab] = useState<Tab>("scoring");
-  const [weights, setWeights] = useState<ScoringWeightsInput>(() => profileToWeights(defaultProfile));
   const [liveScores, setLiveScores] = useState<ScoringLine[]>(brand.scoringLines);
   const [emailTarget, setEmailTarget] = useState<CampaignTarget | null>(
     brand.campaignTargets[0] ?? null
@@ -107,9 +106,10 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
   const [toEmail, setToEmail] = useState("");
   const [toFirstName, setToFirstName] = useState("");
   const [sendStatus, setSendStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const currentTemplate = emailTarget?.emailTemplates[stepIdx] ?? null;
+  const selectedProfile = weightProfiles.find((p) => p.id === selectedProfileId) ?? defaultProfile;
+  const selectedWeights = profileToWeights(selectedProfile);
 
   // Reset editor when template changes
   useEffect(() => {
@@ -131,7 +131,7 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
     };
   }
 
-  // Recompute scores client-side on weight change (< 100ms, no network)
+  // Recompute scores client-side when the selected strategy profile changes.
   const recomputeScores = useCallback(
     (w: ScoringWeightsInput) => {
       const updated = brand.scoringLines.map((sl) => {
@@ -144,15 +144,9 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
     [brand.scoringLines]
   );
 
-  const handleWeightChange = useCallback(
-    (key: keyof ScoringWeightsInput, value: number) => {
-      const next = { ...weights, [key]: value };
-      setWeights(next);
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-      debounceRef.current = setTimeout(() => recomputeScores(next), 30);
-    },
-    [weights, recomputeScores]
-  );
+  useEffect(() => {
+    if (selectedProfile) recomputeScores(profileToWeights(selectedProfile));
+  }, [selectedProfile, recomputeScores]);
 
   const handleProfileChange = useCallback(
     (profileId: string) => {
@@ -160,7 +154,6 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
       const profile = weightProfiles.find((p) => p.id === profileId);
       if (profile) {
         const w = profileToWeights(profile);
-        setWeights(w);
         recomputeScores(w);
       }
     },
@@ -170,8 +163,7 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
   async function handleSend() {
     if (!emailTarget || !toEmail || !currentTemplate) return;
     setSendStatus("sending");
-    const profile = weightProfiles.find((p) => p.id === selectedProfileId);
-    const top = liveScores[0];
+    const top = liveScores.find((sl) => !sl.alreadyPresent) ?? liveScores[0];
     const res = await fetch("/api/outreach", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -183,7 +175,7 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
         toFirstName: toFirstName || undefined,
         subject: editedSubject,
         bodyText: editedBody,
-        scoringProfile: profile?.profileName,
+        scoringProfile: selectedProfile?.profileName,
         finalScore: top?.finalScore,
         priority: top?.priority ?? undefined,
         branch: (currentTemplate.branch === "Launch" || currentTemplate.branch === "Accelerate")
@@ -195,7 +187,8 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
     setTimeout(() => setSendStatus("idle"), 3000);
   }
 
-  const topScore = liveScores[0];
+  const availableScores = liveScores.filter((sl) => !sl.alreadyPresent);
+  const topTargets = availableScores.slice(0, 2);
 
   const WEIGHT_FIELDS: { key: keyof ScoringWeightsInput; label: string }[] = [
     { key: "wCategory", label: t("fitCategory") },
@@ -227,25 +220,10 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
                 </option>
               ))}
             </select>
-            <button
-              onClick={async () => {
-                const name = window.prompt("Profile name");
-                if (!name) return;
-                const res = await fetch("/api/scoring-weights", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ profileName: name, ...weights }),
-                });
-                if (res.ok) window.location.reload();
-              }}
-              className="px-3 py-2 text-xs font-medium bg-zinc-100 text-zinc-700 hover:bg-zinc-200 rounded-lg"
-            >
-              Save as profile
-            </button>
           </div>
         </div>
 
-        {liveScores.slice(0, 2).map((sl) => (
+        {topTargets.map((sl) => (
           <div
             key={sl.marketplaceId}
             className="text-center px-4 py-2 rounded-lg bg-zinc-50 border border-zinc-200 min-w-[110px]"
@@ -283,25 +261,19 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
       {/* Scoring tab */}
       {tab === "scoring" && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Live reweight sliders */}
+          {/* Strategy profile weights */}
           <div className="bg-white border border-zinc-200 rounded-xl p-5">
-            <h3 className="text-sm font-semibold text-zinc-700 mb-4">{t("liveReweight")}</h3>
-            <div className="space-y-3">
+            <h3 className="text-sm font-semibold text-zinc-700 mb-4">Profil de strategie</h3>
+            <div className="space-y-2">
               {WEIGHT_FIELDS.map(({ key, label }) => (
-                <div key={key}>
-                  <div className="flex justify-between text-xs text-zinc-500 mb-1">
-                    <span>{label}</span>
-                    <span className="font-mono font-medium text-zinc-700">{weights[key]}</span>
-                  </div>
-                  <input
-                    type="range"
-                    min={0}
-                    max={60}
-                    step={1}
-                    value={weights[key] as number}
-                    onChange={(e) => handleWeightChange(key, parseInt(e.target.value))}
-                    className="w-full accent-indigo-600"
-                  />
+                <div
+                  key={key}
+                  className="flex items-center justify-between rounded-lg border border-zinc-100 bg-zinc-50 px-3 py-2"
+                >
+                  <span className="text-xs text-zinc-500">{label}</span>
+                  <span className="font-mono text-xs font-semibold text-zinc-800">
+                    {selectedWeights[key]}
+                  </span>
                 </div>
               ))}
             </div>
@@ -318,16 +290,13 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
                 </tr>
               </thead>
               <tbody>
-                {liveScores.map((sl) => (
+                {availableScores.map((sl) => (
                   <tr
                     key={sl.marketplaceId}
                     className="border-b border-zinc-50 last:border-0"
                   >
                     <td className="px-4 py-3 font-medium text-zinc-900">
                       {sl.marketplaceName}
-                      {sl.alreadyPresent && (
-                        <span className="ml-2 text-xs text-zinc-400">({t("alreadyPresent")})</span>
-                      )}
                     </td>
                     <td className="px-4 py-3 text-right font-mono font-semibold text-zinc-700">
                       {sl.finalScore.toFixed(1)}
@@ -337,6 +306,13 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
                     </td>
                   </tr>
                 ))}
+                {availableScores.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="px-4 py-10 text-center text-zinc-400">
+                      No available marketplaces
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -346,15 +322,15 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
       {/* Recommendations tab */}
       {tab === "recommendations" && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {brand.recommendations.map((rec) => (
+          {topTargets.map((rec, index) => (
             <div
-              key={rec.rank}
+              key={rec.marketplaceId}
               className="bg-white border border-zinc-200 rounded-xl p-5"
             >
               <div className="flex items-center justify-between mb-3">
                 <div>
                   <span className="text-xs text-zinc-400 uppercase tracking-wide">
-                    Rank #{rec.rank}
+                    Rank #{index + 1}
                   </span>
                   <h3 className="text-base font-semibold text-zinc-900 mt-0.5">
                     {rec.marketplaceName}
@@ -362,33 +338,33 @@ export default function BrandDetailClient({ brand, weightProfiles, locale }: Pro
                 </div>
                 <div className="text-right">
                   <div className="text-xl font-bold text-zinc-900">
-                    {rec.score.toFixed(1)}
+                    {rec.finalScore.toFixed(1)}
                   </div>
                   <PriorityBadge priority={rec.priority} />
                 </div>
               </div>
 
-              {rec.whyText && (
-                <div className="mb-3">
-                  <div className="text-xs font-medium text-zinc-400 uppercase mb-1">Why</div>
-                  <p className="text-sm text-zinc-600 leading-relaxed">{rec.whyText}</p>
+              <dl className="grid grid-cols-2 gap-2 text-xs">
+                <div className="rounded-lg bg-zinc-50 p-2">
+                  <dt className="text-zinc-400">Categorie</dt>
+                  <dd className="font-mono text-zinc-800">{rec.fitCategory}</dd>
                 </div>
-              )}
-              {rec.entryPlan && (
-                <div className="mb-3">
-                  <div className="text-xs font-medium text-zinc-400 uppercase mb-1">Entry Plan</div>
-                  <p className="text-sm text-zinc-600 leading-relaxed">{rec.entryPlan}</p>
+                <div className="rounded-lg bg-zinc-50 p-2">
+                  <dt className="text-zinc-400">Geo</dt>
+                  <dd className="font-mono text-zinc-800">{rec.fitGeo}</dd>
                 </div>
-              )}
-              {rec.risks && (
-                <div>
-                  <div className="text-xs font-medium text-zinc-400 uppercase mb-1">Risks</div>
-                  <p className="text-sm text-zinc-500 leading-relaxed">{rec.risks}</p>
+                <div className="rounded-lg bg-zinc-50 p-2">
+                  <dt className="text-zinc-400">Scale</dt>
+                  <dd className="font-mono text-zinc-800">{rec.commercialScale}</dd>
                 </div>
-              )}
+                <div className="rounded-lg bg-zinc-50 p-2">
+                  <dt className="text-zinc-400">Ops</dt>
+                  <dd className="font-mono text-zinc-800">{rec.opsReadiness}</dd>
+                </div>
+              </dl>
             </div>
           ))}
-          {brand.recommendations.length === 0 && (
+          {topTargets.length === 0 && (
             <div className="col-span-2 text-center py-10 text-zinc-400 bg-white border border-zinc-200 rounded-xl">
               No recommendations available
             </div>

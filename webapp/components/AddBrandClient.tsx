@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
@@ -31,6 +31,12 @@ interface ProgressEvent {
   message: string;
 }
 
+interface BrandSuggestion {
+  name: string;
+  url: string;
+  category: string;
+}
+
 export default function AddBrandClient({ locale }: { locale: string }) {
   const t = useTranslations("brands");
   const router = useRouter();
@@ -41,7 +47,60 @@ export default function AddBrandClient({ locale }: { locale: string }) {
   const [result, setResult] = useState<EnrichResult | null>(null);
   const [stage, setStage] = useState<"form" | "loading" | "review" | "saved">("form");
   const [editedBrand, setEditedBrand] = useState<BrandData>({});
+  const [brandSuggestions, setBrandSuggestions] = useState<BrandSuggestion[]>([]);
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    const query = inputName.trim();
+    if (!query || stage !== "form") {
+      setBrandSuggestions([]);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      fetch(`/api/brands/suggestions?q=${encodeURIComponent(query)}`, {
+        signal: controller.signal,
+      })
+        .then((res) => (res.ok ? res.json() : []))
+        .then((data: BrandSuggestion[]) => setBrandSuggestions(data))
+        .catch(() => {
+          if (!controller.signal.aborted) setBrandSuggestions([]);
+        });
+    }, 120);
+
+    return () => {
+      controller.abort();
+      clearTimeout(timeout);
+    };
+  }, [inputName, stage]);
+
+  function handleUrlChange(value: string) {
+    setInputUrl(value);
+    const trimmed = value.trim();
+    if (!trimmed) return;
+
+    fetch(`/api/brands/suggestions?url=${encodeURIComponent(trimmed)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((suggestion: BrandSuggestion | null) => {
+        if (suggestion && (!inputName || brandSuggestions.some((brand) => brand.name === inputName))) {
+          setInputName(suggestion.name);
+        }
+      })
+      .catch(() => undefined);
+  }
+
+  function handleNameChange(value: string) {
+    setInputName(value);
+    const known = brandSuggestions.find((brand) => brand.name === value);
+    if (known) setInputUrl(known.url);
+  }
+
+  function selectSuggestion(brand: BrandSuggestion) {
+    setInputName(brand.name);
+    setInputUrl(brand.url);
+    setBrandSuggestions([]);
+  }
 
   async function handleEnrich() {
     if (!inputUrl && !inputName) return;
@@ -133,7 +192,7 @@ export default function AddBrandClient({ locale }: { locale: string }) {
             <input
               type="text"
               value={inputUrl}
-              onChange={(e) => setInputUrl(e.target.value)}
+              onChange={(e) => handleUrlChange(e.target.value)}
               placeholder="https://example.com or example.com"
               disabled={stage === "loading"}
               className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2.5 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 disabled:opacity-50"
@@ -151,11 +210,27 @@ export default function AddBrandClient({ locale }: { locale: string }) {
             <input
               type="text"
               value={inputName}
-              onChange={(e) => setInputName(e.target.value)}
+              onChange={(e) => handleNameChange(e.target.value)}
               placeholder="e.g. Sézane"
               disabled={stage === "loading"}
               className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2.5 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 disabled:opacity-50"
             />
+            {inputName.trim() && brandSuggestions.length > 0 && (
+              <div className="mt-2 overflow-hidden rounded-lg border border-zinc-200 bg-white">
+                {brandSuggestions.map((brand) => (
+                <button
+                  key={brand.name}
+                  type="button"
+                  onClick={() => selectSuggestion(brand)}
+                  disabled={stage === "loading"}
+                  className="flex w-full items-center justify-between gap-3 border-b border-zinc-100 px-3 py-2 text-left text-sm last:border-b-0 hover:bg-indigo-50 disabled:opacity-50"
+                >
+                  <span className="font-medium text-zinc-800">{brand.name}</span>
+                  <span className="truncate text-xs text-zinc-400">{brand.url}</span>
+                </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <button

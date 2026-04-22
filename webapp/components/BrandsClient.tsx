@@ -15,7 +15,14 @@ interface BrandRow {
   bestScore: number | null;
   bestPriority: string | null;
   topMarketplace: string | null;
+  amazonNotZalando: boolean;
   createdVia: string;
+}
+
+interface WeightProfile {
+  id: string;
+  profileName: string;
+  isDefault: boolean;
 }
 
 export default function BrandsClient({ locale }: { locale: string }) {
@@ -23,11 +30,13 @@ export default function BrandsClient({ locale }: { locale: string }) {
   const router = useRouter();
 
   const [brands, setBrands] = useState<BrandRow[]>([]);
+  const [profiles, setProfiles] = useState<WeightProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState("");
   const [category, setCategory] = useState("");
   const [country, setCountry] = useState("");
   const [priority, setPriority] = useState("");
+  const [profileId, setProfileId] = useState("");
 
   const fetchBrands = useCallback(async () => {
     setLoading(true);
@@ -36,14 +45,26 @@ export default function BrandsClient({ locale }: { locale: string }) {
     if (category) params.set("category", category);
     if (country) params.set("country", country);
     if (priority) params.set("priority", priority);
-    params.set("take", "100");
+    if (profileId) params.set("profileId", profileId);
+    params.set("take", "200");
 
     const res = await fetch(`/api/brands?${params}`);
     if (res.ok) {
       setBrands(await res.json());
     }
     setLoading(false);
-  }, [q, category, country, priority]);
+  }, [q, category, country, priority, profileId]);
+
+  useEffect(() => {
+    fetch("/api/scoring-weights")
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data: WeightProfile[]) => {
+        setProfiles(data);
+        const defaultProfile = data.find((p) => p.isDefault) ?? data[0];
+        if (defaultProfile) setProfileId(defaultProfile.id);
+      })
+      .catch(() => undefined);
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(fetchBrands, 200);
@@ -104,6 +125,19 @@ export default function BrandsClient({ locale }: { locale: string }) {
         </select>
 
         <select
+          value={profileId}
+          onChange={(e) => setProfileId(e.target.value)}
+          className="px-3 py-2 text-sm bg-white border border-zinc-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+        >
+          {profiles.length === 0 && <option value="">Profil strategie</option>}
+          {profiles.map((profile) => (
+            <option key={profile.id} value={profile.id}>
+              Profil: {profile.profileName}
+            </option>
+          ))}
+        </select>
+
+        <select
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
           className="px-3 py-2 text-sm bg-white border border-zinc-200 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
@@ -150,10 +184,21 @@ export default function BrandsClient({ locale }: { locale: string }) {
                 <tr
                   key={b.id}
                   onClick={() => router.push(`/${locale}/brands/${b.id}`)}
-                  className="border-b border-zinc-50 last:border-0 hover:bg-zinc-50 cursor-pointer transition-colors"
+                  className={`border-b last:border-0 cursor-pointer transition-colors ${
+                    b.amazonNotZalando
+                      ? "border-amber-100 bg-amber-50/70 hover:bg-amber-100/80"
+                      : "border-zinc-50 hover:bg-zinc-50"
+                  }`}
                 >
                   <td className="px-4 py-3">
-                    <div className="font-medium text-zinc-900">{b.name}</div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-zinc-900">{b.name}</span>
+                      {b.amazonNotZalando && (
+                        <span className="rounded bg-amber-200 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-900">
+                          Amazon sans Zalando
+                        </span>
+                      )}
+                    </div>
                     {b.url && (
                       <div className="text-xs text-zinc-400 truncate max-w-[180px]">
                         {b.url}

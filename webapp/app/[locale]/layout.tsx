@@ -1,23 +1,10 @@
 import type { Metadata } from "next";
-import { DM_Sans, JetBrains_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 import Sidebar from "@/components/Sidebar";
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-});
 
 export const metadata: Metadata = {
   title: "Marketplace Growth Engine",
@@ -40,10 +27,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html
-      lang={locale}
-      className={`${dmSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
-    >
+    <html lang={locale} className="h-full antialiased">
       <body className="h-full flex bg-[var(--color-bg)] text-[var(--color-text-primary)]">
         <NextIntlClientProvider messages={messages}>
           <Sidebar locale={locale} />

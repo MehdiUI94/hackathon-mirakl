@@ -22,6 +22,18 @@ model Brand {
   existingMarketplaces String           @default("[]")
   notes                String?
   sources              String?
+  contactEmail         String?
+  contactType          String?
+  contactRole          String?
+  contactPersona       String?
+  contactSubjectHint   String?
+  contactStatus        String?
+  contactConfidence    Float?
+  contactRecommendation String?
+  contactSourceUrl     String?
+  contactNotes         String?
+  amazonSignal          String?
+  zalandoSignal         String?
   createdVia           String           @default("WORKBOOK")
   sourceGroup          String           @default("MAIN")
   createdAt            DateTime         @default(now())

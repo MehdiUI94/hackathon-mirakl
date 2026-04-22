@@ -3,7 +3,7 @@ import { PrismaClient } from "@/app/generated/prisma/client";
 import path from "node:path";
 
 const dbPath = process.env.DATABASE_URL?.replace("file:", "") ?? "./dev.db";
-const resolvedPath = path.resolve(process.cwd(), dbPath);
+const resolvedPath = path.resolve(/* turbopackIgnore: true */ process.cwd(), dbPath);
 
 const adapter = new PrismaBetterSqlite3({
   url: `file:${resolvedPath}`,

@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "seed": "tsx scripts/seed.ts",
+    "import:contacts": "tsx scripts/import-contacts.ts",
+    "import:signals": "tsx scripts/import-marketplace-signals.ts",
     "postinstall": "prisma generate --config ./prisma.config.ts"
   },
   "dependencies": {

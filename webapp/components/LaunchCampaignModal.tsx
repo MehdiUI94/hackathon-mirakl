@@ -11,12 +11,28 @@ interface Brand {
   bestScore: number | null;
   bestPriority: string | null;
   topMarketplace: string | null;
+  topMarketplaces: { rank: number; name: string; score: number | null; priority: string | null }[];
+  contactEmail: string | null;
+  contactType: string | null;
+  contactRole: string | null;
+  contactPersona: string | null;
+  contactStatus: string | null;
+  contactConfidence: number | null;
+  amazonSignal: string | null;
+  zalandoSignal: string | null;
+  amazonNotZalando: boolean;
+}
+
+interface WeightProfile {
+  id: string;
+  profileName: string;
+  isDefault: boolean;
 }
 
 interface BrandContact {
   brandId: string;
   brandName: string;
-  marketplaceName: string;
+  marketplaceNames: string[];
   toEmail: string;
   toFirstName: string;
 }
@@ -29,6 +45,8 @@ interface Props {
 export function LaunchCampaignModal({ locale, onClose }: Props) {
   const router = useRouter();
   const [brands, setBrands] = useState<Brand[]>([]);
+  const [profiles, setProfiles] = useState<WeightProfile[]>([]);
+  const [selectedProfileId, setSelectedProfileId] = useState("");
   const [loadingBrands, setLoadingBrands] = useState(true);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState<Map<string, BrandContact>>(new Map());
@@ -39,11 +57,44 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
 
   useEffect(() => {
     searchRef.current?.focus();
-    fetch("/api/brands?take=100")
-      .then((r) => r.json())
-      .then((data) => { setBrands(data); setLoadingBrands(false); })
-      .catch(() => setLoadingBrands(false));
   }, []);
+
+  useEffect(() => {
+    fetch("/api/scoring-weights")
+      .then((r) => r.json())
+      .then((data: WeightProfile[]) => {
+        setProfiles(data);
+        const defaultProfile = data.find((p) => p.isDefault) ?? data[0];
+        if (defaultProfile) setSelectedProfileId(defaultProfile.id);
+      })
+      .catch(() => undefined);
+  }, []);
+
+  useEffect(() => {
+    setLoadingBrands(true);
+    const params = new URLSearchParams({ take: "200" });
+    if (selectedProfileId) params.set("profileId", selectedProfileId);
+
+    fetch(`/api/brands?${params}`)
+      .then((r) => r.json())
+      .then((data: Brand[]) => {
+        setBrands(data);
+        setSelected((prev) => {
+          const next = new Map(prev);
+          for (const b of data) {
+            const entry = next.get(b.id);
+            if (!entry) continue;
+            next.set(b.id, {
+              ...entry,
+              marketplaceNames: getTargetMarketplaces(b),
+            });
+          }
+          return next;
+        });
+        setLoadingBrands(false);
+      })
+      .catch(() => setLoadingBrands(false));
+  }, [selectedProfileId]);
 
   // Close on Escape
   useEffect(() => {
@@ -57,7 +108,7 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
   const filtered = brands.filter((b) =>
     b.name.toLowerCase().includes(search.toLowerCase()) ||
     (b.category ?? "").toLowerCase().includes(search.toLowerCase()) ||
-    (b.topMarketplace ?? "").toLowerCase().includes(search.toLowerCase())
+    b.topMarketplaces.some((m) => m.name.toLowerCase().includes(search.toLowerCase()))
   );
 
   function toggleBrand(b: Brand) {
@@ -69,8 +120,8 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
         next.set(b.id, {
           brandId: b.id,
           brandName: b.name,
-          marketplaceName: b.topMarketplace ?? "Mirakl",
-          toEmail: "",
+          marketplaceNames: getTargetMarketplaces(b),
+          toEmail: b.contactEmail ?? "",
           toFirstName: "",
         });
       }
@@ -78,7 +129,7 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
     });
   }
 
-  function updateContact(brandId: string, field: "toEmail" | "toFirstName" | "marketplaceName", value: string) {
+  function updateContact(brandId: string, field: "toEmail" | "toFirstName", value: string) {
     setSelected((prev) => {
       const next = new Map(prev);
       const entry = next.get(brandId);
@@ -88,6 +139,7 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
   }
 
   const contacts = Array.from(selected.values());
+  const targetCount = contacts.reduce((sum, c) => sum + c.marketplaceNames.length, 0);
   const canLaunch = contacts.length > 0 && contacts.every((c) => c.toEmail.trim() !== "") && !launching;
 
   async function launch() {
@@ -100,12 +152,14 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
         body: JSON.stringify({
           campaign: campaignName,
           testMode: false,
-          targets: contacts.map((c) => ({
-            brandName: c.brandName,
-            toEmail: c.toEmail,
-            toFirstName: c.toFirstName || undefined,
-            marketplaceName: c.marketplaceName,
-          })),
+          targets: contacts.flatMap((c) =>
+            c.marketplaceNames.map((marketplaceName) => ({
+              brandName: c.brandName,
+              toEmail: c.toEmail,
+              toFirstName: c.toFirstName || undefined,
+              marketplaceName,
+            }))
+          ),
         }),
       });
       const data = await res.json();
@@ -160,7 +214,20 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
         <div className="flex flex-1 overflow-hidden">
           {/* Left — brand picker */}
           <div className="flex flex-col w-1/2 border-r border-zinc-100" style={{ minWidth: 0 }}>
-            <div className="px-5 py-3 border-b border-zinc-100">
+            <div className="space-y-2 px-5 py-3 border-b border-zinc-100">
+              {profiles.length > 0 && (
+                <select
+                  value={selectedProfileId}
+                  onChange={(e) => setSelectedProfileId(e.target.value)}
+                  className="w-full text-sm bg-white border border-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-300"
+                >
+                  {profiles.map((profile) => (
+                    <option key={profile.id} value={profile.id}>
+                      Profil strategie: {profile.profileName}
+                    </option>
+                  ))}
+                </select>
+              )}
               <input
                 ref={searchRef}
                 type="text"
@@ -182,8 +249,14 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
                 return (
                   <label
                     key={b.id}
-                    className={`flex items-start gap-3 px-5 py-3 cursor-pointer border-b border-zinc-50 transition-colors ${
-                      isSelected ? "bg-indigo-50" : "hover:bg-zinc-50"
+                    className={`flex items-start gap-3 px-5 py-3 cursor-pointer border-b transition-colors ${
+                      b.amazonNotZalando
+                        ? isSelected
+                          ? "bg-amber-100 border-amber-200"
+                          : "bg-amber-50/70 border-amber-100 hover:bg-amber-100/80"
+                        : isSelected
+                        ? "bg-indigo-50 border-zinc-50"
+                        : "border-zinc-50 hover:bg-zinc-50"
                     }`}
                   >
                     <span
@@ -208,11 +281,24 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
                             "bg-zinc-100 text-zinc-500"
                           }`}>{b.bestPriority}</span>
                         )}
+                        {b.contactEmail && (
+                          <>
+                            <span className="text-xs text-zinc-300">Â·</span>
+                            <span className="text-xs text-emerald-600 truncate">contact</span>
+                          </>
+                        )}
+                        {b.amazonNotZalando && (
+                          <span className="rounded bg-amber-200 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-900">
+                            Amazon sans Zalando
+                          </span>
+                        )}
                       </div>
                       <div className="flex items-center gap-3 mt-0.5">
-                        {b.topMarketplace && (
-                          <span className="text-xs text-zinc-400">{b.topMarketplace}</span>
-                        )}
+                        {b.topMarketplaces.slice(0, 2).map((marketplace) => (
+                          <span key={marketplace.rank} className="text-xs text-zinc-400">
+                            #{marketplace.rank} {marketplace.name}
+                          </span>
+                        ))}
                         {b.category && (
                           <span className="text-xs text-zinc-300">·</span>
                         )}
@@ -287,6 +373,11 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
                         placeholder="contact@marque.com"
                         className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-300 bg-white"
                       />
+                      {brands.find((b) => b.id === c.brandId)?.contactRole && (
+                        <p className="mt-1 text-[11px] text-zinc-400 truncate">
+                          {brands.find((b) => b.id === c.brandId)?.contactRole}
+                        </p>
+                      )}
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
@@ -303,14 +394,18 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
                       </div>
                       <div>
                         <label className="block text-[10px] font-semibold text-zinc-400 uppercase tracking-wide mb-1">
-                          Marketplace
+                          Top marketplaces
                         </label>
-                        <input
-                          type="text"
-                          value={c.marketplaceName}
-                          onChange={(e) => updateContact(c.brandId, "marketplaceName", e.target.value)}
-                          className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-300 bg-white"
-                        />
+                        <div className="min-h-[34px] flex flex-wrap gap-1.5 rounded-lg border border-zinc-200 bg-white px-2 py-1.5">
+                          {c.marketplaceNames.map((marketplaceName, index) => (
+                            <span
+                              key={`${c.brandId}-${marketplaceName}`}
+                              className="inline-flex items-center rounded bg-indigo-50 px-2 py-0.5 text-[11px] font-medium text-indigo-700"
+                            >
+                              #{index + 1} {marketplaceName}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -342,7 +437,7 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
             )}
             {contacts.length > 0 && contacts.every((c) => c.toEmail) && !launching && !result && (
               <span className="text-zinc-500">
-                {contacts.length} marque{contacts.length > 1 ? "s" : ""} · envoi via n8n
+                {contacts.length} marque{contacts.length > 1 ? "s" : ""} · {targetCount} envoi{targetCount > 1 ? "s" : ""} via n8n
               </span>
             )}
           </div>
@@ -380,4 +475,9 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
       </div>
     </div>
   );
+}
+
+function getTargetMarketplaces(brand: Brand) {
+  const targets = brand.topMarketplaces.slice(0, 2).map((m) => m.name);
+  return targets.length > 0 ? targets : [brand.topMarketplace ?? "Mirakl"];
 }

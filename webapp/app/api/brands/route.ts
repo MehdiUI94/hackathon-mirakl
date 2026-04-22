@@ -1,7 +1,13 @@
 import { prisma } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { scoreBrandAgainstMarketplaces } from "@/lib/scoring";
+import {
+  computeScore,
+  priorityFromScore,
+  scoreBrandAgainstMarketplaces,
+  type ScoringComponents,
+  type ScoringWeightsInput,
+} from "@/lib/scoring";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -9,8 +15,14 @@ export async function GET(request: NextRequest) {
   const category = searchParams.get("category") ?? "";
   const country = searchParams.get("country") ?? "";
   const priority = searchParams.get("priority") ?? "";
+  const profileId = searchParams.get("profileId") ?? "";
   const take = Math.min(parseInt(searchParams.get("take") ?? "50"), 200);
   const skip = parseInt(searchParams.get("skip") ?? "0");
+
+  const profile = profileId
+    ? await prisma.scoringWeights.findUnique({ where: { id: profileId } })
+    : null;
+  const weights = profile ? profileToWeights(profile) : null;
 
   const brands = await prisma.brand.findMany({
     where: {
@@ -27,8 +39,8 @@ export async function GET(request: NextRequest) {
         include: { marketplace: true },
       },
       scoringLines: {
+        include: { marketplace: true },
         orderBy: { finalScore: "desc" },
-        take: 1,
       },
     },
     orderBy: { name: "asc" },
@@ -36,26 +48,119 @@ export async function GET(request: NextRequest) {
     skip,
   });
 
-  const filtered = priority
-    ? brands.filter((b) =>
-        b.scoringLines[0]?.priority?.startsWith(priority) ?? false
-      )
-    : brands;
+  const rows = brands.map((b) => {
+    const rankedLines = weights
+      ? b.scoringLines
+          .map((sl) => {
+            const score = computeScore(scoringLineToComponents(sl), weights);
+            return {
+              marketplaceName: sl.marketplace.name,
+              marketplaceId: sl.marketplaceId,
+              finalScore: score,
+              priority: priorityFromScore(score),
+              alreadyPresent: sl.alreadyPresent,
+            };
+          })
+          .sort((a, b) => b.finalScore - a.finalScore)
+      : b.scoringLines.map((sl) => ({
+          marketplaceName: sl.marketplace.name,
+          marketplaceId: sl.marketplaceId,
+          finalScore: sl.finalScore,
+          priority: sl.priority,
+          alreadyPresent: sl.alreadyPresent,
+        }));
 
-  return NextResponse.json(
-    filtered.map((b) => ({
+    const eligibleLines = rankedLines.filter((sl) => !sl.alreadyPresent);
+    const topTargets = weights
+      ? eligibleLines.slice(0, 2).map((sl, idx) => ({
+          rank: idx + 1,
+          name: sl.marketplaceName,
+          score: sl.finalScore,
+          priority: sl.priority,
+        }))
+      : b.recommendations.map((r) => ({
+          rank: r.rank,
+          name: r.marketplace.name,
+          score: r.score,
+          priority: r.priority,
+        }));
+    const best = weights ? eligibleLines[0] ?? rankedLines[0] : rankedLines[0];
+
+    return {
       id: b.id,
       name: b.name,
       url: b.url,
       country: b.country,
       category: b.category,
       sourceGroup: b.sourceGroup,
-      bestScore: b.scoringLines[0]?.finalScore ?? null,
-      bestPriority: b.scoringLines[0]?.priority ?? null,
-      topMarketplace: b.recommendations[0]?.marketplace.name ?? null,
+      bestScore: best?.finalScore ?? null,
+      bestPriority: best?.priority ?? null,
+      topMarketplace: topTargets[0]?.name ?? null,
+      topMarketplaces: topTargets,
+      scoringProfile: profile?.profileName ?? null,
+      contactEmail: b.contactEmail,
+      contactType: b.contactType,
+      contactRole: b.contactRole,
+      contactPersona: b.contactPersona,
+      contactStatus: b.contactStatus,
+      contactConfidence: b.contactConfidence,
+      amazonSignal: b.amazonSignal,
+      zalandoSignal: b.zalandoSignal,
+      amazonNotZalando: isAmazonNotZalando(b.amazonSignal, b.zalandoSignal),
       createdVia: b.createdVia,
-    }))
-  );
+    };
+  });
+
+  const filtered = priority
+    ? rows.filter((b) => b.bestPriority?.startsWith(priority) ?? false)
+    : rows;
+
+  return NextResponse.json(filtered);
+}
+
+function profileToWeights(profile: {
+  wCategory: number;
+  wGeo: number;
+  wScale: number;
+  wOps: number;
+  wPositioning: number;
+  wIncrementality: number;
+  wStory: number;
+  wPenalty: number;
+  wPrior: number;
+}): ScoringWeightsInput {
+  return {
+    wCategory: profile.wCategory,
+    wGeo: profile.wGeo,
+    wScale: profile.wScale,
+    wOps: profile.wOps,
+    wPositioning: profile.wPositioning,
+    wIncrementality: profile.wIncrementality,
+    wStory: profile.wStory,
+    wPenalty: profile.wPenalty,
+    wPrior: profile.wPrior,
+  };
+}
+
+function scoringLineToComponents(line: ScoringComponents): ScoringComponents {
+  return {
+    fitCategory: line.fitCategory,
+    fitGeo: line.fitGeo,
+    commercialScale: line.commercialScale,
+    opsReadiness: line.opsReadiness,
+    fitPositioning: line.fitPositioning,
+    incrementality: line.incrementality,
+    sustainabilityStory: line.sustainabilityStory,
+    baseCompletion: line.baseCompletion,
+    penalty: line.penalty,
+    initialPrior: line.initialPrior,
+  };
+}
+
+function isAmazonNotZalando(amazonSignal: string | null, zalandoSignal: string | null) {
+  const amazon = (amazonSignal ?? "").toLowerCase();
+  const zalando = (zalandoSignal ?? "").toLowerCase();
+  return /oui|observed|signal|storefront|search/.test(amazon) && /\bnon\b|absent|pas de/.test(zalando);
 }
 
 const CreateBrandSchema = z.object({
