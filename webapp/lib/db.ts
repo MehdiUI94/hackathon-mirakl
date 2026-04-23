@@ -33,12 +33,14 @@ function resolveDatabasePath() {
 
   const tmpDbPath = path.join(os.tmpdir(), "hackathon-mirakl-dev.db");
   if (fs.existsSync(tmpDbPath)) {
+    ensureWritable(tmpDbPath);
     return tmpDbPath;
   }
 
   const bundledDbPath = findBundledDatabasePath();
   if (bundledDbPath) {
     fs.copyFileSync(bundledDbPath, tmpDbPath);
+    ensureWritable(tmpDbPath);
     return tmpDbPath;
   }
 
@@ -57,4 +59,12 @@ function findBundledDatabasePath() {
   ];
 
   return candidates.find((candidate) => fs.existsSync(candidate)) ?? null;
+}
+
+function ensureWritable(filePath: string) {
+  try {
+    fs.chmodSync(filePath, 0o600);
+  } catch {
+    // Best effort only: some environments ignore chmod on ephemeral filesystems.
+  }
 }
