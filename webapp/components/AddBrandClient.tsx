@@ -52,6 +52,26 @@ interface BrandSuggestion {
   category: string;
 }
 
+const REVIEW_FIELDS = [
+  { key: "name", label: "Brand Name" },
+  { key: "url", label: "URL" },
+  { key: "country", label: "Country" },
+  { key: "category", label: "Category" },
+  { key: "foundedYear", label: "Founded Year" },
+  { key: "headquartersAddress", label: "Headquarters" },
+  { key: "companyType", label: "Company Type" },
+  { key: "genderFocus", label: "Gender Focus" },
+  { key: "productType", label: "Product Type" },
+  { key: "positioning", label: "Positioning" },
+  { key: "revenueMUsd", label: "Revenue ($M)" },
+  { key: "headcount", label: "Employees" },
+  { key: "intlPresence", label: "International Presence" },
+  { key: "businessSignals", label: "Business Signals" },
+  { key: "productTags", label: "Product Tags" },
+  { key: "sources", label: "Sources" },
+  { key: "notes", label: "Notes" },
+] as const;
+
 export default function AddBrandClient({ locale }: { locale: string }) {
   const t = useTranslations("brands");
   const router = useRouter();
@@ -231,9 +251,9 @@ export default function AddBrandClient({ locale }: { locale: string }) {
   if (stage === "form" || stage === "loading") {
     return (
       <div className="space-y-6">
-        <div className="bg-white border border-zinc-200 rounded-xl p-6 space-y-4">
+        <div className="mirakl-card rise space-y-6 border border-[var(--mirakl-border)] p-8">
           <div>
-            <label className="block text-sm font-medium text-zinc-700 mb-1.5">
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.08em] text-[rgba(3,24,47,0.56)]">
               Brand URL
             </label>
             <input
@@ -242,39 +262,43 @@ export default function AddBrandClient({ locale }: { locale: string }) {
               onChange={(e) => handleUrlChange(e.target.value)}
               placeholder="https://example.com or example.com"
               disabled={stage === "loading"}
-              className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2.5 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 disabled:opacity-50"
+              className="w-full rounded-lg border border-[var(--mirakl-border)] bg-[var(--mirakl-surface-muted)] px-4 py-3 text-sm text-[var(--mirakl-primary-dark)] shadow-[inset_0_1px_2px_rgba(3,24,47,0.04)] outline-none transition focus:border-[rgba(39,100,255,0.5)] focus:bg-white focus:ring-2 focus:ring-[rgba(39,100,255,0.14)] disabled:opacity-50"
             />
           </div>
+
           <div className="flex items-center gap-3">
-            <div className="flex-1 border-t border-zinc-200" />
-            <span className="text-xs text-zinc-400">or</span>
-            <div className="flex-1 border-t border-zinc-200" />
+            <div className="flex-1 border-t border-[var(--mirakl-border)]" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-[rgba(3,24,47,0.44)]">
+              or
+            </span>
+            <div className="flex-1 border-t border-[var(--mirakl-border)]" />
           </div>
+
           <div>
-            <label className="block text-sm font-medium text-zinc-700 mb-1.5">
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.08em] text-[rgba(3,24,47,0.56)]">
               Brand Name
             </label>
             <input
               type="text"
               value={inputName}
               onChange={(e) => handleNameChange(e.target.value)}
-              placeholder="e.g. Sézane"
+              placeholder="e.g. Sezane"
               disabled={stage === "loading"}
-              className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2.5 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 disabled:opacity-50"
+              className="w-full rounded-lg border border-[var(--mirakl-border)] bg-[var(--mirakl-surface-muted)] px-4 py-3 text-sm text-[var(--mirakl-primary-dark)] shadow-[inset_0_1px_2px_rgba(3,24,47,0.04)] outline-none transition focus:border-[rgba(39,100,255,0.5)] focus:bg-white focus:ring-2 focus:ring-[rgba(39,100,255,0.14)] disabled:opacity-50"
             />
             {inputName.trim() && brandSuggestions.length > 0 && (
-              <div className="mt-2 overflow-hidden rounded-lg border border-zinc-200 bg-white">
+              <div className="mt-3 overflow-hidden rounded-lg border border-[var(--mirakl-border)] bg-white shadow-[var(--mirakl-shadow-soft)]">
                 {brandSuggestions.map((brand) => (
-                <button
-                  key={brand.name}
-                  type="button"
-                  onClick={() => selectSuggestion(brand)}
-                  disabled={stage === "loading"}
-                  className="flex w-full items-center justify-between gap-3 border-b border-zinc-100 px-3 py-2 text-left text-sm last:border-b-0 hover:bg-indigo-50 disabled:opacity-50"
-                >
-                  <span className="font-medium text-zinc-800">{brand.name}</span>
-                  <span className="truncate text-xs text-zinc-400">{brand.url}</span>
-                </button>
+                  <button
+                    key={brand.name}
+                    type="button"
+                    onClick={() => selectSuggestion(brand)}
+                    disabled={stage === "loading"}
+                    className="flex w-full items-center justify-between gap-3 border-b border-[var(--mirakl-border)] px-4 py-3 text-left text-sm last:border-b-0 hover:bg-[var(--mirakl-primary-background)] disabled:opacity-50"
+                  >
+                    <span className="font-bold text-[var(--mirakl-primary-dark)]">{brand.name}</span>
+                    <span className="truncate text-xs text-[rgba(3,24,47,0.44)]">{brand.url}</span>
+                  </button>
                 ))}
               </div>
             )}
@@ -283,21 +307,25 @@ export default function AddBrandClient({ locale }: { locale: string }) {
           <button
             onClick={handleEnrich}
             disabled={(!inputUrl && !inputName) || stage === "loading"}
-            className="w-full py-2.5 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full rounded-lg bg-[var(--mirakl-primary-accent)] px-4 py-3 text-sm font-bold text-white shadow-[var(--mirakl-shadow-soft)] transition hover:bg-[#1e57ef] disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {stage === "loading" ? "Enriching…" : "Enrich & Score"}
+            {stage === "loading" ? "Enriching..." : "Enrich & Score"}
           </button>
         </div>
 
         {progress.length > 0 && (
-          <div className="bg-zinc-900 rounded-xl p-4 space-y-1 font-mono text-xs">
+          <div className="mirakl-card rise-2 space-y-2 border border-[rgba(3,24,47,0.08)] bg-[var(--mirakl-primary-dark)] p-5 text-xs text-white">
             {progress.map((p, i) => (
-              <div key={i} className={`${p.step === "error" ? "text-red-400" : "text-emerald-400"}`}>
-                <span className="text-zinc-500">[{p.step}]</span> {p.message}
+              <div
+                key={i}
+                className={p.step === "error" ? "text-[var(--mirakl-secondary-accent)]" : "text-white"}
+              >
+                <span className="mr-2 text-[rgba(255,255,255,0.48)]">[{p.step}]</span>
+                {p.message}
               </div>
             ))}
             {stage === "loading" && (
-              <div className="text-zinc-500 animate-pulse">…</div>
+              <div className="animate-pulse text-[rgba(255,255,255,0.48)]">...</div>
             )}
           </div>
         )}
@@ -308,37 +336,22 @@ export default function AddBrandClient({ locale }: { locale: string }) {
   if (stage === "review" && result) {
     return (
       <div className="space-y-6">
-        {/* Review form */}
-        <div className="bg-white border border-zinc-200 rounded-xl p-6 space-y-4">
-          <h2 className="text-sm font-semibold text-zinc-700">Review Extracted Data</h2>
+        <div className="mirakl-card rise border border-[var(--mirakl-border)] p-8">
+          <h2 className="pb-4 text-[18px] font-bold leading-7 text-[var(--mirakl-primary-dark)]">
+            Review Extracted Data
+          </h2>
 
-          {[
-            { key: "name", label: "Brand Name" },
-            { key: "url", label: "URL" },
-            { key: "country", label: "Country" },
-            { key: "category", label: "Category" },
-            { key: "foundedYear", label: "Founded Year" },
-            { key: "headquartersAddress", label: "Headquarters" },
-            { key: "companyType", label: "Company Type" },
-            { key: "genderFocus", label: "Gender Focus" },
-            { key: "productType", label: "Product Type" },
-            { key: "positioning", label: "Positioning" },
-            { key: "revenueMUsd", label: "Revenue ($M)" },
-            { key: "headcount", label: "Employees" },
-            { key: "intlPresence", label: "International Presence" },
-            { key: "businessSignals", label: "Business Signals" },
-            { key: "productTags", label: "Product Tags" },
-            { key: "sources", label: "Sources" },
-            { key: "notes", label: "Notes" },
-          ].map(({ key, label }) => (
-            <div key={key}>
-              <label className="block text-xs font-medium text-zinc-500 uppercase mb-1">{label}</label>
+          {REVIEW_FIELDS.map(({ key, label }) => (
+            <div key={key} className="mb-4 last:mb-0">
+              <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.08em] text-[rgba(3,24,47,0.56)]">
+                {label}
+              </label>
               {key === "notes" || key === "sources" ? (
                 <textarea
                   rows={key === "notes" ? 3 : 4}
                   value={stringifyFieldValue(editedBrand[key])}
                   onChange={(e) => setEditedBrand((prev) => ({ ...prev, [key]: e.target.value }))}
-                  className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+                  className="w-full rounded-lg border border-[var(--mirakl-border)] bg-[var(--mirakl-surface-muted)] px-4 py-3 text-sm text-[var(--mirakl-primary-dark)] shadow-[inset_0_1px_2px_rgba(3,24,47,0.04)] outline-none transition focus:border-[rgba(39,100,255,0.5)] focus:bg-white focus:ring-2 focus:ring-[rgba(39,100,255,0.14)]"
                 />
               ) : (
                 <input
@@ -353,15 +366,17 @@ export default function AddBrandClient({ locale }: { locale: string }) {
                           : e.target.value,
                     }))
                   }
-                  className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+                  className="w-full rounded-lg border border-[var(--mirakl-border)] bg-[var(--mirakl-surface-muted)] px-4 py-3 text-sm text-[var(--mirakl-primary-dark)] shadow-[inset_0_1px_2px_rgba(3,24,47,0.04)] outline-none transition focus:border-[rgba(39,100,255,0.5)] focus:bg-white focus:ring-2 focus:ring-[rgba(39,100,255,0.14)]"
                 />
               )}
             </div>
           ))}
 
           <div>
-            <label className="block text-xs font-medium text-zinc-500 uppercase mb-1">Sustainable</label>
-            <label className="inline-flex items-center gap-2 text-sm text-zinc-700">
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-[0.08em] text-[rgba(3,24,47,0.56)]">
+              Sustainable
+            </label>
+            <label className="inline-flex items-center gap-2 text-sm text-[var(--mirakl-text-muted)]">
               <input
                 type="checkbox"
                 checked={Boolean(editedBrand.sustainable)}
@@ -374,24 +389,29 @@ export default function AddBrandClient({ locale }: { locale: string }) {
           </div>
         </div>
 
-        {/* Score preview */}
-        <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden">
-          <div className="px-4 py-3 border-b border-zinc-100">
-            <h3 className="text-sm font-semibold text-zinc-700">Estimated Scores (Balanced weights)</h3>
+        <div className="mirakl-card rise-2 overflow-hidden border border-[var(--mirakl-border)]">
+          <div className="border-b border-[var(--mirakl-border)] px-6 py-4">
+            <h3 className="text-[18px] font-bold leading-7 text-[var(--mirakl-primary-dark)]">
+              Estimated Scores (Balanced weights)
+            </h3>
           </div>
-          <table className="w-full text-sm">
+          <table className="data-table w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-50 text-xs text-zinc-400 uppercase">
-                <th className="text-left px-4 py-2">Marketplace</th>
-                <th className="text-right px-4 py-2">Score</th>
-                <th className="text-right px-4 py-2">Priority</th>
+              <tr className="border-b border-[var(--mirakl-border)]">
+                <th className="px-4 py-2 text-left">Marketplace</th>
+                <th className="px-4 py-2 text-right">Score</th>
+                <th className="px-4 py-2 text-right">Priority</th>
               </tr>
             </thead>
             <tbody>
               {result.scores.map((s) => (
-                <tr key={s.marketplaceId} className="border-b border-zinc-50 last:border-0">
-                  <td className="px-4 py-2.5 font-medium text-zinc-900">{s.marketplaceName}</td>
-                  <td className="px-4 py-2.5 text-right font-mono text-zinc-700">{s.score.toFixed(1)}</td>
+                <tr key={s.marketplaceId} className="last:border-0">
+                  <td className="px-4 py-2.5 font-bold text-[var(--mirakl-primary-dark)]">
+                    {s.marketplaceName}
+                  </td>
+                  <td className="px-4 py-2.5 text-right font-bold text-[var(--mirakl-primary-dark)]">
+                    {s.score.toFixed(1)}
+                  </td>
                   <td className="px-4 py-2.5 text-right">
                     <PriorityBadge priority={s.priority} />
                   </td>
@@ -404,20 +424,21 @@ export default function AddBrandClient({ locale }: { locale: string }) {
         <div className="flex gap-3">
           <button
             onClick={() => setStage("form")}
-            className="px-4 py-2.5 text-sm font-medium text-zinc-600 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50"
+            className="rounded-lg border border-[var(--mirakl-border)] bg-white px-4 py-3 text-sm font-bold text-[var(--mirakl-primary-dark)] transition hover:bg-[var(--mirakl-primary-background)]"
           >
             Back
           </button>
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex-1 py-2.5 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+            className="flex-1 rounded-lg bg-[var(--mirakl-primary-accent)] px-4 py-3 text-sm font-bold text-white shadow-[var(--mirakl-shadow-soft)] transition hover:bg-[#1e57ef] disabled:opacity-50"
           >
-            {saving ? "Saving…" : "Save Brand"}
+            {saving ? "Saving..." : "Save Brand"}
           </button>
         </div>
+
         {saveError && (
-          <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="rounded-lg border border-[rgba(242,46,117,0.22)] bg-[var(--mirakl-secondary-background)] px-4 py-3 text-sm text-[var(--mirakl-secondary-dark)]">
             {saveError}
           </div>
         )}
@@ -425,25 +446,24 @@ export default function AddBrandClient({ locale }: { locale: string }) {
     );
   }
 
-  return (
-    <div className="text-center py-12 text-zinc-500">
-      Brand saved! Redirecting…
-    </div>
-  );
+  return <div className="py-12 text-center text-[var(--mirakl-text-muted)]">Brand saved! Redirecting...</div>;
 }
 
 function PriorityBadge({ priority }: { priority: string | null }) {
   const p = priority ?? "";
   const cls = p.startsWith("P1")
-    ? "bg-emerald-100 text-emerald-700"
+    ? "bg-[var(--mirakl-primary-accent)] text-white"
     : p.startsWith("P2")
-    ? "bg-blue-100 text-blue-700"
+    ? "bg-[var(--mirakl-primary-background)] text-[var(--mirakl-primary-accent)]"
     : p.startsWith("P3")
-    ? "bg-amber-100 text-amber-700"
-    : "bg-zinc-100 text-zinc-500";
+    ? "bg-[rgba(3,24,47,0.08)] text-[var(--mirakl-primary-dark)]"
+    : "bg-[rgba(3,24,47,0.05)] text-[var(--mirakl-text-muted)]";
+
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${cls}`}>
-      {p || "—"}
+    <span
+      className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.06em] ${cls}`}
+    >
+      {p || "Watchlist"}
     </span>
   );
 }
@@ -506,7 +526,9 @@ function extractErrorMessage(payload: unknown) {
 
     if (errorRecord.fieldErrors && typeof errorRecord.fieldErrors === "object") {
       const fieldErrors = errorRecord.fieldErrors as Record<string, unknown>;
-      const firstFieldError = Object.entries(fieldErrors).find(([, value]) => Array.isArray(value) && value.length > 0);
+      const firstFieldError = Object.entries(fieldErrors).find(
+        ([, value]) => Array.isArray(value) && value.length > 0
+      );
       if (firstFieldError) {
         const [field, messages] = firstFieldError;
         return `${field}: ${String((messages as unknown[])[0])}`;
