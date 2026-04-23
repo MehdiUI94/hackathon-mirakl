@@ -6,6 +6,9 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.1.24"],
+  outputFileTracingIncludes: {
+    "/*": ["./dev.db"],
+  },
   turbopack: {
     root: path.resolve(__dirname),
   },
