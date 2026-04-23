@@ -1,0 +1,9 @@
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3010
+- Network:       http://10.40.0.210:3010
+- Environments: .env
+✓ Ready in 373ms
+Creating turbopack project { dir: 'C:\\Cours\\hackathon-mirakl\\webapp', testMode: true }
+[sequence-engine] cron started (every 5 min)
+
+ POST /api/brands/enrich 200 in 442ms (next.js: 202ms, application-code: 239ms)
