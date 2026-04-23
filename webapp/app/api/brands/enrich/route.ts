@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/db";
+import { computeBrandPreview } from "@/lib/brand-activation";
 import { NextRequest } from "next/server";
 import * as cheerio from "cheerio";
 import Anthropic from "@anthropic-ai/sdk";
-import { computeScore, priorityFromScore, BALANCED_WEIGHTS } from "@/lib/scoring";
 
 function sse(controller: ReadableStreamDefaultController, event: string, data: unknown) {
   const msg = `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
@@ -54,6 +54,12 @@ export async function POST(req: NextRequest) {
           url: resolvedUrl,
           country: null,
           category: null,
+          foundedYear: null,
+          headquartersAddress: null,
+          companyType: null,
+          businessSignals: [],
+          genderFocus: null,
+          productType: null,
           productTags: [],
           revenueMUsd: null,
           headcount: null,
@@ -61,6 +67,7 @@ export async function POST(req: NextRequest) {
           sustainable: false,
           positioning: null,
           existingMarketplaces: [],
+          sources: resolvedUrl || null,
           notes: null,
         };
 
@@ -75,8 +82,15 @@ Page content: ${pageText || "(no page content available)"}
 
 Return a JSON object with these fields:
 - name: string (brand name)
+- url: string | null (official website url)
 - country: string (brand's home country, ISO or full name)
 - category: string (main fashion category: e.g. "Womenswear RTW", "Fine Jewelry", "Outdoor", "Menswear", "Accessories", "Luxury", "Childrenswear", "Sportswear")
+- foundedYear: number | null (year brand was founded)
+- headquartersAddress: string | null (best available HQ city/address)
+- companyType: string | null (e.g. independent brand, designer label, group-owned, DNVB)
+- businessSignals: string[] (4-6 concrete business signals: wholesale, Amazon presence, retail footprint, omnichannel, international, premium wholesale...)
+- genderFocus: string | null (women, men, unisex, kids, mixed)
+- productType: string | null (apparel, footwear, jewelry, accessories, beauty, home, mixed)
 - productTags: string[] (3-5 specific product keywords)
 - revenueMUsd: number | null (estimated annual revenue in USD millions, or null)
 - headcount: number | null (estimated employee count, or null)
@@ -84,6 +98,7 @@ Return a JSON object with these fields:
 - sustainable: boolean (true if brand emphasizes sustainability/ethics)
 - positioning: string (e.g. "accessible_premium", "luxury", "mid_market", "mass_market")
 - existingMarketplaces: string[] (known marketplace presences: Zalando, Amazon, ASOS, etc.)
+- sources: string (source URLs or source notes supporting the extraction)
 - notes: string (1-2 key observations about brand fit)
 
 Respond with only valid JSON, no markdown.`;
@@ -111,55 +126,16 @@ Respond with only valid JSON, no markdown.`;
           }
         }
 
-        sse(controller, "progress", { step: "score", message: "Computing marketplace scores…" });
-
-        // Step 3: Compute scores with default weights
-        const marketplaces = await prisma.marketplace.findMany();
-        const scores = marketplaces.map((mp) => {
-          // Heuristic scoring for new brands (no historical data)
-          const fitCategory = estimateFitCategory(String(brandData.category ?? ""), mp.targetCategories);
-          const fitGeo = estimateFitGeo(String(brandData.country ?? ""), String(brandData.intlPresence ?? ""), mp.winningGeos);
-          const commercialScale = estimateScale(Number(brandData.revenueMUsd) || 0, Number(brandData.headcount) || 0);
-          const opsReadiness = 5; // default mid
-          const fitPositioning = estimatePositioning(String(brandData.positioning ?? ""), mp.role ?? "");
-          const incrementality = 5;
-          const sustainabilityStory = brandData.sustainable ? 8 : 4;
-
-          const score = computeScore(
-            {
-              fitCategory,
-              fitGeo,
-              commercialScale,
-              opsReadiness,
-              fitPositioning,
-              incrementality,
-              sustainabilityStory,
-              baseCompletion: 3, // lower for manual entry (less data)
-              penalty: 0,
-              initialPrior: 0,
-            },
-            BALANCED_WEIGHTS
-          );
-
-          return {
-            marketplaceId: mp.id,
-            marketplaceName: mp.name,
-            score,
-            priority: priorityFromScore(score),
-            fitCategory,
-            fitGeo,
-            commercialScale,
-            opsReadiness,
-            fitPositioning,
-            incrementality,
-            sustainabilityStory,
-          };
+        sse(controller, "progress", { step: "score", message: "Computing marketplace scores with benchmark…" });
+        const preview = await computeBrandPreview({
+          ...brandData,
+          url: resolvedUrl || String(brandData.url ?? ""),
+          name: String(brandData.name ?? name ?? resolvedUrl ?? ""),
+          createdVia: "ENRICHED",
         });
 
-        scores.sort((a, b) => b.score - a.score);
-
         sse(controller, "progress", { step: "done", message: "Enrichment complete" });
-        sse(controller, "result", { brand: brandData, scores });
+        sse(controller, "result", { brand: preview.brand, scores: preview.scores });
 
       } catch (err) {
         sse(controller, "error", { message: err instanceof Error ? err.message : "Unknown error" });
@@ -176,41 +152,4 @@ Respond with only valid JSON, no markdown.`;
       Connection: "keep-alive",
     },
   });
-}
-
-function estimateFitCategory(category: string, targetCategoriesJson: string): number {
-  const targets = JSON.parse(targetCategoriesJson || "[]") as string[];
-  if (!category || targets.length === 0) return 5;
-  const cat = category.toLowerCase();
-  for (const t of targets) {
-    const tl = t.toLowerCase();
-    if (cat.includes(tl) || tl.includes(cat)) return 9;
-  }
-  return 4;
-}
-
-function estimateFitGeo(country: string, intl: string, winningGeosJson: string): number {
-  const geos = JSON.parse(winningGeosJson || "[]") as string[];
-  const combined = `${country} ${intl}`.toLowerCase();
-  if (geos.length === 0) return 5;
-  for (const g of geos) {
-    if (combined.includes(g.toLowerCase())) return 9;
-  }
-  return 4;
-}
-
-function estimateScale(revenueMUsd: number, headcount: number): number {
-  if (revenueMUsd > 50 || headcount > 500) return 9;
-  if (revenueMUsd > 20 || headcount > 200) return 7;
-  if (revenueMUsd > 5 || headcount > 50) return 5;
-  return 3;
-}
-
-function estimatePositioning(positioning: string, mpRole: string): number {
-  const pos = positioning.toLowerCase();
-  const role = mpRole.toLowerCase();
-  if ((pos.includes("premium") || pos.includes("luxury")) && role.includes("premium")) return 9;
-  if (pos.includes("mass") && role.includes("mass")) return 8;
-  if (pos.includes("mid") && !role.includes("luxury")) return 7;
-  return 5;
 }

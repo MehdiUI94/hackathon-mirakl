@@ -9,6 +9,9 @@ interface ScoreResult {
   marketplaceName: string;
   score: number;
   priority: string;
+  benchmarkScore?: number | null;
+  benchmarkMatchedBrands?: number;
+  benchmarkConfidence?: string;
 }
 
 interface BrandData {
@@ -16,7 +19,19 @@ interface BrandData {
   url?: string;
   country?: string;
   category?: string;
+  foundedYear?: number | null;
+  headquartersAddress?: string;
+  companyType?: string;
+  businessSignals?: string[];
+  genderFocus?: string;
+  productType?: string;
+  productTags?: string[];
+  revenueMUsd?: number | null;
+  headcount?: number | null;
+  intlPresence?: string;
+  sustainable?: boolean;
   positioning?: string;
+  sources?: string;
   notes?: string;
   [key: string]: unknown;
 }
@@ -167,8 +182,21 @@ export default function AddBrandClient({ locale }: { locale: string }) {
         url: editedBrand.url ?? inputUrl,
         country: editedBrand.country ?? undefined,
         category: editedBrand.category ?? undefined,
+        foundedYear: toNullableNumber(editedBrand.foundedYear),
+        headquartersAddress: toOptionalString(editedBrand.headquartersAddress),
+        companyType: toOptionalString(editedBrand.companyType),
+        businessSignals: toStringList(editedBrand.businessSignals),
+        genderFocus: toOptionalString(editedBrand.genderFocus),
+        productType: toOptionalString(editedBrand.productType),
         positioning: editedBrand.positioning ?? undefined,
+        revenueMUsd: toNullableNumber(editedBrand.revenueMUsd),
+        headcount: toNullableInteger(editedBrand.headcount),
+        intlPresence: toOptionalString(editedBrand.intlPresence),
+        sustainable: Boolean(editedBrand.sustainable),
+        productTags: toStringList(editedBrand.productTags),
+        sources: toOptionalString(editedBrand.sources),
         notes: editedBrand.notes ?? undefined,
+        createdVia: "ENRICHED",
       }),
     });
 
@@ -270,19 +298,61 @@ export default function AddBrandClient({ locale }: { locale: string }) {
             { key: "url", label: "URL" },
             { key: "country", label: "Country" },
             { key: "category", label: "Category" },
+            { key: "foundedYear", label: "Founded Year" },
+            { key: "headquartersAddress", label: "Headquarters" },
+            { key: "companyType", label: "Company Type" },
+            { key: "genderFocus", label: "Gender Focus" },
+            { key: "productType", label: "Product Type" },
             { key: "positioning", label: "Positioning" },
+            { key: "revenueMUsd", label: "Revenue ($M)" },
+            { key: "headcount", label: "Employees" },
+            { key: "intlPresence", label: "International Presence" },
+            { key: "businessSignals", label: "Business Signals" },
+            { key: "productTags", label: "Product Tags" },
+            { key: "sources", label: "Sources" },
             { key: "notes", label: "Notes" },
           ].map(({ key, label }) => (
             <div key={key}>
               <label className="block text-xs font-medium text-zinc-500 uppercase mb-1">{label}</label>
-              <input
-                type="text"
-                value={String(editedBrand[key] ?? "")}
-                onChange={(e) => setEditedBrand((prev) => ({ ...prev, [key]: e.target.value }))}
-                className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
-              />
+              {key === "notes" || key === "sources" ? (
+                <textarea
+                  rows={key === "notes" ? 3 : 4}
+                  value={stringifyFieldValue(editedBrand[key])}
+                  onChange={(e) => setEditedBrand((prev) => ({ ...prev, [key]: e.target.value }))}
+                  className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+                />
+              ) : (
+                <input
+                  type={key === "foundedYear" || key === "revenueMUsd" || key === "headcount" ? "number" : "text"}
+                  value={stringifyFieldValue(editedBrand[key])}
+                  onChange={(e) =>
+                    setEditedBrand((prev) => ({
+                      ...prev,
+                      [key]:
+                        key === "businessSignals" || key === "productTags"
+                          ? splitInputList(e.target.value)
+                          : e.target.value,
+                    }))
+                  }
+                  className="w-full text-sm border border-zinc-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400"
+                />
+              )}
             </div>
           ))}
+
+          <div>
+            <label className="block text-xs font-medium text-zinc-500 uppercase mb-1">Sustainable</label>
+            <label className="inline-flex items-center gap-2 text-sm text-zinc-700">
+              <input
+                type="checkbox"
+                checked={Boolean(editedBrand.sustainable)}
+                onChange={(e) =>
+                  setEditedBrand((prev) => ({ ...prev, sustainable: e.target.checked }))
+                }
+              />
+              Sustainability / ethical signal detected
+            </label>
+          </div>
         </div>
 
         {/* Score preview */}
@@ -352,4 +422,39 @@ function PriorityBadge({ priority }: { priority: string | null }) {
       {p || "—"}
     </span>
   );
+}
+
+function stringifyFieldValue(value: unknown) {
+  if (Array.isArray(value)) return value.join(", ");
+  if (value == null) return "";
+  return String(value);
+}
+
+function splitInputList(value: string) {
+  return value
+    .split(/[,;\n|]+/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function toStringList(value: unknown) {
+  if (Array.isArray(value)) return value.map((item) => String(item).trim()).filter(Boolean);
+  if (typeof value === "string") return splitInputList(value);
+  return [];
+}
+
+function toOptionalString(value: unknown) {
+  const normalized = stringifyFieldValue(value).trim();
+  return normalized ? normalized : undefined;
+}
+
+function toNullableNumber(value: unknown) {
+  if (value == null || value === "") return undefined;
+  const number = Number(value);
+  return Number.isFinite(number) ? number : undefined;
+}
+
+function toNullableInteger(value: unknown) {
+  const number = toNullableNumber(value);
+  return number == null ? undefined : Math.round(number);
 }

@@ -8,6 +8,7 @@ import {
   type ScoringComponents,
   type ScoringWeightsInput,
 } from "@/lib/scoring";
+import { saveBrandWithActivation } from "@/lib/brand-activation";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -92,6 +93,11 @@ export async function GET(request: NextRequest) {
       url: b.url,
       country: b.country,
       category: b.category,
+      foundedYear: b.foundedYear,
+      headquartersAddress: b.headquartersAddress,
+      companyType: b.companyType,
+      genderFocus: b.genderFocus,
+      productType: b.productType,
       sourceGroup: b.sourceGroup,
       bestScore: best?.finalScore ?? null,
       bestPriority: best?.priority ?? null,
@@ -168,6 +174,12 @@ const CreateBrandSchema = z.object({
   url: z.string().optional(),
   country: z.string().optional(),
   category: z.string().optional(),
+  foundedYear: z.number().int().nullable().optional(),
+  headquartersAddress: z.string().optional(),
+  companyType: z.string().optional(),
+  businessSignals: z.array(z.string()).optional(),
+  genderFocus: z.string().optional(),
+  productType: z.string().optional(),
   positioning: z.string().optional(),
   notes: z.string().optional(),
   revenueMUsd: z.number().optional(),
@@ -177,6 +189,12 @@ const CreateBrandSchema = z.object({
   existingMarketplaces: z.array(z.string()).optional(),
   productTags: z.array(z.string()).optional(),
   sources: z.string().optional(),
+  contactEmail: z.string().email().optional().or(z.literal("")),
+  contactRole: z.string().optional(),
+  contactPersona: z.string().optional(),
+  contactSubjectHint: z.string().optional(),
+  amazonSignal: z.string().optional(),
+  zalandoSignal: z.string().optional(),
   createdVia: z.enum(["WORKBOOK", "MANUAL", "ENRICHED"]).optional(),
 });
 
@@ -187,58 +205,34 @@ export async function POST(request: NextRequest) {
   }
   const data = parsed.data;
 
-  const brand = await prisma.brand.create({
-    data: {
-      name: data.name,
-      url: data.url,
-      country: data.country,
-      category: data.category,
-      positioning: data.positioning,
-      notes: data.notes,
-      revenueMUsd: data.revenueMUsd,
-      headcount: data.headcount,
-      intlPresence: data.intlPresence,
-      sustainable: data.sustainable ?? false,
-      existingMarketplaces: JSON.stringify(data.existingMarketplaces ?? []),
-      productTags: JSON.stringify(data.productTags ?? []),
-      sources: data.sources,
-      createdVia: data.createdVia ?? "MANUAL",
-      sourceGroup: "MAIN",
-    },
+  const { brand, scores } = await saveBrandWithActivation({
+    name: data.name,
+    url: data.url,
+    country: data.country,
+    category: data.category,
+    foundedYear: data.foundedYear ?? null,
+    headquartersAddress: data.headquartersAddress,
+    companyType: data.companyType,
+    businessSignals: data.businessSignals ?? [],
+    genderFocus: data.genderFocus,
+    productType: data.productType,
+    positioning: data.positioning,
+    notes: data.notes,
+    revenueMUsd: data.revenueMUsd,
+    headcount: data.headcount,
+    intlPresence: data.intlPresence,
+    sustainable: data.sustainable ?? false,
+    existingMarketplaces: data.existingMarketplaces ?? [],
+    productTags: data.productTags ?? [],
+    sources: data.sources,
+    contactEmail: data.contactEmail,
+    contactRole: data.contactRole,
+    contactPersona: data.contactPersona,
+    contactSubjectHint: data.contactSubjectHint,
+    amazonSignal: data.amazonSignal,
+    zalandoSignal: data.zalandoSignal,
+    createdVia: data.createdVia ?? "MANUAL",
   });
 
-  // Score against all marketplaces and persist lines + top-2 recos
-  const marketplaces = await prisma.marketplace.findMany();
-  if (marketplaces.length > 0) {
-    const scored = scoreBrandAgainstMarketplaces(brand, marketplaces);
-
-    await prisma.scoringLine.createMany({
-      data: scored.map((s) => ({
-        brandId: brand.id,
-        marketplaceId: s.marketplaceId,
-        ...s.components,
-        rawModelScore: s.finalScore,
-        finalScore: s.finalScore,
-        priority: s.priority,
-        alreadyPresent: s.alreadyPresent,
-      })),
-    });
-
-    const ranked = scored
-      .filter((s) => !s.alreadyPresent)
-      .sort((a, b) => b.finalScore - a.finalScore)
-      .slice(0, 2);
-    await prisma.recommendation.createMany({
-      data: ranked.map((s, idx) => ({
-        brandId: brand.id,
-        rank: idx + 1,
-        marketplaceId: s.marketplaceId,
-        score: s.finalScore,
-        priority: s.priority,
-        confidence: "Moyenne",
-      })),
-    });
-  }
-
-  return NextResponse.json(brand, { status: 201 });
+  return NextResponse.json({ ...brand, scores }, { status: 201 });
 }

@@ -130,14 +130,27 @@ export function estimatePositioning(positioning: string, mpRole: string): number
 }
 
 export interface BrandLike {
+  name?: string | null;
+  url?: string | null;
   category?: string | null;
   country?: string | null;
+  foundedYear?: number | null;
+  headquartersAddress?: string | null;
+  companyType?: string | null;
+  businessSignals?: string[] | string | null;
+  genderFocus?: string | null;
+  productType?: string | null;
+  productTags?: string[] | string | null;
   intlPresence?: string | null;
   revenueMUsd?: number | null;
   headcount?: number | null;
   positioning?: string | null;
   sustainable?: boolean | null;
   existingMarketplaces?: string[] | string | null;
+  notes?: string | null;
+  sources?: string | null;
+  amazonSignal?: string | null;
+  zalandoSignal?: string | null;
 }
 
 export interface MarketplaceLike {
@@ -155,40 +168,54 @@ export interface ScoredLine {
   finalScore: number;
   priority: string;
   alreadyPresent: boolean;
+  benchmarkScore: number | null;
+  benchmarkMatchedBrands: number;
+  benchmarkConfidence: "low" | "medium" | "high";
 }
 
 export function scoreBrandAgainstMarketplaces(
   brand: BrandLike,
   marketplaces: MarketplaceLike[],
-  weights: ScoringWeightsInput = BALANCED_WEIGHTS
+  weights: ScoringWeightsInput = BALANCED_WEIGHTS,
+  benchmarkByMarketplace: Record<string, { averageScore: number; matchedBrands: number }> = {}
 ): ScoredLine[] {
-  const existing = (() => {
-    if (Array.isArray(brand.existingMarketplaces)) return brand.existingMarketplaces;
-    if (typeof brand.existingMarketplaces === "string") {
-      try {
-        const parsed = JSON.parse(brand.existingMarketplaces);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
-      }
-    }
-    return [];
-  })().map((s) => String(s).toLowerCase());
+  const existing = parseStringArray(brand.existingMarketplaces).map((s) => String(s).toLowerCase());
+  const businessSignals = parseStringArray(brand.businessSignals);
+  const productTags = parseStringArray(brand.productTags);
 
   return marketplaces.map((mp) => {
+    const benchmark = benchmarkByMarketplace[mp.id] ?? null;
     const components: ScoringComponents = {
-      fitCategory: estimateFitCategory(brand.category ?? "", mp.targetCategories),
+      fitCategory: estimateFitCategoryAdvanced(
+        brand.category ?? "",
+        brand.productType ?? "",
+        productTags,
+        mp.targetCategories
+      ),
       fitGeo: estimateFitGeo(brand.country ?? "", brand.intlPresence ?? "", mp.winningGeos),
-      commercialScale: estimateScale(brand.revenueMUsd ?? 0, brand.headcount ?? 0),
-      opsReadiness: 5,
-      fitPositioning: estimatePositioning(brand.positioning ?? "", mp.role ?? ""),
-      incrementality: 5,
+      commercialScale: estimateScaleAdvanced(
+        brand.revenueMUsd ?? 0,
+        brand.headcount ?? 0,
+        brand.foundedYear ?? null,
+        businessSignals
+      ),
+      opsReadiness: estimateOpsReadiness(brand, businessSignals),
+      fitPositioning: estimatePositioningAdvanced(
+        brand.positioning ?? "",
+        brand.genderFocus ?? "",
+        brand.companyType ?? "",
+        mp.role ?? ""
+      ),
+      incrementality: estimateIncrementality(brand, mp.name, existing),
       sustainabilityStory: brand.sustainable ? 8 : 4,
-      baseCompletion: 3,
-      penalty: 0,
-      initialPrior: 0,
+      baseCompletion: estimateBaseCompletion(brand),
+      penalty: estimatePenalty(brand, mp.name, existing),
+      initialPrior: benchmark?.averageScore ?? estimateInitialPrior(brand, businessSignals),
     };
-    const finalScore = computeScore(components, weights);
+    const heuristicScore = computeScore(components, weights);
+    const finalScore = benchmark
+      ? roundScore(heuristicScore * 0.72 + benchmark.averageScore * 0.28)
+      : heuristicScore;
     const alreadyPresent = existing.some((e) => mp.name.toLowerCase().includes(e) || e.includes(mp.name.toLowerCase()));
     return {
       marketplaceId: mp.id,
@@ -197,6 +224,169 @@ export function scoreBrandAgainstMarketplaces(
       finalScore,
       priority: priorityFromScore(finalScore),
       alreadyPresent,
+      benchmarkScore: benchmark?.averageScore ?? null,
+      benchmarkMatchedBrands: benchmark?.matchedBrands ?? 0,
+      benchmarkConfidence:
+        (benchmark?.matchedBrands ?? 0) >= 6 ? "high" : (benchmark?.matchedBrands ?? 0) >= 3 ? "medium" : "low",
     };
   });
+}
+
+export function parseStringArray(value: string[] | string | null | undefined): string[] {
+  if (Array.isArray(value)) return value.map((item) => String(item).trim()).filter(Boolean);
+  if (typeof value !== "string") return [];
+  try {
+    const parsed = JSON.parse(value);
+    if (Array.isArray(parsed)) {
+      return parsed.map((item) => String(item).trim()).filter(Boolean);
+    }
+  } catch {
+    // Fall through to delimiter-based parsing.
+  }
+  return value
+    .split(/[,;\n|]+/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function estimateFitCategoryAdvanced(
+  category: string,
+  productType: string,
+  productTags: string[],
+  targetCategoriesJson: string
+) {
+  const base = estimateFitCategory(`${category} ${productType}`.trim(), targetCategoriesJson);
+  if (base >= 8) return base;
+  const tagsText = productTags.join(" ").toLowerCase();
+  const targets = parseStringArray(targetCategoriesJson);
+  if (targets.some((target) => tagsText.includes(target.toLowerCase()))) return Math.min(10, base + 2);
+  return base;
+}
+
+function estimateScaleAdvanced(
+  revenueMUsd: number,
+  headcount: number,
+  foundedYear: number | null,
+  businessSignals: string[]
+) {
+  const base = estimateScale(revenueMUsd, headcount);
+  const ageBoost =
+    foundedYear && Number.isFinite(foundedYear)
+      ? Math.min(2, Math.max(0, (new Date().getFullYear() - foundedYear) / 15))
+      : 0;
+  const signalBoost = businessSignals.some((signal) =>
+    /wholesale|international|omnichannel|marketplace|d2c|b2b/i.test(signal)
+  )
+    ? 1
+    : 0;
+  return Math.min(10, roundScore(base + ageBoost + signalBoost));
+}
+
+function estimateOpsReadiness(brand: BrandLike, businessSignals: string[]) {
+  let score = 3;
+  if (brand.url) score += 1;
+  if (brand.sources) score += 1;
+  if ((brand.headcount ?? 0) >= 20) score += 1;
+  if (brand.companyType) score += 1;
+  if (businessSignals.some((signal) => /wholesale|erp|feeds?|catalog|distribution|marketplace/i.test(signal))) {
+    score += 2;
+  }
+  return Math.min(10, score);
+}
+
+function estimatePositioningAdvanced(
+  positioning: string,
+  genderFocus: string,
+  companyType: string,
+  mpRole: string
+) {
+  const base = estimatePositioning(`${positioning} ${genderFocus} ${companyType}`.trim(), mpRole);
+  if (/premium|luxury/i.test(positioning) && /department|premium|luxury/i.test(mpRole)) {
+    return Math.min(10, base + 1);
+  }
+  return base;
+}
+
+function estimateIncrementality(
+  brand: BrandLike,
+  marketplaceName: string,
+  existingMarketplaces: string[]
+) {
+  const name = marketplaceName.toLowerCase();
+  if (existingMarketplaces.some((value) => name.includes(value) || value.includes(name))) return 1;
+
+  let score = 5;
+  if (/zalando/i.test(marketplaceName) && isAmazonNotZalando(brand.amazonSignal, brand.zalandoSignal)) {
+    score += 4;
+  }
+  if (/amazon/i.test(marketplaceName) && isObserved(brand.amazonSignal)) {
+    score -= 2;
+  }
+  if (existingMarketplaces.length === 0) score += 1;
+  return Math.max(1, Math.min(10, score));
+}
+
+function estimateBaseCompletion(brand: BrandLike) {
+  const checks = [
+    brand.name,
+    brand.url,
+    brand.category,
+    brand.country,
+    brand.positioning,
+    brand.productType,
+    brand.genderFocus,
+    brand.companyType,
+    brand.foundedYear,
+    brand.headquartersAddress,
+    brand.sources,
+    brand.notes,
+    brand.headcount,
+    brand.businessSignals,
+  ];
+  const present = checks.filter((value) => {
+    if (Array.isArray(value)) return value.length > 0;
+    if (typeof value === "number") return Number.isFinite(value);
+    return Boolean(value && String(value).trim() !== "");
+  }).length;
+  return Math.min(9, 2 + (present / checks.length) * 6);
+}
+
+function estimatePenalty(brand: BrandLike, marketplaceName: string, existingMarketplaces: string[]) {
+  let penalty = 0;
+  if (!brand.url) penalty += 0.4;
+  if (!brand.sources) penalty += 0.6;
+  if (!brand.category) penalty += 0.6;
+  if (!brand.headcount && !brand.revenueMUsd) penalty += 0.4;
+  const name = marketplaceName.toLowerCase();
+  if (existingMarketplaces.some((value) => name.includes(value) || value.includes(name))) penalty += 5;
+  return roundScore(penalty);
+}
+
+function estimateInitialPrior(brand: BrandLike, businessSignals: string[]) {
+  let prior = 32;
+  if (brand.url) prior += 8;
+  if ((brand.headcount ?? 0) >= 50) prior += 10;
+  if (brand.positioning) prior += 8;
+  if (brand.category) prior += 8;
+  if (brand.sources) prior += 8;
+  if (businessSignals.some((signal) => /marketplace|amazon|zalando|wholesale|retail/i.test(signal))) {
+    prior += 10;
+  }
+  return Math.min(90, prior);
+}
+
+function roundScore(value: number) {
+  return Math.round(Math.max(0, Math.min(100, value)) * 10) / 10;
+}
+
+function isAmazonNotZalando(amazonSignal: string | null | undefined, zalandoSignal: string | null | undefined) {
+  return isObserved(amazonSignal) && isAbsent(zalandoSignal);
+}
+
+function isObserved(value: string | null | undefined) {
+  return /oui|observed|signal|storefront|search/i.test(value ?? "");
+}
+
+function isAbsent(value: string | null | undefined) {
+  return /\bnon\b|absent|pas de/i.test(value ?? "");
 }

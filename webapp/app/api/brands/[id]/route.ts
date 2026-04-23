@@ -35,6 +35,7 @@ export async function GET(
 
   return NextResponse.json({
     ...brand,
+    businessSignals: JSON.parse(brand.businessSignals || "[]"),
     productTags: JSON.parse(brand.productTags || "[]"),
     existingMarketplaces: JSON.parse(brand.existingMarketplaces || "[]"),
   });
