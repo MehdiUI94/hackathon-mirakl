@@ -31,6 +31,7 @@ interface WeightProfile {
 interface BrandContact {
   brandId: string;
   brandName: string;
+  amazonNotZalando: boolean;
   marketplaceNames: string[];
   toEmail: string;
   toFirstName: string;
@@ -40,6 +41,8 @@ interface Props {
   locale: string;
   onClose: () => void;
 }
+
+const TEST_BRAND_EMAIL = "zitounimehdi7@gmail.com";
 
 export function LaunchCampaignModal({ locale, onClose }: Props) {
   const [brands, setBrands] = useState<Brand[]>([]);
@@ -84,7 +87,9 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
             if (!entry) continue;
             next.set(b.id, {
               ...entry,
+              amazonNotZalando: b.amazonNotZalando,
               marketplaceNames: getTargetMarketplaces(b),
+              toEmail: normalizeRecipientEmail(entry.toEmail || b.contactEmail || ""),
             });
           }
           return next;
@@ -118,8 +123,9 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
         next.set(b.id, {
           brandId: b.id,
           brandName: b.name,
+          amazonNotZalando: b.amazonNotZalando,
           marketplaceNames: getTargetMarketplaces(b),
-          toEmail: b.contactEmail ?? "",
+          toEmail: normalizeRecipientEmail(b.contactEmail ?? ""),
           toFirstName: "",
         });
       }
@@ -153,6 +159,7 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
           targets: contacts.flatMap((c) =>
             c.marketplaceNames.map((marketplaceName) => ({
               brandName: c.brandName,
+              amazonNotZalando: c.amazonNotZalando,
               toEmail: c.toEmail,
               toFirstName: c.toFirstName || undefined,
               marketplaceName,
@@ -475,4 +482,12 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
 function getTargetMarketplaces(brand: Brand) {
   const targets = brand.topMarketplaces.slice(0, 2).map((m) => m.name);
   return targets.length > 0 ? targets : [brand.topMarketplace ?? "Mirakl"];
+}
+
+function normalizeRecipientEmail(email: string) {
+  const trimmed = email.trim();
+  if (trimmed.toLowerCase().endsWith("@eugeniaschool.example")) {
+    return TEST_BRAND_EMAIL;
+  }
+  return trimmed;
 }

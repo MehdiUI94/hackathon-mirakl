@@ -7,7 +7,7 @@ import { z } from "zod";
  * The operator will review/edit/approve from the Inbox UI; on approval
  * the app will POST back to `callbackUrl` with the final subject/body.
  */
-const PreviewSchema = z.object({
+const CanonicalPreviewSchema = z.object({
   brandId: z.string().optional(),
   marketplaceId: z.string().optional(),
   brandName: z.string().optional(),
@@ -28,6 +28,65 @@ const PreviewSchema = z.object({
   callbackUrl: z.url().optional(),
   n8nExecutionId: z.string().optional(),
 });
+
+const PreviewSchema = z.preprocess((raw) => {
+  if (!raw || typeof raw !== "object") return raw;
+
+  const input = raw as Record<string, unknown>;
+  const output =
+    input.output && typeof input.output === "object"
+      ? (input.output as Record<string, unknown>)
+      : null;
+  const to =
+    input.to && typeof input.to === "object"
+      ? (input.to as Record<string, unknown>)
+      : null;
+
+  const subject =
+    asNonEmptyString(input.subject) ??
+    asNonEmptyString(input.subjectLine) ??
+    asNonEmptyString(input.subject_line) ??
+    asNonEmptyString(output?.subject) ??
+    asNonEmptyString(output?.subjectLine) ??
+    asNonEmptyString(output?.subject_line);
+
+  const bodyText =
+    asNonEmptyString(input.bodyText) ??
+    asNonEmptyString(input.body) ??
+    asNonEmptyString(output?.bodyText) ??
+    asNonEmptyString(output?.body);
+
+  const firstName =
+    asNonEmptyString(to?.firstName) ??
+    asNonEmptyString(to?.first_name) ??
+    asNonEmptyString(input.toFirstName) ??
+    asNonEmptyString(input.firstName) ??
+    asNonEmptyString(input.first_name);
+
+  return {
+    ...input,
+    to: {
+      email:
+        asNonEmptyString(to?.email) ??
+        asNonEmptyString(input.toEmail) ??
+        asNonEmptyString(input.to_email),
+      firstName,
+    },
+    subject,
+    bodyText,
+    meta: {
+      ...(input.meta && typeof input.meta === "object"
+        ? (input.meta as Record<string, unknown>)
+        : {}),
+      ...(input.conversationUrl ? { conversationUrl: input.conversationUrl } : {}),
+      ...(input.webhookUrl ? { webhookUrl: input.webhookUrl } : {}),
+      ...(input.executionMode ? { executionMode: input.executionMode } : {}),
+      ...(input.amazonNotZalando !== undefined
+        ? { amazonNotZalando: input.amazonNotZalando }
+        : {}),
+    },
+  };
+}, CanonicalPreviewSchema);
 
 export async function POST(req: NextRequest) {
   const settings = await prisma.appSettings.findUnique({ where: { id: "singleton" } });
@@ -82,4 +141,10 @@ export async function POST(req: NextRequest) {
   });
 
   return NextResponse.json({ id: draft.id, status: draft.status }, { status: 201 });
+}
+
+function asNonEmptyString(value: unknown) {
+  if (typeof value !== "string") return undefined;
+  const trimmed = value.trim();
+  return trimmed ? trimmed : undefined;
 }
