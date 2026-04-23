@@ -77,10 +77,19 @@ export async function POST(req: NextRequest) {
   const callbackUrl = `${appBaseUrl}/api/webhooks/n8n/preview`;
   const callbackUrlIsPublic = isPublicCallbackUrl(appBaseUrl);
   const n8nLaunchWebhookUrl =
-    settings?.n8nWebhookUrl ?? process.env.N8N_LAUNCH_WEBHOOK_URL ?? "";
+    settings?.n8nWebhookUrl ??
+    process.env.N8N_LAUNCH_WEBHOOK_URL ??
+    process.env.N8N_WEBHOOK_URL ??
+    "";
 
-  const senderEmail = settings?.defaultSenderEmail ?? TEST_SENDER_EMAIL;
-  const senderName = settings?.defaultSenderName ?? TEST_SENDER_NAME;
+  const senderEmail =
+    settings?.defaultSenderEmail ??
+    process.env.DEFAULT_SENDER_EMAIL ??
+    TEST_SENDER_EMAIL;
+  const senderName =
+    settings?.defaultSenderName ??
+    process.env.DEFAULT_SENDER_NAME ??
+    TEST_SENDER_NAME;
 
   const normalizedTargets = targets
     ? await enrichTargets(targets)
@@ -116,8 +125,11 @@ export async function POST(req: NextRequest) {
   };
 
   const webhookHeaders: Record<string, string> = { "Content-Type": "application/json" };
-  if (settings?.n8nWebhookSecret) {
-    webhookHeaders["X-Webhook-Secret"] = settings.n8nWebhookSecret;
+  const n8nWebhookSecret =
+    settings?.n8nWebhookSecret ?? process.env.N8N_WEBHOOK_SECRET ?? "";
+
+  if (n8nWebhookSecret) {
+    webhookHeaders["X-Webhook-Secret"] = n8nWebhookSecret;
   }
 
   let n8nOk = false;
