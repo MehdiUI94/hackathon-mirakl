@@ -5,7 +5,9 @@
   "scripts": {
     "predev": "node scripts/free-port.cjs 3000",
     "dev": "next dev",
-    "tunnel": "node scripts/start-cloudflare-tunnel.cjs 3000",
+    "tunnel": "node scripts/start-cloudflare-tunnel.cjs 3000 quick",
+    "tunnel:quick": "node scripts/start-cloudflare-tunnel.cjs 3000 quick",
+    "tunnel:named": "node scripts/start-cloudflare-tunnel.cjs 3000 named",
     "build": "next build",
     "start": "next start",
     "render:start": "prisma migrate deploy --config ./prisma.config.ts && next start -p ${PORT:-3000}",

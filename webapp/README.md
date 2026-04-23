@@ -32,6 +32,45 @@ APP_BASE_URL="https://your-app.ngrok-free.app"
 
 `N8N_CALLBACK_BASE_URL` is preferred for the n8n callback. It should point to a public URL that reaches this local app, for example through ngrok or Cloudflare Tunnel.
 
+### Health check
+
+Once the app is running, verify the public URL with:
+
+```text
+https://your-public-url.example/api/health
+```
+
+It should answer with JSON containing `"ok": true`.
+
+### Cloudflare tunnel commands
+
+Quick temporary tunnel:
+
+```bash
+npm run tunnel:quick
+```
+
+Stable named tunnel, once you have created it in Cloudflare:
+
+```env
+CLOUDFLARE_TUNNEL_NAME="my-preview-tunnel"
+CLOUDFLARE_TUNNEL_HOSTNAME="preview.example.com"
+N8N_CALLBACK_BASE_URL="https://preview.example.com"
+APP_BASE_URL="https://preview.example.com"
+```
+
+Then run:
+
+```bash
+npm run tunnel:named
+```
+
+For n8n, use:
+
+```text
+https://preview.example.com/api/emails/preview
+```
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
