@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { createFallbackDraft, useNetlifyDraftStore } from "@/lib/netlify-draft-store";
 import { NextRequest, NextResponse } from "next/server";
 
 const TEST_SENDER_EMAIL = "mzitouni@eugeniaschool.com";
@@ -14,6 +15,23 @@ type LaunchTarget = {
   toEmail: string;
   toFirstName?: string;
   marketplaceName?: string;
+};
+
+type LaunchPreviewResponse = {
+  info?: Partial<LaunchTarget> & {
+    campaign?: string;
+    sender?: { email?: string; firstName?: string };
+  };
+  output?: {
+    subject_line?: string;
+    body?: string;
+  };
+  subject_line?: string;
+  body?: string;
+  conversationUrl?: string;
+  callbackUrl?: string;
+  webhookUrl?: string;
+  n8nExecutionId?: string;
 };
 
 export async function POST(req: NextRequest) {
@@ -76,6 +94,7 @@ export async function POST(req: NextRequest) {
   let n8nOk = false;
   let n8nError: string | null = null;
   let callbackWarning: string | null = null;
+  let createdDrafts = 0;
 
   if (!callbackUrlIsPublic) {
     callbackWarning =
@@ -109,6 +128,14 @@ export async function POST(req: NextRequest) {
         } else {
           n8nError = `HTTP ${res.status} - ${raw.slice(0, 120)}`;
         }
+      } else {
+        const raw = await res.text().catch(() => "");
+        createdDrafts = await persistPreviewsFromLaunchResponse({
+          raw,
+          campaign,
+          callbackUrl,
+          targets: emailTargets,
+        });
       }
     } catch (err) {
       if (err instanceof Error && err.name === "AbortError") {
@@ -123,12 +150,126 @@ export async function POST(req: NextRequest) {
     ok: true,
     n8nOk,
     n8nError,
+    createdDrafts,
     callbackUrl,
     callbackWarning,
     message: n8nOk
-      ? `Campagne lancee - ${emailTargets.length} cible${emailTargets.length > 1 ? "s" : ""} envoyee${emailTargets.length > 1 ? "s" : ""} a n8n.${callbackWarning ? ` ${callbackWarning}` : " Les apercus apparaitront dans la boite de reception quand n8n les renverra."}`
+      ? `Campagne lancee - ${emailTargets.length} cible${emailTargets.length > 1 ? "s" : ""} envoyee${emailTargets.length > 1 ? "s" : ""} a n8n.${createdDrafts > 0 ? ` ${createdDrafts} apercu${createdDrafts > 1 ? "s" : ""} cree${createdDrafts > 1 ? "s" : ""} directement depuis la reponse n8n.` : callbackWarning ? ` ${callbackWarning}` : " Les apercus apparaitront dans la boite de reception quand n8n les renverra."}`
       : `Campagne non envoyee a n8n${n8nError ? ` : ${n8nError}` : ""}. Aucun apercu local n'a ete cree.`,
   });
+}
+
+async function persistPreviewsFromLaunchResponse({
+  raw,
+  campaign,
+  callbackUrl,
+  targets,
+}: {
+  raw: string;
+  campaign: string;
+  callbackUrl: string;
+  targets: LaunchTarget[];
+}) {
+  if (!raw.trim()) return 0;
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return 0;
+  }
+
+  const responses = Array.isArray(parsed) ? parsed : [parsed];
+  let created = 0;
+
+  for (let index = 0; index < responses.length; index += 1) {
+    const response = responses[index];
+    if (!response || typeof response !== "object") continue;
+
+    const preview = response as LaunchPreviewResponse;
+    const subject =
+      asNonEmptyString(preview.output?.subject_line) ?? asNonEmptyString(preview.subject_line);
+    const bodyText =
+      asNonEmptyString(preview.output?.body) ?? asNonEmptyString(preview.body);
+
+    if (!subject || !bodyText) continue;
+
+    const fallbackTarget = targets[index] ?? targets[0];
+    if (!fallbackTarget) continue;
+
+    const brandName =
+      asNonEmptyString(preview.info?.brandName) ?? fallbackTarget.brandName ?? "Marque inconnue";
+    const marketplaceName =
+      asNonEmptyString(preview.info?.marketplaceName) ??
+      fallbackTarget.marketplaceName ??
+      "Marketplace inconnue";
+    const toEmail =
+      asNonEmptyString(preview.info?.toEmail) ?? fallbackTarget.toEmail;
+    const toFirstName =
+      asNonEmptyString(preview.info?.toFirstName) ?? fallbackTarget.toFirstName ?? null;
+
+    if (!toEmail) continue;
+
+    const meta = {
+      ...(preview.conversationUrl ? { conversationUrl: preview.conversationUrl } : {}),
+      ...(preview.webhookUrl ? { webhookUrl: preview.webhookUrl } : {}),
+      ...(fallbackTarget.amazonNotZalando !== undefined
+        ? { amazonNotZalando: fallbackTarget.amazonNotZalando }
+        : {}),
+    };
+
+    if (useNetlifyDraftStore()) {
+      await createFallbackDraft({
+        brandId: null,
+        marketplaceId: null,
+        brandName,
+        marketplaceName,
+        campaign: asNonEmptyString(preview.info?.campaign) ?? campaign,
+        step: index + 1,
+        branch: null,
+        toEmail,
+        toFirstName,
+        subject,
+        bodyText,
+        cta: null,
+        stopRule: null,
+        claimSources: JSON.stringify([]),
+        meta: JSON.stringify(meta),
+        callbackUrl: asNonEmptyString(preview.callbackUrl) ?? callbackUrl,
+        n8nExecutionId: asNonEmptyString(preview.n8nExecutionId) ?? null,
+        status: "PENDING",
+        edited: false,
+      });
+      created += 1;
+      continue;
+    }
+
+    await prisma.emailDraft.create({
+      data: {
+        brandId: null,
+        marketplaceId: null,
+        brandName,
+        marketplaceName,
+        campaign: asNonEmptyString(preview.info?.campaign) ?? campaign,
+        step: index + 1,
+        branch: null,
+        toEmail,
+        toFirstName,
+        subject,
+        bodyText,
+        cta: null,
+        stopRule: null,
+        claimSources: JSON.stringify([]),
+        meta: JSON.stringify(meta),
+        callbackUrl: asNonEmptyString(preview.callbackUrl) ?? callbackUrl,
+        n8nExecutionId: asNonEmptyString(preview.n8nExecutionId) ?? null,
+        status: "PENDING",
+      },
+    });
+    created += 1;
+  }
+
+  return created;
 }
 
 function getAppBaseUrl(req: NextRequest) {
@@ -170,6 +311,12 @@ function normalizeRecipientEmail(email: string) {
     return TEST_RECIPIENT_EMAIL;
   }
   return trimmed;
+}
+
+function asNonEmptyString(value: unknown) {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
 }
 
 async function enrichTargets(targets: LaunchTarget[]) {
