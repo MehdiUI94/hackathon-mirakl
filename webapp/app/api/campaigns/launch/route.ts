@@ -126,7 +126,10 @@ export async function POST(req: NextRequest) {
 }
 
 function getAppBaseUrl(req: NextRequest) {
-  const configured = process.env.APP_BASE_URL ?? process.env.NEXT_PUBLIC_APP_URL;
+  const configured =
+    process.env.N8N_CALLBACK_BASE_URL ??
+    process.env.APP_BASE_URL ??
+    process.env.NEXT_PUBLIC_APP_URL;
   if (configured) return configured.replace(/\/$/, "");
 
   const host = req.headers.get("x-forwarded-host") ?? req.headers.get("host") ?? "localhost:3000";

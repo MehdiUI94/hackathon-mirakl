@@ -16,6 +16,22 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## n8n Callback URL
+
+If n8n Cloud must send previews back to this app, set a public callback URL in [webapp/.env](/c:/Cours/hackathon-mirakl/webapp/.env):
+
+```env
+N8N_CALLBACK_BASE_URL="https://your-app.ngrok-free.app"
+```
+
+You can also use:
+
+```env
+APP_BASE_URL="https://your-app.ngrok-free.app"
+```
+
+`N8N_CALLBACK_BASE_URL` is preferred for the n8n callback. It should point to a public URL that reaches this local app, for example through ngrok or Cloudflare Tunnel.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

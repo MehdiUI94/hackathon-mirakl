@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/free-port.cjs 3000",
     "dev": "next dev",
+    "tunnel": "node scripts/start-cloudflare-tunnel.cjs 3000",
     "build": "next build",
     "start": "next start",
     "seed": "tsx scripts/seed.ts",
