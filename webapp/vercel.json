@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm install",
+  "buildCommand": "npx prisma generate --config ./prisma.config.ts && npx prisma db push --accept-data-loss --config ./prisma.config.ts --url=\"$DIRECT_URL\" && next build",
+  "crons": [
+    {
+      "path": "/api/campaigns/tick",
+      "schedule": "0 6 * * *"
+    }
+  ]
+}

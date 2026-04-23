@@ -1,13 +1,18 @@
 #!/usr/bin/env tsx
 import "dotenv/config";
+import { PrismaPg } from "@prisma/adapter-pg";
 import * as XLSX from "xlsx";
 import path from "node:path";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaClient } from "../app/generated/prisma/client";
 
 const workbookPath = path.resolve(process.cwd(), "..", "marketplace_growth_engine_v3.xlsx");
-const dbPath = process.env.DATABASE_URL?.replace("file:", "") ?? "./dev.db";
-const adapter = new PrismaBetterSqlite3({ url: `file:${path.resolve(process.cwd(), dbPath)}` });
+const connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) {
+  throw new Error("DATABASE_URL is required. Use a PostgreSQL connection string.");
+}
+
+const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
 function normalize(value: unknown): string {
