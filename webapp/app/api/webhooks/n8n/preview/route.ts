@@ -26,6 +26,13 @@ const CanonicalPreviewSchema = z.object({
   stopRule: z.string().optional(),
   claimSources: z.array(z.string()).optional(),
   meta: z.record(z.string(), z.unknown()).optional(),
+  sender: z
+    .object({
+      email: z.string().optional(),
+      firstName: z.string().optional(),
+      name: z.string().optional(),
+    })
+    .optional(),
   callbackUrl: z.url().optional(),
   n8nExecutionId: z.string().optional(),
 });
@@ -57,6 +64,11 @@ const PreviewSchema = z.preprocess((raw) => {
     asNonEmptyString(output?.bodyText) ??
     asNonEmptyString(output?.body);
 
+  const sender =
+    input.sender && typeof input.sender === "object"
+      ? (input.sender as Record<string, unknown>)
+      : null;
+
   const firstName =
     asNonEmptyString(to?.firstName) ??
     asNonEmptyString(to?.first_name) ??
@@ -75,6 +87,16 @@ const PreviewSchema = z.preprocess((raw) => {
     },
     subject,
     bodyText,
+    sender: sender
+      ? {
+          email: asNonEmptyString(sender.email),
+          firstName:
+            asNonEmptyString(sender.firstName) ??
+            asNonEmptyString(sender.first_name) ??
+            asNonEmptyString(sender.name),
+          name: asNonEmptyString(sender.name),
+        }
+      : undefined,
     meta: {
       ...(input.meta && typeof input.meta === "object"
         ? (input.meta as Record<string, unknown>)
@@ -106,6 +128,8 @@ export async function POST(req: NextRequest) {
     }
     const p = parsed.data;
     fallbackPreview = p;
+    const subject = interpolatePreviewTemplate(p.subject, p);
+    const bodyText = interpolatePreviewTemplate(p.bodyText, p);
 
     let brand = null;
     if (p.brandId) brand = await prisma.brand.findUnique({ where: { id: p.brandId } });
@@ -130,8 +154,8 @@ export async function POST(req: NextRequest) {
         branch: p.branch ?? null,
         toEmail: p.to.email,
         toFirstName: p.to.firstName ?? null,
-        subject: p.subject,
-        bodyText: p.bodyText,
+        subject,
+        bodyText,
         cta: p.cta ?? null,
         stopRule: p.stopRule ?? null,
         claimSources: JSON.stringify(p.claimSources ?? []),
@@ -146,6 +170,8 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     if (useNetlifyDraftStore() && fallbackPreview) {
       const p = fallbackPreview;
+        const subject = interpolatePreviewTemplate(p.subject, p);
+        const bodyText = interpolatePreviewTemplate(p.bodyText, p);
         const draft = await createFallbackDraft({
           brandId: null,
           marketplaceId: null,
@@ -156,8 +182,8 @@ export async function POST(req: NextRequest) {
           branch: p.branch ?? null,
           toEmail: p.to.email,
           toFirstName: p.to.firstName ?? null,
-          subject: p.subject,
-          bodyText: p.bodyText,
+          subject,
+          bodyText,
           cta: p.cta ?? null,
           stopRule: p.stopRule ?? null,
           claimSources: JSON.stringify(p.claimSources ?? []),
@@ -185,4 +211,24 @@ function asNonEmptyString(value: unknown) {
   if (typeof value !== "string") return undefined;
   const trimmed = value.trim();
   return trimmed ? trimmed : undefined;
+}
+
+function interpolatePreviewTemplate(
+  template: string,
+  preview: z.infer<typeof CanonicalPreviewSchema>
+) {
+  const replacements: Array<[RegExp, string]> = [
+    [/\{\{\s*brand_name\s*\}\}|\{brand_name\}/gi, preview.brandName ?? ""],
+    [/\{\{\s*marketplace_name\s*\}\}|\{marketplace_name\}/gi, preview.marketplaceName ?? ""],
+    [/\{\{\s*first_name\s*\}\}|\{first_name\}/gi, preview.to.firstName ?? ""],
+    [/\{\{\s*sender\.first_name\s*\}\}|\{sender\.first_name\}/gi, preview.sender?.firstName ?? ""],
+    [/\{\{\s*sender\.firstName\s*\}\}|\{sender\.firstName\}/gi, preview.sender?.firstName ?? ""],
+    [/\{\{\s*sender\.email\s*\}\}|\{sender\.email\}/gi, preview.sender?.email ?? ""],
+    [/\{\{\s*operator_name\s*\}\}|\{operator_name\}/gi, preview.marketplaceName ?? ""],
+  ];
+
+  return replacements.reduce(
+    (value, [pattern, replacement]) => value.replace(pattern, replacement),
+    template
+  );
 }
