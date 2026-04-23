@@ -8,6 +8,7 @@
     "tunnel": "node scripts/start-cloudflare-tunnel.cjs 3000",
     "build": "next build",
     "start": "next start",
+    "render:start": "prisma migrate deploy --config ./prisma.config.ts && next start -p ${PORT:-3000}",
     "seed": "tsx scripts/seed.ts",
     "import:contacts": "tsx scripts/import-contacts.ts",
     "import:signals": "tsx scripts/import-marketplace-signals.ts",

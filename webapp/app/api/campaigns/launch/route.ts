@@ -10,6 +10,7 @@ const TEST_MARKETPLACE = "Mirakl";
 
 type LaunchTarget = {
   brandName: string;
+  amazonNotZalando?: boolean;
   toEmail: string;
   toFirstName?: string;
   marketplaceName?: string;
@@ -34,12 +35,17 @@ export async function POST(req: NextRequest) {
   const senderEmail = settings?.defaultSenderEmail ?? TEST_SENDER_EMAIL;
   const senderName = settings?.defaultSenderName ?? TEST_SENDER_NAME;
 
+  const normalizedTargets = targets
+    ? await enrichTargets(targets)
+    : null;
+
   const emailTargets =
-    targets ??
+    normalizedTargets ??
     (testMode
       ? [
           {
             brandName: TEST_BRAND_NAME,
+            amazonNotZalando: false,
             toEmail: TEST_RECIPIENT_EMAIL,
             toFirstName: TEST_RECIPIENT_NAME,
             marketplaceName: TEST_MARKETPLACE,
@@ -129,6 +135,7 @@ function getAppBaseUrl(req: NextRequest) {
   const configured =
     process.env.N8N_CALLBACK_BASE_URL ??
     process.env.APP_BASE_URL ??
+    process.env.RENDER_EXTERNAL_URL ??
     process.env.NEXT_PUBLIC_APP_URL;
   if (configured) return configured.replace(/\/$/, "");
 
@@ -155,4 +162,47 @@ function isPublicCallbackUrl(appBaseUrl: string) {
   } catch {
     return false;
   }
+}
+
+function normalizeRecipientEmail(email: string) {
+  const trimmed = email.trim();
+  if (trimmed.toLowerCase().endsWith("@eugeniaschool.example")) {
+    return TEST_RECIPIENT_EMAIL;
+  }
+  return trimmed;
+}
+
+async function enrichTargets(targets: LaunchTarget[]) {
+  const brandNames = Array.from(
+    new Set(targets.map((target) => target.brandName.trim()).filter(Boolean))
+  );
+
+  const brands = brandNames.length
+    ? await prisma.brand.findMany({
+        where: { name: { in: brandNames } },
+        select: { name: true, amazonSignal: true, zalandoSignal: true },
+      })
+    : [];
+
+  const amazonStatusByBrand = new Map(
+    brands.map((brand) => [
+      brand.name,
+      isAmazonNotZalando(brand.amazonSignal, brand.zalandoSignal),
+    ])
+  );
+
+  return targets.map((target) => ({
+    ...target,
+    amazonNotZalando:
+      target.amazonNotZalando ??
+      amazonStatusByBrand.get(target.brandName.trim()) ??
+      false,
+    toEmail: normalizeRecipientEmail(target.toEmail),
+  }));
+}
+
+function isAmazonNotZalando(amazonSignal: string | null, zalandoSignal: string | null) {
+  const amazon = (amazonSignal ?? "").toLowerCase();
+  const zalando = (zalandoSignal ?? "").toLowerCase();
+  return /oui|observed|signal|storefront|search/.test(amazon) && /\bnon\b|absent|pas de/.test(zalando);
 }

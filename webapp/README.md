@@ -45,8 +45,24 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy on Render
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This app uses SQLite, so the simplest public deployment is a Render web service with a persistent disk.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Render setup
+
+This repo includes a root [render.yaml](/c:/Cours/hackathon-mirakl/render.yaml) blueprint.
+
+What it does:
+
+- deploys the `webapp` subdirectory as a Node web service
+- mounts a persistent disk at `/var/data`
+- stores SQLite at `file:/var/data/dev.db`
+- runs Prisma migrations before start
+- lets the app auto-detect its public URL via Render's `RENDER_EXTERNAL_URL`
+
+After deployment, your preview endpoint will be:
+
+```text
+https://<your-service>.onrender.com/api/emails/preview
+```
