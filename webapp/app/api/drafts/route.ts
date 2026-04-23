@@ -1,10 +1,16 @@
 import { prisma } from "@/lib/db";
+import { countFallbackDrafts, listFallbackDrafts, useNetlifyDraftStore } from "@/lib/netlify-draft-store";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const status = req.nextUrl.searchParams.get("status") ?? "";
   const campaign = req.nextUrl.searchParams.get("campaign") ?? "";
   const q = req.nextUrl.searchParams.get("q") ?? "";
+
+  if (useNetlifyDraftStore()) {
+    const drafts = listFallbackDrafts({ status, campaign, q });
+    return NextResponse.json({ drafts, counts: countFallbackDrafts() });
+  }
 
   const drafts = await prisma.emailDraft.findMany({
     where: {

@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { createFallbackDraft, useNetlifyDraftStore } from "@/lib/netlify-draft-store";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -89,6 +90,7 @@ const PreviewSchema = z.preprocess((raw) => {
 }, CanonicalPreviewSchema);
 
 export async function POST(req: NextRequest) {
+  let fallbackPreview: z.infer<typeof CanonicalPreviewSchema> | null = null;
   try {
     const settings = await prisma.appSettings.findUnique({ where: { id: "singleton" } });
     if (settings?.n8nWebhookSecret) {
@@ -103,6 +105,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
     }
     const p = parsed.data;
+    fallbackPreview = p;
 
     let brand = null;
     if (p.brandId) brand = await prisma.brand.findUnique({ where: { id: p.brandId } });
@@ -141,6 +144,32 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ id: draft.id, status: draft.status }, { status: 201 });
   } catch (error) {
+    if (useNetlifyDraftStore() && fallbackPreview) {
+      const p = fallbackPreview;
+        const draft = createFallbackDraft({
+          brandId: null,
+          marketplaceId: null,
+          brandName: p.brandName ?? "Marque inconnue",
+          marketplaceName: p.marketplaceName ?? "Marketplace inconnue",
+          campaign: p.campaign ?? null,
+          step: p.step,
+          branch: p.branch ?? null,
+          toEmail: p.to.email,
+          toFirstName: p.to.firstName ?? null,
+          subject: p.subject,
+          bodyText: p.bodyText,
+          cta: p.cta ?? null,
+          stopRule: p.stopRule ?? null,
+          claimSources: JSON.stringify(p.claimSources ?? []),
+          meta: JSON.stringify(p.meta ?? {}),
+          callbackUrl: p.callbackUrl ?? null,
+          n8nExecutionId: p.n8nExecutionId ?? null,
+          status: "PENDING",
+          edited: false,
+        });
+        return NextResponse.json({ id: draft.id, status: draft.status, fallback: true }, { status: 201 });
+    }
+
     const message = error instanceof Error ? error.message : "Unknown preview webhook error";
     return NextResponse.json(
       {

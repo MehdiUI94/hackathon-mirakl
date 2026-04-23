@@ -1,4 +1,9 @@
 import { prisma } from "@/lib/db";
+import {
+  getFallbackDraft,
+  updateFallbackDraft,
+  useNetlifyDraftStore,
+} from "@/lib/netlify-draft-store";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -12,6 +17,74 @@ export async function POST(
   ctx: { params: Promise<{ id: string }> }
 ) {
   const { id } = await ctx.params;
+  if (useNetlifyDraftStore()) {
+    const draft = getFallbackDraft(id);
+    if (!draft) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    if (draft.status === "SENT") {
+      return NextResponse.json({ error: "Déjà envoyé" }, { status: 409 });
+    }
+    if (draft.status === "DISCARDED") {
+      return NextResponse.json({ error: "Aperçu refusé, envoi impossible" }, { status: 409 });
+    }
+
+    const targetUrl = draft.callbackUrl;
+    if (!targetUrl) {
+      return NextResponse.json(
+        { error: "Aucune URL n8n configurée pour ce draft." },
+        { status: 422 }
+      );
+    }
+
+    const payload = {
+      event: "preview.approved",
+      draftId: draft.id,
+      n8nExecutionId: draft.n8nExecutionId,
+      to: { email: draft.toEmail, firstName: draft.toFirstName },
+      subject: draft.subject,
+      bodyText: draft.bodyText,
+      edited: draft.edited,
+      brand: { id: draft.brandId, name: draft.brandName },
+      marketplace: { id: draft.marketplaceId, name: draft.marketplaceName },
+      campaign: draft.campaign,
+      step: draft.step,
+      branch: draft.branch,
+      sender: null,
+    };
+
+    try {
+      const res = await fetch(targetUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        updateFallbackDraft(id, {
+          status: "FAILED",
+          errorMessage: `HTTP ${res.status} ${text.slice(0, 200)}`,
+        });
+        return NextResponse.json(
+          { error: "Échec de l'envoi à n8n", status: res.status },
+          { status: 502 }
+        );
+      }
+      const updated = updateFallbackDraft(id, {
+        status: "SENT",
+        decidedAt: new Date().toISOString(),
+        sentAt: new Date().toISOString(),
+      });
+      return NextResponse.json({ ok: true, draft: updated });
+    } catch (err) {
+      updateFallbackDraft(id, {
+        status: "FAILED",
+        errorMessage: err instanceof Error ? err.message : "Erreur réseau inconnue",
+      });
+      return NextResponse.json(
+        { error: "Erreur réseau lors de l'envoi à n8n" },
+        { status: 502 }
+      );
+    }
+  }
   const draft = await prisma.emailDraft.findUnique({ where: { id } });
   if (!draft) return NextResponse.json({ error: "Not found" }, { status: 404 });
   if (draft.status === "SENT") {
