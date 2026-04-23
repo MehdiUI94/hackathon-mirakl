@@ -3,24 +3,45 @@ import { ButtonHTMLAttributes, ReactNode, useState } from "react";
 type Variant = "primary" | "outline-primary" | "outline-danger" | "ghost";
 
 const base: Record<Variant, React.CSSProperties> = {
-  primary: { background: "var(--color-primary)", color: "#fff", border: "none" },
-  "outline-primary": { background: "#fff", color: "var(--color-primary)", border: "1px solid var(--color-primary)" },
-  "outline-danger": { background: "#fff", color: "var(--color-text-secondary)", border: "1px solid var(--color-border)" },
-  ghost: { background: "transparent", color: "var(--color-text-secondary)", border: "none" },
+  primary: {
+    background: "var(--mirakl-primary-accent)",
+    color: "#fff",
+    border: "1px solid transparent",
+    boxShadow: "var(--mirakl-shadow-soft)",
+  },
+  "outline-primary": {
+    background: "#fff",
+    color: "var(--mirakl-primary-dark)",
+    border: "1px solid rgba(39,100,255,0.28)",
+  },
+  "outline-danger": {
+    background: "#fff",
+    color: "var(--mirakl-secondary-dark)",
+    border: "1px solid rgba(242,46,117,0.26)",
+  },
+  ghost: {
+    background: "transparent",
+    color: "var(--mirakl-text-muted)",
+    border: "1px solid transparent",
+  },
 };
 
 const hovered: Record<Variant, React.CSSProperties> = {
-  primary: { background: "var(--color-primary-dark)" },
-  "outline-primary": { background: "var(--color-primary-light)" },
-  "outline-danger": { background: "#FFF1F0", color: "#B91C1C", borderColor: "#FECACA" },
-  ghost: { background: "rgba(0,0,0,0.05)", color: "var(--color-text-primary)" },
+  primary: { background: "#1e57ef" },
+  "outline-primary": { background: "var(--mirakl-primary-background)", borderColor: "rgba(39,100,255,0.36)" },
+  "outline-danger": {
+    background: "var(--mirakl-secondary-background)",
+    color: "var(--mirakl-secondary-dark)",
+    borderColor: "rgba(242,46,117,0.38)",
+  },
+  ghost: { background: "rgba(3,24,47,0.05)", color: "var(--mirakl-primary-dark)" },
 };
 
 const pressed: Record<Variant, React.CSSProperties> = {
-  primary: { background: "#143058", transform: "scale(0.97)" },
-  "outline-primary": { background: "#D1E9FF", transform: "scale(0.97)" },
-  "outline-danger": { background: "#FFE4E6", transform: "scale(0.97)" },
-  ghost: { background: "rgba(0,0,0,0.1)", transform: "scale(0.97)" },
+  primary: { background: "#1747c6", transform: "scale(0.985)" },
+  "outline-primary": { background: "#e8f1ff", transform: "scale(0.985)" },
+  "outline-danger": { background: "#ffdbe6", transform: "scale(0.985)" },
+  ghost: { background: "rgba(3,24,47,0.1)", transform: "scale(0.985)" },
 };
 
 export function Button({
@@ -52,14 +73,16 @@ export function Button({
         display: "inline-flex",
         alignItems: "center",
         gap: 8,
-        padding: "8px 16px",
+        justifyContent: "center",
+        padding: "10px 16px",
         borderRadius: 8,
         fontSize: 14,
-        fontWeight: 500,
+        lineHeight: "24px",
+        fontWeight: 700,
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.6 : 1,
-        transition: "background 0.12s, transform 0.08s, border-color 0.12s, color 0.12s",
-        fontFamily: "inherit",
+        transition: "background 0.12s, transform 0.08s, border-color 0.12s, color 0.12s, box-shadow 0.12s",
+        fontFamily: "var(--font-roboto-serif), 'Roboto Serif', serif",
         userSelect: "none",
         ...base[variant],
         ...interactionStyle,

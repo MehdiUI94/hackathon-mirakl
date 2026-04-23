@@ -1,12 +1,36 @@
 type Variant = "blue" | "green" | "amber" | "red" | "gray" | "purple";
 
 const variantStyles: Record<Variant, { bg: string; color: string; border: string }> = {
-  blue:   { bg: "#DBEAFE", color: "#1D4ED8", border: "#BFDBFE" },
-  green:  { bg: "#D1FAE5", color: "#065F46", border: "#A7F3D0" },
-  amber:  { bg: "#FEF3C7", color: "#92400E", border: "#FDE68A" },
-  red:    { bg: "#FEE2E2", color: "#991B1B", border: "#FECACA" },
-  gray:   { bg: "#F1F3F5", color: "#4B5563", border: "#E5E7EB" },
-  purple: { bg: "#EDE9FE", color: "#5B21B6", border: "#DDD6FE" },
+  blue: {
+    bg: "var(--mirakl-primary-background)",
+    color: "var(--mirakl-primary-accent)",
+    border: "rgba(39,100,255,0.16)",
+  },
+  green: {
+    bg: "rgba(39,100,255,0.08)",
+    color: "var(--mirakl-primary-dark)",
+    border: "rgba(39,100,255,0.12)",
+  },
+  amber: {
+    bg: "rgba(3,24,47,0.05)",
+    color: "var(--mirakl-primary-dark)",
+    border: "rgba(3,24,47,0.1)",
+  },
+  red: {
+    bg: "var(--mirakl-secondary-background)",
+    color: "var(--mirakl-secondary-dark)",
+    border: "rgba(242,46,117,0.18)",
+  },
+  gray: {
+    bg: "rgba(3,24,47,0.05)",
+    color: "var(--mirakl-text-muted)",
+    border: "rgba(3,24,47,0.08)",
+  },
+  purple: {
+    bg: "rgba(119,0,49,0.08)",
+    color: "var(--mirakl-secondary-dark)",
+    border: "rgba(119,0,49,0.14)",
+  },
 };
 
 export function PillTag({
@@ -25,11 +49,13 @@ export function PillTag({
         padding: "2px 10px",
         borderRadius: 9999,
         fontSize: 12,
-        fontWeight: 500,
+        lineHeight: "18px",
+        fontWeight: 700,
         background: s.bg,
         color: s.color,
         border: `1px solid ${s.border}`,
         whiteSpace: "nowrap",
+        fontFamily: "var(--font-roboto-serif), 'Roboto Serif', serif",
       }}
     >
       {label}

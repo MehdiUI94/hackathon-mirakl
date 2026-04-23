@@ -12,9 +12,9 @@ export function TabBar({
   return (
     <div
       style={{
-        borderBottom: "1px solid var(--color-border)",
+        borderBottom: "1px solid var(--mirakl-border)",
         display: "flex",
-        gap: 0,
+        gap: 8,
       }}
     >
       {tabs.map((tab) => {
@@ -24,21 +24,24 @@ export function TabBar({
             key={tab.key}
             onClick={() => onChange(tab.key)}
             style={{
-              padding: "10px 16px",
+              padding: "12px 16px",
               fontSize: 14,
-              fontWeight: 500,
-              color: isActive ? "var(--color-text-primary)" : "var(--color-text-secondary)",
-              background: "none",
+              lineHeight: "24px",
+              fontWeight: isActive ? 700 : 400,
+              color: isActive ? "var(--mirakl-primary-dark)" : "var(--mirakl-text-muted)",
+              background: isActive ? "rgba(39,100,255,0.06)" : "transparent",
               border: "none",
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
               borderBottom: isActive
-                ? "2px solid var(--color-primary)"
+                ? "2px solid var(--mirakl-primary-accent)"
                 : "2px solid transparent",
               cursor: "pointer",
-              transition: "all 0.12s",
+              transition: "all 0.12s ease",
               display: "flex",
               alignItems: "center",
               gap: 6,
-              fontFamily: "inherit",
+              fontFamily: "var(--font-roboto-serif), 'Roboto Serif', serif",
               marginBottom: -1,
             }}
           >
@@ -46,12 +49,18 @@ export function TabBar({
             {tab.count !== undefined && (
               <span
                 style={{
-                  background: isActive ? "var(--color-primary-light)" : "var(--color-tag-gray-bg)",
-                  color: isActive ? "var(--color-primary)" : "var(--color-text-secondary)",
+                  background: isActive
+                    ? "var(--mirakl-primary-background)"
+                    : "rgba(3,24,47,0.05)",
+                  color: isActive
+                    ? "var(--mirakl-primary-accent)"
+                    : "var(--mirakl-text-muted)",
                   fontSize: 11,
-                  fontWeight: 600,
+                  lineHeight: "16px",
+                  fontWeight: 700,
                   padding: "1px 7px",
                   borderRadius: 9999,
+                  fontFamily: "var(--font-roboto-serif), 'Roboto Serif', serif",
                 }}
               >
                 {tab.count}
