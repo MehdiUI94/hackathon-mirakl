@@ -64,6 +64,7 @@ export default function AddBrandClient({ locale }: { locale: string }) {
   const [editedBrand, setEditedBrand] = useState<BrandData>({});
   const [brandSuggestions, setBrandSuggestions] = useState<BrandSuggestion[]>([]);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     const query = inputName.trim();
@@ -122,6 +123,7 @@ export default function AddBrandClient({ locale }: { locale: string }) {
     setStage("loading");
     setProgress([]);
     setResult(null);
+    setSaveError(null);
 
     const res = await fetch("/api/brands/enrich", {
       method: "POST",
@@ -174,37 +176,54 @@ export default function AddBrandClient({ locale }: { locale: string }) {
   async function handleSave() {
     if (!result) return;
     setSaving(true);
-    const res = await fetch("/api/brands", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: editedBrand.name ?? "Unnamed Brand",
-        url: editedBrand.url ?? inputUrl,
-        country: editedBrand.country ?? undefined,
-        category: editedBrand.category ?? undefined,
-        foundedYear: toNullableNumber(editedBrand.foundedYear),
-        headquartersAddress: toOptionalString(editedBrand.headquartersAddress),
-        companyType: toOptionalString(editedBrand.companyType),
-        businessSignals: toStringList(editedBrand.businessSignals),
-        genderFocus: toOptionalString(editedBrand.genderFocus),
-        productType: toOptionalString(editedBrand.productType),
-        positioning: editedBrand.positioning ?? undefined,
-        revenueMUsd: toNullableNumber(editedBrand.revenueMUsd),
-        headcount: toNullableInteger(editedBrand.headcount),
-        intlPresence: toOptionalString(editedBrand.intlPresence),
-        sustainable: Boolean(editedBrand.sustainable),
-        productTags: toStringList(editedBrand.productTags),
-        sources: toOptionalString(editedBrand.sources),
-        notes: editedBrand.notes ?? undefined,
-        createdVia: "ENRICHED",
-      }),
-    });
+    setSaveError(null);
 
-    if (res.ok) {
+    try {
+      const res = await fetch("/api/brands", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: editedBrand.name ?? "Unnamed Brand",
+          url: editedBrand.url ?? inputUrl,
+          country: editedBrand.country ?? undefined,
+          category: editedBrand.category ?? undefined,
+          foundedYear: toNullableNumber(editedBrand.foundedYear),
+          headquartersAddress: toOptionalString(editedBrand.headquartersAddress),
+          companyType: toOptionalString(editedBrand.companyType),
+          businessSignals: toStringList(editedBrand.businessSignals),
+          genderFocus: toOptionalString(editedBrand.genderFocus),
+          productType: toOptionalString(editedBrand.productType),
+          positioning: editedBrand.positioning ?? undefined,
+          revenueMUsd: toNullableNumber(editedBrand.revenueMUsd),
+          headcount: toNullableInteger(editedBrand.headcount),
+          intlPresence: toOptionalString(editedBrand.intlPresence),
+          sustainable: Boolean(editedBrand.sustainable),
+          productTags: toStringList(editedBrand.productTags),
+          sources: toOptionalString(editedBrand.sources),
+          notes: editedBrand.notes ?? undefined,
+          createdVia: "ENRICHED",
+        }),
+      });
+
+      if (!res.ok) {
+        const errorPayload = await safeReadJson(res);
+        setSaveError(extractErrorMessage(errorPayload) ?? `Save failed (${res.status})`);
+        setSaving(false);
+        return;
+      }
+
       const saved = await res.json();
+      if (!saved?.id) {
+        setSaveError("Brand saved but no brand id was returned.");
+        setSaving(false);
+        return;
+      }
+
       setStage("saved");
-      router.push(`/${locale}/brands/${saved.id}`);
-    } else {
+      router.refresh();
+      window.location.assign(`/${locale}/brands/${saved.id}`);
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : "Unexpected save failure");
       setSaving(false);
     }
   }
@@ -397,6 +416,11 @@ export default function AddBrandClient({ locale }: { locale: string }) {
             {saving ? "Saving…" : "Save Brand"}
           </button>
         </div>
+        {saveError && (
+          <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {saveError}
+          </div>
+        )}
       </div>
     );
   }
@@ -457,4 +481,38 @@ function toNullableNumber(value: unknown) {
 function toNullableInteger(value: unknown) {
   const number = toNullableNumber(value);
   return number == null ? undefined : Math.round(number);
+}
+
+async function safeReadJson(response: Response) {
+  try {
+    return await response.json();
+  } catch {
+    return null;
+  }
+}
+
+function extractErrorMessage(payload: unknown) {
+  if (!payload || typeof payload !== "object") return null;
+
+  const record = payload as Record<string, unknown>;
+  if (typeof record.error === "string") return record.error;
+
+  if (record.error && typeof record.error === "object") {
+    const errorRecord = record.error as Record<string, unknown>;
+    const formErrors = Array.isArray(errorRecord.formErrors) ? errorRecord.formErrors : [];
+    if (formErrors.length > 0) {
+      return String(formErrors[0]);
+    }
+
+    if (errorRecord.fieldErrors && typeof errorRecord.fieldErrors === "object") {
+      const fieldErrors = errorRecord.fieldErrors as Record<string, unknown>;
+      const firstFieldError = Object.entries(fieldErrors).find(([, value]) => Array.isArray(value) && value.length > 0);
+      if (firstFieldError) {
+        const [field, messages] = firstFieldError;
+        return `${field}: ${String((messages as unknown[])[0])}`;
+      }
+    }
+  }
+
+  return null;
 }
