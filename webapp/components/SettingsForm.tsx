@@ -120,6 +120,19 @@ export default function SettingsForm() {
               e.target.style.boxShadow = "none";
             }}
           />
+          {key === "n8nWebhookUrl" && (
+            <p
+              style={{
+                margin: "8px 0 0",
+                fontSize: 12,
+                lineHeight: 1.45,
+                color: "var(--color-text-secondary)",
+              }}
+            >
+              Ce champ configure seulement le webhook d&apos;entree n8n. Pour que n8n Cloud puisse renvoyer les apercus
+              vers cette app, il faut aussi definir `APP_BASE_URL` avec une URL publique de l&apos;app.
+            </p>
+          )}
         </div>
       ))}
 

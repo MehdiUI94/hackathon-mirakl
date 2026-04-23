@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 
 interface Brand {
   id: string;
@@ -43,7 +42,6 @@ interface Props {
 }
 
 export function LaunchCampaignModal({ locale, onClose }: Props) {
-  const router = useRouter();
   const [brands, setBrands] = useState<Brand[]>([]);
   const [profiles, setProfiles] = useState<WeightProfile[]>([]);
   const [selectedProfileId, setSelectedProfileId] = useState("");
@@ -168,10 +166,7 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
           type: data.n8nOk ? "success" : "info",
           text: data.message ?? "Campagne lancée",
         });
-        setTimeout(() => {
-          onClose();
-          router.push(`/${locale}/inbox`);
-        }, 1600);
+        setLaunching(false);
       } else {
         setResult({ type: "error", text: data.error ?? "Échec du lancement" });
         setLaunching(false);
