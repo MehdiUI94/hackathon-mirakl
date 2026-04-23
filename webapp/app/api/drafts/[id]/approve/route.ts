@@ -18,7 +18,7 @@ export async function POST(
 ) {
   const { id } = await ctx.params;
   if (useNetlifyDraftStore()) {
-    const draft = getFallbackDraft(id);
+    const draft = await getFallbackDraft(id);
     if (!draft) return NextResponse.json({ error: "Not found" }, { status: 404 });
     if (draft.status === "SENT") {
       return NextResponse.json({ error: "Déjà envoyé" }, { status: 409 });
@@ -59,7 +59,7 @@ export async function POST(
       });
       if (!res.ok) {
         const text = await res.text().catch(() => "");
-        updateFallbackDraft(id, {
+        await updateFallbackDraft(id, {
           status: "FAILED",
           errorMessage: `HTTP ${res.status} ${text.slice(0, 200)}`,
         });
@@ -68,14 +68,14 @@ export async function POST(
           { status: 502 }
         );
       }
-      const updated = updateFallbackDraft(id, {
+      const updated = await updateFallbackDraft(id, {
         status: "SENT",
         decidedAt: new Date().toISOString(),
         sentAt: new Date().toISOString(),
       });
       return NextResponse.json({ ok: true, draft: updated });
     } catch (err) {
-      updateFallbackDraft(id, {
+      await updateFallbackDraft(id, {
         status: "FAILED",
         errorMessage: err instanceof Error ? err.message : "Erreur réseau inconnue",
       });

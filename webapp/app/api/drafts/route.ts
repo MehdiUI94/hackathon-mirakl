@@ -8,8 +8,8 @@ export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get("q") ?? "";
 
   if (useNetlifyDraftStore()) {
-    const drafts = listFallbackDrafts({ status, campaign, q });
-    return NextResponse.json({ drafts, counts: countFallbackDrafts() });
+    const drafts = await listFallbackDrafts({ status, campaign, q });
+    return NextResponse.json({ drafts, counts: await countFallbackDrafts() });
   }
 
   const drafts = await prisma.emailDraft.findMany({

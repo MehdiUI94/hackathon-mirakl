@@ -35,17 +35,18 @@ type DraftStoreFile = {
 };
 
 const STORE_PATH = path.join(os.tmpdir(), "hackathon-mirakl-drafts.json");
+const BLOBS_KEY = "drafts";
 
 export function useNetlifyDraftStore() {
   return process.env.NETLIFY === "true" || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
 }
 
-export function listFallbackDrafts(filters?: {
+export async function listFallbackDrafts(filters?: {
   status?: string;
   campaign?: string;
   q?: string;
 }) {
-  const drafts = readStore().drafts.filter((draft) => {
+  const drafts = (await readStore()).drafts.filter((draft) => {
     if (filters?.status && draft.status !== filters.status) return false;
     if (filters?.campaign && draft.campaign !== filters.campaign) return false;
     if (filters?.q) {
@@ -65,22 +66,22 @@ export function listFallbackDrafts(filters?: {
   });
 }
 
-export function countFallbackDrafts() {
+export async function countFallbackDrafts() {
   const counts: Record<string, number> = {};
-  for (const draft of readStore().drafts) {
+  for (const draft of (await readStore()).drafts) {
     counts[draft.status] = (counts[draft.status] ?? 0) + 1;
   }
   return counts;
 }
 
-export function getFallbackDraft(id: string) {
-  return readStore().drafts.find((draft) => draft.id === id) ?? null;
+export async function getFallbackDraft(id: string) {
+  return (await readStore()).drafts.find((draft) => draft.id === id) ?? null;
 }
 
-export function createFallbackDraft(
+export async function createFallbackDraft(
   draft: Omit<FallbackDraft, "id" | "receivedAt" | "decidedAt" | "sentAt" | "errorMessage">
 ) {
-  const store = readStore();
+  const store = await readStore();
   const record: FallbackDraft = {
     ...draft,
     id: randomUUID(),
@@ -90,23 +91,33 @@ export function createFallbackDraft(
     errorMessage: null,
   };
   store.drafts.unshift(record);
-  writeStore(store);
+  await writeStore(store);
   return record;
 }
 
-export function updateFallbackDraft(
-  id: string,
-  patch: Partial<FallbackDraft>
-) {
-  const store = readStore();
+export async function updateFallbackDraft(id: string, patch: Partial<FallbackDraft>) {
+  const store = await readStore();
   const index = store.drafts.findIndex((draft) => draft.id === id);
   if (index === -1) return null;
   store.drafts[index] = { ...store.drafts[index], ...patch };
-  writeStore(store);
+  await writeStore(store);
   return store.drafts[index];
 }
 
-function readStore(): DraftStoreFile {
+async function readStore(): Promise<DraftStoreFile> {
+  if (useNetlifyDraftStore()) {
+    try {
+      const { getStore } = await import("@netlify/blobs");
+      const store = getStore("hackathon-mirakl");
+      const drafts = await store.get(BLOBS_KEY, { type: "json" });
+      if (drafts && typeof drafts === "object" && Array.isArray((drafts as DraftStoreFile).drafts)) {
+        return drafts as DraftStoreFile;
+      }
+    } catch {
+      // Fall back to tmp file below.
+    }
+  }
+
   try {
     if (!fs.existsSync(STORE_PATH)) {
       return { drafts: [] };
@@ -119,6 +130,17 @@ function readStore(): DraftStoreFile {
   }
 }
 
-function writeStore(store: DraftStoreFile) {
-  fs.writeFileSync(STORE_PATH, JSON.stringify(store, null, 2), "utf8");
+async function writeStore(storeData: DraftStoreFile) {
+  if (useNetlifyDraftStore()) {
+    try {
+      const { getStore } = await import("@netlify/blobs");
+      const store = getStore("hackathon-mirakl");
+      await store.setJSON(BLOBS_KEY, storeData);
+      return;
+    } catch {
+      // Fall back to tmp file below.
+    }
+  }
+
+  fs.writeFileSync(STORE_PATH, JSON.stringify(storeData, null, 2), "utf8");
 }

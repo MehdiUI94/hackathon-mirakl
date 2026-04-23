@@ -146,7 +146,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     if (useNetlifyDraftStore() && fallbackPreview) {
       const p = fallbackPreview;
-        const draft = createFallbackDraft({
+        const draft = await createFallbackDraft({
           brandId: null,
           marketplaceId: null,
           brandName: p.brandName ?? "Marque inconnue",

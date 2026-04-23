@@ -13,7 +13,7 @@ export async function GET(
 ) {
   const { id } = await ctx.params;
   if (useNetlifyDraftStore()) {
-    const draft = getFallbackDraft(id);
+    const draft = await getFallbackDraft(id);
     if (!draft) return NextResponse.json({ error: "Not found" }, { status: 404 });
     return NextResponse.json(draft);
   }
@@ -39,12 +39,12 @@ export async function PATCH(
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
   if (useNetlifyDraftStore()) {
-    const draft = getFallbackDraft(id);
+    const draft = await getFallbackDraft(id);
     if (!draft) return NextResponse.json({ error: "Not found" }, { status: 404 });
     if (draft.status !== "PENDING" && draft.status !== "EDITED") {
       return NextResponse.json({ error: "Aperçu déjà décidé, modification impossible" }, { status: 409 });
     }
-    const updated = updateFallbackDraft(id, { ...parsed.data, status: "EDITED", edited: true });
+    const updated = await updateFallbackDraft(id, { ...parsed.data, status: "EDITED", edited: true });
     return NextResponse.json(updated);
   }
   const draft = await prisma.emailDraft.findUnique({ where: { id } });
@@ -65,7 +65,7 @@ export async function DELETE(
 ) {
   const { id } = await ctx.params;
   if (useNetlifyDraftStore()) {
-    const draft = getFallbackDraft(id);
+    const draft = await getFallbackDraft(id);
     if (!draft) return NextResponse.json({ error: "Not found" }, { status: 404 });
     if (draft.callbackUrl) {
       notifyN8n(draft.callbackUrl, {
@@ -74,7 +74,7 @@ export async function DELETE(
         n8nExecutionId: draft.n8nExecutionId,
       }).catch(() => {});
     }
-    updateFallbackDraft(id, { status: "DISCARDED", decidedAt: new Date().toISOString() });
+    await updateFallbackDraft(id, { status: "DISCARDED", decidedAt: new Date().toISOString() });
     return NextResponse.json({ ok: true });
   }
   const draft = await prisma.emailDraft.findUnique({ where: { id } });
