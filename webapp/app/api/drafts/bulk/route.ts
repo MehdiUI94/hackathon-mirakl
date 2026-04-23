@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { canSendDirectEmail, sendDraftEmailDirect } from "@/lib/email-delivery";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -16,12 +17,13 @@ export async function POST(req: NextRequest) {
 
   const settings = await prisma.appSettings.findUnique({ where: { id: "singleton" } });
   const drafts = await prisma.emailDraft.findMany({ where: { id: { in: ids } } });
+  const directEmailEnabled = canSendDirectEmail();
 
   const results: { id: string; ok: boolean; error?: string }[] = [];
 
   for (const draft of drafts) {
     if (draft.status !== "PENDING" && draft.status !== "EDITED") {
-      results.push({ id: draft.id, ok: false, error: "Déjà décidé" });
+      results.push({ id: draft.id, ok: false, error: "Deja decide" });
       continue;
     }
 
@@ -41,14 +43,37 @@ export async function POST(req: NextRequest) {
       continue;
     }
 
-    // action === "approve"
+    if (directEmailEnabled) {
+      try {
+        await sendDraftEmailDirect(draft, settings);
+        await prisma.emailDraft.update({
+          where: { id: draft.id },
+          data: {
+            status: "SENT",
+            decidedAt: new Date(),
+            sentAt: new Date(),
+            errorMessage: null,
+          },
+        });
+        results.push({ id: draft.id, ok: true });
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "Erreur SMTP";
+        await prisma.emailDraft.update({
+          where: { id: draft.id },
+          data: { status: "FAILED", errorMessage: msg },
+        });
+        results.push({ id: draft.id, ok: false, error: msg });
+      }
+      continue;
+    }
+
     const targetUrl = draft.callbackUrl ?? settings?.n8nWebhookUrl;
     if (!targetUrl) {
       await prisma.emailDraft.update({
         where: { id: draft.id },
-        data: { status: "FAILED", errorMessage: "Aucune URL n8n configurée" },
+        data: { status: "FAILED", errorMessage: "Aucun SMTP ni URL n8n configuree" },
       });
-      results.push({ id: draft.id, ok: false, error: "Aucune URL n8n" });
+      results.push({ id: draft.id, ok: false, error: "Aucun SMTP ni URL n8n" });
       continue;
     }
 
@@ -82,12 +107,17 @@ export async function POST(req: NextRequest) {
       } else {
         await prisma.emailDraft.update({
           where: { id: draft.id },
-          data: { status: "SENT", decidedAt: new Date(), sentAt: new Date() },
+          data: {
+            status: "SENT",
+            decidedAt: new Date(),
+            sentAt: new Date(),
+            errorMessage: null,
+          },
         });
         results.push({ id: draft.id, ok: true });
       }
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Erreur réseau";
+      const msg = err instanceof Error ? err.message : "Erreur reseau";
       await prisma.emailDraft.update({
         where: { id: draft.id },
         data: { status: "FAILED", errorMessage: msg },

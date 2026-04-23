@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { canSendDirectEmail, sendDraftEmailDirect } from "@/lib/email-delivery";
 import {
   getFallbackDraft,
   updateFallbackDraft,
@@ -8,29 +9,51 @@ import { NextRequest, NextResponse } from "next/server";
 
 /**
  * Approve a draft and trigger the actual send.
- * Posts the final subject/body back to the n8n callbackUrl that came in
- * with the preview. If no callbackUrl is present, falls back to the
- * generic n8nWebhookUrl from Settings.
+ * If SMTP is configured, the app sends the email directly.
+ * Otherwise it falls back to the historical n8n callback flow.
  */
 export async function POST(
   _req: NextRequest,
   ctx: { params: Promise<{ id: string }> }
 ) {
   const { id } = await ctx.params;
+
   if (useNetlifyDraftStore()) {
     const draft = await getFallbackDraft(id);
     if (!draft) return NextResponse.json({ error: "Not found" }, { status: 404 });
     if (draft.status === "SENT") {
-      return NextResponse.json({ error: "Déjà envoyé" }, { status: 409 });
+      return NextResponse.json({ error: "Deja envoye" }, { status: 409 });
     }
     if (draft.status === "DISCARDED") {
-      return NextResponse.json({ error: "Aperçu refusé, envoi impossible" }, { status: 409 });
+      return NextResponse.json({ error: "Apercu refuse, envoi impossible" }, { status: 409 });
+    }
+
+    if (canSendDirectEmail()) {
+      try {
+        await sendDraftEmailDirect(draft);
+        const updated = await updateFallbackDraft(id, {
+          status: "SENT",
+          decidedAt: new Date().toISOString(),
+          sentAt: new Date().toISOString(),
+          errorMessage: null,
+        });
+        return NextResponse.json({ ok: true, draft: updated, delivery: "direct" });
+      } catch (err) {
+        await updateFallbackDraft(id, {
+          status: "FAILED",
+          errorMessage: err instanceof Error ? err.message : "Erreur SMTP inconnue",
+        });
+        return NextResponse.json(
+          { error: "Erreur lors de l'envoi direct du mail" },
+          { status: 502 }
+        );
+      }
     }
 
     const targetUrl = draft.callbackUrl;
     if (!targetUrl) {
       return NextResponse.json(
-        { error: "Aucune URL n8n configurée pour ce draft." },
+        { error: "Aucun SMTP ni URL n8n configures pour ce draft." },
         { status: 422 }
       );
     }
@@ -64,7 +87,7 @@ export async function POST(
           errorMessage: `HTTP ${res.status} ${text.slice(0, 200)}`,
         });
         return NextResponse.json(
-          { error: "Échec de l'envoi à n8n", status: res.status },
+          { error: "Echec de l'envoi a n8n", status: res.status },
           { status: 502 }
         );
       }
@@ -72,33 +95,64 @@ export async function POST(
         status: "SENT",
         decidedAt: new Date().toISOString(),
         sentAt: new Date().toISOString(),
+        errorMessage: null,
       });
-      return NextResponse.json({ ok: true, draft: updated });
+      return NextResponse.json({ ok: true, draft: updated, delivery: "n8n" });
     } catch (err) {
       await updateFallbackDraft(id, {
         status: "FAILED",
-        errorMessage: err instanceof Error ? err.message : "Erreur réseau inconnue",
+        errorMessage: err instanceof Error ? err.message : "Erreur reseau inconnue",
       });
       return NextResponse.json(
-        { error: "Erreur réseau lors de l'envoi à n8n" },
+        { error: "Erreur reseau lors de l'envoi a n8n" },
         { status: 502 }
       );
     }
   }
+
   const draft = await prisma.emailDraft.findUnique({ where: { id } });
   if (!draft) return NextResponse.json({ error: "Not found" }, { status: 404 });
   if (draft.status === "SENT") {
-    return NextResponse.json({ error: "Déjà envoyé" }, { status: 409 });
+    return NextResponse.json({ error: "Deja envoye" }, { status: 409 });
   }
   if (draft.status === "DISCARDED") {
-    return NextResponse.json({ error: "Aperçu refusé, envoi impossible" }, { status: 409 });
+    return NextResponse.json({ error: "Apercu refuse, envoi impossible" }, { status: 409 });
   }
 
   const settings = await prisma.appSettings.findUnique({ where: { id: "singleton" } });
+
+  if (canSendDirectEmail()) {
+    try {
+      await sendDraftEmailDirect(draft, settings);
+      const updated = await prisma.emailDraft.update({
+        where: { id },
+        data: {
+          status: "SENT",
+          decidedAt: new Date(),
+          sentAt: new Date(),
+          errorMessage: null,
+        },
+      });
+      return NextResponse.json({ ok: true, draft: updated, delivery: "direct" });
+    } catch (err) {
+      await prisma.emailDraft.update({
+        where: { id },
+        data: {
+          status: "FAILED",
+          errorMessage: err instanceof Error ? err.message : "Erreur SMTP inconnue",
+        },
+      });
+      return NextResponse.json(
+        { error: "Erreur lors de l'envoi direct du mail" },
+        { status: 502 }
+      );
+    }
+  }
+
   const targetUrl = draft.callbackUrl ?? settings?.n8nWebhookUrl;
   if (!targetUrl) {
     return NextResponse.json(
-      { error: "Aucune URL n8n configurée. Renseignez l'URL du webhook dans les Réglages." },
+      { error: "Aucun SMTP ni URL n8n configures. Configure le SMTP ou le webhook." },
       { status: 422 }
     );
   }
@@ -136,10 +190,13 @@ export async function POST(
       const text = await res.text().catch(() => "");
       await prisma.emailDraft.update({
         where: { id },
-        data: { status: "FAILED", errorMessage: `HTTP ${res.status} ${text.slice(0, 200)}` },
+        data: {
+          status: "FAILED",
+          errorMessage: `HTTP ${res.status} ${text.slice(0, 200)}`,
+        },
       });
       return NextResponse.json(
-        { error: "Échec de l'envoi à n8n", status: res.status },
+        { error: "Echec de l'envoi a n8n", status: res.status },
         { status: 502 }
       );
     }
@@ -149,19 +206,20 @@ export async function POST(
         status: "SENT",
         decidedAt: new Date(),
         sentAt: new Date(),
+        errorMessage: null,
       },
     });
-    return NextResponse.json({ ok: true, draft: updated });
+    return NextResponse.json({ ok: true, draft: updated, delivery: "n8n" });
   } catch (err) {
     await prisma.emailDraft.update({
       where: { id },
       data: {
         status: "FAILED",
-        errorMessage: err instanceof Error ? err.message : "Erreur réseau inconnue",
+        errorMessage: err instanceof Error ? err.message : "Erreur reseau inconnue",
       },
     });
     return NextResponse.json(
-      { error: "Erreur réseau lors de l'envoi à n8n" },
+      { error: "Erreur reseau lors de l'envoi a n8n" },
       { status: 502 }
     );
   }
