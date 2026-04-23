@@ -89,58 +89,67 @@ const PreviewSchema = z.preprocess((raw) => {
 }, CanonicalPreviewSchema);
 
 export async function POST(req: NextRequest) {
-  const settings = await prisma.appSettings.findUnique({ where: { id: "singleton" } });
-  if (settings?.n8nWebhookSecret) {
-    const incoming = req.headers.get("x-webhook-secret") ?? "";
-    if (incoming !== settings.n8nWebhookSecret) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  try {
+    const settings = await prisma.appSettings.findUnique({ where: { id: "singleton" } });
+    if (settings?.n8nWebhookSecret) {
+      const incoming = req.headers.get("x-webhook-secret") ?? "";
+      if (incoming !== settings.n8nWebhookSecret) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
     }
+
+    const parsed = PreviewSchema.safeParse(await req.json());
+    if (!parsed.success) {
+      return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
+    }
+    const p = parsed.data;
+
+    let brand = null;
+    if (p.brandId) brand = await prisma.brand.findUnique({ where: { id: p.brandId } });
+    if (!brand && p.brandName) {
+      brand = await prisma.brand.findFirst({ where: { name: { contains: p.brandName } } });
+    }
+
+    let marketplace = null;
+    if (p.marketplaceId) marketplace = await prisma.marketplace.findUnique({ where: { id: p.marketplaceId } });
+    if (!marketplace && p.marketplaceName) {
+      marketplace = await prisma.marketplace.findFirst({ where: { name: p.marketplaceName } });
+    }
+
+    const draft = await prisma.emailDraft.create({
+      data: {
+        brandId: brand?.id ?? null,
+        marketplaceId: marketplace?.id ?? null,
+        brandName: brand?.name ?? p.brandName ?? "Marque inconnue",
+        marketplaceName: marketplace?.name ?? p.marketplaceName ?? "Marketplace inconnue",
+        campaign: p.campaign ?? null,
+        step: p.step,
+        branch: p.branch ?? null,
+        toEmail: p.to.email,
+        toFirstName: p.to.firstName ?? null,
+        subject: p.subject,
+        bodyText: p.bodyText,
+        cta: p.cta ?? null,
+        stopRule: p.stopRule ?? null,
+        claimSources: JSON.stringify(p.claimSources ?? []),
+        meta: JSON.stringify(p.meta ?? {}),
+        callbackUrl: p.callbackUrl ?? null,
+        n8nExecutionId: p.n8nExecutionId ?? null,
+        status: "PENDING",
+      },
+    });
+
+    return NextResponse.json({ id: draft.id, status: draft.status }, { status: 201 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown preview webhook error";
+    return NextResponse.json(
+      {
+        error: "Preview creation failed",
+        detail: message,
+      },
+      { status: 500 }
+    );
   }
-
-  const parsed = PreviewSchema.safeParse(await req.json());
-  if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
-  }
-  const p = parsed.data;
-
-  // Resolve brand
-  let brand = null;
-  if (p.brandId) brand = await prisma.brand.findUnique({ where: { id: p.brandId } });
-  if (!brand && p.brandName) {
-    brand = await prisma.brand.findFirst({ where: { name: { contains: p.brandName } } });
-  }
-
-  // Resolve marketplace
-  let marketplace = null;
-  if (p.marketplaceId) marketplace = await prisma.marketplace.findUnique({ where: { id: p.marketplaceId } });
-  if (!marketplace && p.marketplaceName) {
-    marketplace = await prisma.marketplace.findFirst({ where: { name: p.marketplaceName } });
-  }
-
-  const draft = await prisma.emailDraft.create({
-    data: {
-      brandId: brand?.id ?? null,
-      marketplaceId: marketplace?.id ?? null,
-      brandName: brand?.name ?? p.brandName ?? "Marque inconnue",
-      marketplaceName: marketplace?.name ?? p.marketplaceName ?? "Marketplace inconnue",
-      campaign: p.campaign ?? null,
-      step: p.step,
-      branch: p.branch ?? null,
-      toEmail: p.to.email,
-      toFirstName: p.to.firstName ?? null,
-      subject: p.subject,
-      bodyText: p.bodyText,
-      cta: p.cta ?? null,
-      stopRule: p.stopRule ?? null,
-      claimSources: JSON.stringify(p.claimSources ?? []),
-      meta: JSON.stringify(p.meta ?? {}),
-      callbackUrl: p.callbackUrl ?? null,
-      n8nExecutionId: p.n8nExecutionId ?? null,
-      status: "PENDING",
-    },
-  });
-
-  return NextResponse.json({ id: draft.id, status: draft.status }, { status: 201 });
 }
 
 function asNonEmptyString(value: unknown) {
