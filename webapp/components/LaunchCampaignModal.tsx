@@ -43,6 +43,33 @@ interface Props {
 }
 
 const TEST_BRAND_EMAIL = "zitounimehdi7@gmail.com";
+const LOCAL_PREVIEW_DRAFTS_STORAGE_KEY = "hackathon-mirakl.local-preview-drafts";
+
+type LaunchPreviewDraft = {
+  id: string;
+  brandId: string | null;
+  marketplaceId: string | null;
+  brandName: string;
+  marketplaceName: string;
+  campaign: string | null;
+  step: number;
+  branch: string | null;
+  toEmail: string;
+  toFirstName: string | null;
+  subject: string;
+  bodyText: string;
+  cta: string | null;
+  stopRule: string | null;
+  claimSources: string;
+  callbackUrl: string | null;
+  status: string;
+  edited: boolean;
+  receivedAt: string;
+  decidedAt: string | null;
+  sentAt: string | null;
+  errorMessage: string | null;
+  localOnly?: boolean;
+};
 
 export function LaunchCampaignModal({ locale, onClose }: Props) {
   const [brands, setBrands] = useState<Brand[]>([]);
@@ -169,9 +196,17 @@ export function LaunchCampaignModal({ locale, onClose }: Props) {
       });
       const data = await res.json();
       if (res.ok) {
+        const previewDrafts = sanitizeLocalPreviewDrafts(data.previewDrafts);
+        if (previewDrafts.length > 0) {
+          storeLocalPreviewDrafts(previewDrafts);
+          window.dispatchEvent(new Event("local-preview-drafts:updated"));
+        }
         setResult({
           type: data.n8nOk ? "success" : "info",
-          text: data.message ?? "Campagne lancée",
+          text:
+            previewDrafts.length > 0
+              ? `${data.message ?? "Campagne lancée"} Les aperçus sont visibles dans la boîte de réception.`
+              : (data.message ?? "Campagne lancée"),
         });
         setLaunching(false);
       } else {
@@ -490,4 +525,57 @@ function normalizeRecipientEmail(email: string) {
     return TEST_BRAND_EMAIL;
   }
   return trimmed;
+}
+
+function sanitizeLocalPreviewDrafts(value: unknown): LaunchPreviewDraft[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((draft): draft is LaunchPreviewDraft => {
+    return (
+      !!draft &&
+      typeof draft === "object" &&
+      typeof (draft as LaunchPreviewDraft).id === "string" &&
+      typeof (draft as LaunchPreviewDraft).brandName === "string" &&
+      typeof (draft as LaunchPreviewDraft).marketplaceName === "string" &&
+      typeof (draft as LaunchPreviewDraft).toEmail === "string" &&
+      typeof (draft as LaunchPreviewDraft).subject === "string" &&
+      typeof (draft as LaunchPreviewDraft).bodyText === "string"
+    );
+  });
+}
+
+function storeLocalPreviewDrafts(incomingDrafts: LaunchPreviewDraft[]) {
+  if (typeof window === "undefined" || incomingDrafts.length === 0) return;
+
+  const currentDrafts = readLocalPreviewDrafts();
+  const draftsBySignature = new Map<string, LaunchPreviewDraft>();
+
+  for (const draft of [...incomingDrafts, ...currentDrafts]) {
+    draftsBySignature.set(getPreviewSignature(draft), draft);
+  }
+
+  window.localStorage.setItem(
+    LOCAL_PREVIEW_DRAFTS_STORAGE_KEY,
+    JSON.stringify(Array.from(draftsBySignature.values()))
+  );
+}
+
+function readLocalPreviewDrafts() {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(LOCAL_PREVIEW_DRAFTS_STORAGE_KEY);
+    return sanitizeLocalPreviewDrafts(raw ? JSON.parse(raw) : []);
+  } catch {
+    return [];
+  }
+}
+
+function getPreviewSignature(draft: LaunchPreviewDraft) {
+  return [
+    draft.brandName,
+    draft.marketplaceName,
+    draft.campaign ?? "",
+    draft.toEmail,
+    draft.subject,
+    draft.bodyText,
+  ].join("::");
 }

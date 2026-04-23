@@ -32,6 +32,35 @@ type LaunchPreviewResponse = {
   callbackUrl?: string;
   webhookUrl?: string;
   n8nExecutionId?: string;
+  objet?: string;
+  object?: string;
+  email?: string;
+};
+
+type LaunchPreviewDraft = {
+  id: string;
+  brandId: null;
+  marketplaceId: null;
+  brandName: string;
+  marketplaceName: string;
+  campaign: string | null;
+  step: number;
+  branch: null;
+  toEmail: string;
+  toFirstName: string | null;
+  subject: string;
+  bodyText: string;
+  cta: null;
+  stopRule: null;
+  claimSources: string;
+  callbackUrl: string | null;
+  status: "PENDING";
+  edited: false;
+  receivedAt: string;
+  decidedAt: null;
+  sentAt: null;
+  errorMessage: null;
+  localOnly: true;
 };
 
 export async function POST(req: NextRequest) {
@@ -95,6 +124,7 @@ export async function POST(req: NextRequest) {
   let n8nError: string | null = null;
   let callbackWarning: string | null = null;
   let createdDrafts = 0;
+  let previewDrafts: LaunchPreviewDraft[] = [];
 
   if (!callbackUrlIsPublic) {
     callbackWarning =
@@ -130,12 +160,13 @@ export async function POST(req: NextRequest) {
         }
       } else {
         const raw = await res.text().catch(() => "");
-        createdDrafts = await persistPreviewsFromLaunchResponse({
+        previewDrafts = await persistPreviewsFromLaunchResponse({
           raw,
           campaign,
           callbackUrl,
           targets: emailTargets,
         });
+        createdDrafts = previewDrafts.length;
       }
     } catch (err) {
       if (err instanceof Error && err.name === "AbortError") {
@@ -151,6 +182,7 @@ export async function POST(req: NextRequest) {
     n8nOk,
     n8nError,
     createdDrafts,
+    previewDrafts,
     callbackUrl,
     callbackWarning,
     message: n8nOk
@@ -170,17 +202,17 @@ async function persistPreviewsFromLaunchResponse({
   callbackUrl: string;
   targets: LaunchTarget[];
 }) {
-  if (!raw.trim()) return 0;
+  if (!raw.trim()) return [];
 
   let parsed: unknown;
   try {
     parsed = JSON.parse(raw);
   } catch {
-    return 0;
+    return [];
   }
 
   const responses = Array.isArray(parsed) ? parsed : [parsed];
-  let created = 0;
+  const previewDrafts: LaunchPreviewDraft[] = [];
 
   for (let index = 0; index < responses.length; index += 1) {
     const response = responses[index];
@@ -188,9 +220,14 @@ async function persistPreviewsFromLaunchResponse({
 
     const preview = response as LaunchPreviewResponse;
     const subject =
-      asNonEmptyString(preview.output?.subject_line) ?? asNonEmptyString(preview.subject_line);
+      asNonEmptyString(preview.output?.subject_line) ??
+      asNonEmptyString(preview.subject_line) ??
+      asNonEmptyString(preview.objet) ??
+      asNonEmptyString(preview.object);
     const bodyText =
-      asNonEmptyString(preview.output?.body) ?? asNonEmptyString(preview.body);
+      asNonEmptyString(preview.output?.body) ??
+      asNonEmptyString(preview.body) ??
+      asNonEmptyString(preview.email);
 
     if (!subject || !bodyText) continue;
 
@@ -209,6 +246,33 @@ async function persistPreviewsFromLaunchResponse({
       asNonEmptyString(preview.info?.toFirstName) ?? fallbackTarget.toFirstName ?? null;
 
     if (!toEmail) continue;
+
+    const previewDraft: LaunchPreviewDraft = {
+      id: `local-preview-${crypto.randomUUID()}`,
+      brandId: null,
+      marketplaceId: null,
+      brandName,
+      marketplaceName,
+      campaign: asNonEmptyString(preview.info?.campaign) ?? campaign,
+      step: index + 1,
+      branch: null,
+      toEmail,
+      toFirstName,
+      subject,
+      bodyText,
+      cta: null,
+      stopRule: null,
+      claimSources: JSON.stringify([]),
+      callbackUrl: asNonEmptyString(preview.callbackUrl) ?? callbackUrl,
+      status: "PENDING",
+      edited: false,
+      receivedAt: new Date().toISOString(),
+      decidedAt: null,
+      sentAt: null,
+      errorMessage: null,
+      localOnly: true,
+    };
+    previewDrafts.push(previewDraft);
 
     const meta = {
       ...(preview.conversationUrl ? { conversationUrl: preview.conversationUrl } : {}),
@@ -240,7 +304,6 @@ async function persistPreviewsFromLaunchResponse({
         status: "PENDING",
         edited: false,
       });
-      created += 1;
       continue;
     }
 
@@ -266,10 +329,9 @@ async function persistPreviewsFromLaunchResponse({
         status: "PENDING",
       },
     });
-    created += 1;
   }
 
-  return created;
+  return previewDrafts;
 }
 
 function getAppBaseUrl(req: NextRequest) {

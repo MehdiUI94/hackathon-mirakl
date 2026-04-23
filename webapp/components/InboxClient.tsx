@@ -26,6 +26,7 @@ interface Draft {
   decidedAt: string | null;
   sentAt: string | null;
   errorMessage: string | null;
+  localOnly?: boolean;
 }
 
 type Toast = { id: number; type: "success" | "error" | "info"; message: string };
@@ -38,9 +39,12 @@ const STATUS_TABS = [
   { key: "FAILED", labelKey: "failed", dot: "bg-rose-600", num: "V" },
 ] as const;
 
+const LOCAL_PREVIEW_DRAFTS_STORAGE_KEY = "hackathon-mirakl.local-preview-drafts";
+
 export default function InboxClient({ locale: _locale }: { locale: string }) {
   const t = useTranslations("inbox");
   const [drafts, setDrafts] = useState<Draft[]>([]);
+  const [localDrafts, setLocalDrafts] = useState<Draft[]>([]);
   const [counts, setCounts] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<string>("PENDING");
@@ -73,6 +77,39 @@ export default function InboxClient({ locale: _locale }: { locale: string }) {
     return () => clearInterval(id);
   }, [refresh]);
 
+  useEffect(() => {
+    function syncLocalDrafts() {
+      setLocalDrafts(readLocalPreviewDrafts());
+    }
+
+    syncLocalDrafts();
+    window.addEventListener("storage", syncLocalDrafts);
+    window.addEventListener("local-preview-drafts:updated", syncLocalDrafts);
+    return () => {
+      window.removeEventListener("storage", syncLocalDrafts);
+      window.removeEventListener("local-preview-drafts:updated", syncLocalDrafts);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (localDrafts.length === 0 || drafts.length === 0) return;
+
+    const serverSignatures = new Set(drafts.map(getDraftSignature));
+    const dedupedLocalDrafts = localDrafts.filter(
+      (draft) => !serverSignatures.has(getDraftSignature(draft))
+    );
+
+    if (dedupedLocalDrafts.length === localDrafts.length) return;
+
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(
+        LOCAL_PREVIEW_DRAFTS_STORAGE_KEY,
+        JSON.stringify(dedupedLocalDrafts)
+      );
+      setLocalDrafts(dedupedLocalDrafts);
+    }
+  }, [drafts, localDrafts]);
+
   function pushToast(type: Toast["type"], message: string) {
     const id = Date.now() + Math.random();
     setToasts((prev) => [...prev, { id, type, message }]);
@@ -80,6 +117,12 @@ export default function InboxClient({ locale: _locale }: { locale: string }) {
   }
 
   async function approve(draft: Draft) {
+    if (draft.localOnly) {
+      pushToast("info", "Cet aperçu local est visible dans la boîte, mais son envoi n'est pas encore disponible sur Netlify.");
+      setSelected(null);
+      setConfirm(null);
+      return;
+    }
     setBusy(true);
     try {
       const res = await fetch(`/api/drafts/${draft.id}/approve`, { method: "POST" });
@@ -98,6 +141,14 @@ export default function InboxClient({ locale: _locale }: { locale: string }) {
   }
 
   async function discard(draft: Draft) {
+    if (draft.localOnly) {
+      removeLocalPreviewDraft(draft.id);
+      setLocalDrafts((prev) => prev.filter((item) => item.id !== draft.id));
+      setSelected(null);
+      setConfirm(null);
+      pushToast("info", "Aperçu local retiré");
+      return;
+    }
     setBusy(true);
     try {
       const res = await fetch(`/api/drafts/${draft.id}`, { method: "DELETE" });
@@ -147,13 +198,6 @@ export default function InboxClient({ locale: _locale }: { locale: string }) {
     setChecked(new Set());
   }, [statusFilter, search]);
 
-  const selectableIds = useMemo(
-    () => drafts.filter((d) => d.status === "PENDING" || d.status === "EDITED").map((d) => d.id),
-    [drafts]
-  );
-  const allSelected = selectableIds.length > 0 && selectableIds.every((id) => checked.has(id));
-  const someSelected = checked.size > 0;
-
   function toggleRow(id: string) {
     setChecked((prev) => {
       const next = new Set(prev);
@@ -169,6 +213,22 @@ export default function InboxClient({ locale: _locale }: { locale: string }) {
   }
 
   async function saveEdits(draft: Draft, subject: string, bodyText: string, toEmail: string, toFirstName: string) {
+    if (draft.localOnly) {
+      const updatedDraft: Draft = {
+        ...draft,
+        subject,
+        bodyText,
+        toEmail,
+        toFirstName,
+        edited: true,
+        status: "EDITED",
+      };
+      upsertLocalPreviewDraft(updatedDraft);
+      setLocalDrafts((prev) => prev.map((item) => (item.id === draft.id ? updatedDraft : item)));
+      setSelected(updatedDraft);
+      pushToast("success", "Modifications enregistrées");
+      return;
+    }
     setBusy(true);
     try {
       const res = await fetch(`/api/drafts/${draft.id}`, {
@@ -189,14 +249,42 @@ export default function InboxClient({ locale: _locale }: { locale: string }) {
     }
   }
 
-  const total = useMemo(() => drafts.length, [drafts]);
+  const visibleLocalDrafts = useMemo(
+    () => localDrafts.filter((draft) => matchesDraftFilters(draft, statusFilter, search)),
+    [localDrafts, search, statusFilter]
+  );
+
+  const mergedDrafts = useMemo(() => {
+    const serverSignatures = new Set(drafts.map(getDraftSignature));
+    return [...drafts, ...visibleLocalDrafts.filter((draft) => !serverSignatures.has(getDraftSignature(draft)))]
+      .sort((a, b) => new Date(b.receivedAt).getTime() - new Date(a.receivedAt).getTime());
+  }, [drafts, visibleLocalDrafts]);
+
+  const mergedCounts = useMemo(() => {
+    const next = { ...counts };
+    for (const draft of localDrafts) {
+      const hasServerEquivalent = drafts.some((serverDraft) => getDraftSignature(serverDraft) === getDraftSignature(draft));
+      if (hasServerEquivalent) continue;
+      next[draft.status] = (next[draft.status] ?? 0) + 1;
+    }
+    return next;
+  }, [counts, drafts, localDrafts]);
+
+  const selectableIds = useMemo(
+    () => mergedDrafts.filter((d) => d.status === "PENDING" || d.status === "EDITED").map((d) => d.id),
+    [mergedDrafts]
+  );
+  const allSelected = selectableIds.length > 0 && selectableIds.every((id) => checked.has(id));
+  const someSelected = checked.size > 0;
+
+  const total = useMemo(() => mergedDrafts.length, [mergedDrafts]);
 
   return (
     <div className="space-y-10">
       {/* Editorial KPI rail — five columns separated by hairlines */}
       <div className="grid grid-cols-2 sm:grid-cols-5 border-y border-rule rise">
         {STATUS_TABS.map((s, i) => {
-          const count = counts[s.key] ?? 0;
+          const count = mergedCounts[s.key] ?? 0;
           const active = statusFilter === s.key;
           return (
             <button
@@ -271,7 +359,7 @@ export default function InboxClient({ locale: _locale }: { locale: string }) {
         {loading && (
           <div className="px-6 py-16 text-center eyebrow">Chargement</div>
         )}
-        {!loading && drafts.length === 0 && (
+        {!loading && mergedDrafts.length === 0 && (
           <div className="px-6 py-24 text-center max-w-md mx-auto">
             <div className="font-display italic text-2xl text-ink mb-2">
               Tirage en attente
@@ -279,9 +367,9 @@ export default function InboxClient({ locale: _locale }: { locale: string }) {
             <p className="text-[14px] text-muted leading-relaxed">{t("empty")}</p>
           </div>
         )}
-        {!loading && drafts.length > 0 && (
+        {!loading && mergedDrafts.length > 0 && (
           <ul className="divide-y divide-rule">
-            {drafts.map((d, idx) => {
+            {mergedDrafts.map((d, idx) => {
               const isPending = d.status === "PENDING" || d.status === "EDITED";
               const isChecked = checked.has(d.id);
               return (
@@ -340,6 +428,11 @@ export default function InboxClient({ locale: _locale }: { locale: string }) {
                       {d.edited && (
                         <span className="font-mono text-[9px] tracking-widest text-ember uppercase border border-ember/40 px-1.5 py-0.5 ml-1">
                           {t("edited_badge")}
+                        </span>
+                      )}
+                      {d.localOnly && (
+                        <span className="font-mono text-[9px] tracking-widest text-sky-700 uppercase border border-sky-300 px-1.5 py-0.5 ml-1">
+                          aperçu local
                         </span>
                       )}
                     </div>
@@ -890,5 +983,80 @@ function ConfirmModal({
         </div>
       </div>
     </div>
+  );
+}
+
+function matchesDraftFilters(draft: Draft, statusFilter: string, search: string) {
+  if (statusFilter && draft.status !== statusFilter) return false;
+  if (!search.trim()) return true;
+
+  const query = search.trim().toLowerCase();
+  return [draft.brandName, draft.toEmail, draft.subject].some((value) =>
+    value.toLowerCase().includes(query)
+  );
+}
+
+function readLocalPreviewDrafts(): Draft[] {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const raw = window.localStorage.getItem(LOCAL_PREVIEW_DRAFTS_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(isDraftShape);
+  } catch {
+    return [];
+  }
+}
+
+function upsertLocalPreviewDraft(nextDraft: Draft) {
+  if (typeof window === "undefined") return;
+
+  const currentDrafts = readLocalPreviewDrafts();
+  const updatedDrafts = [
+    nextDraft,
+    ...currentDrafts.filter((draft) => draft.id !== nextDraft.id),
+  ];
+
+  window.localStorage.setItem(
+    LOCAL_PREVIEW_DRAFTS_STORAGE_KEY,
+    JSON.stringify(updatedDrafts)
+  );
+  window.dispatchEvent(new Event("local-preview-drafts:updated"));
+}
+
+function removeLocalPreviewDraft(id: string) {
+  if (typeof window === "undefined") return;
+  const nextDrafts = readLocalPreviewDrafts().filter((draft) => draft.id !== id);
+  window.localStorage.setItem(
+    LOCAL_PREVIEW_DRAFTS_STORAGE_KEY,
+    JSON.stringify(nextDrafts)
+  );
+  window.dispatchEvent(new Event("local-preview-drafts:updated"));
+}
+
+function getDraftSignature(draft: Draft) {
+  return [
+    draft.brandName,
+    draft.marketplaceName,
+    draft.campaign ?? "",
+    draft.toEmail,
+    draft.subject,
+    draft.bodyText,
+  ].join("::");
+}
+
+function isDraftShape(value: unknown): value is Draft {
+  if (!value || typeof value !== "object") return false;
+  const draft = value as Draft;
+  return (
+    typeof draft.id === "string" &&
+    typeof draft.brandName === "string" &&
+    typeof draft.marketplaceName === "string" &&
+    typeof draft.toEmail === "string" &&
+    typeof draft.subject === "string" &&
+    typeof draft.bodyText === "string" &&
+    typeof draft.status === "string" &&
+    typeof draft.receivedAt === "string"
   );
 }
