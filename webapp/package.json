@@ -8,6 +8,7 @@
     "tunnel": "node scripts/start-cloudflare-tunnel.cjs 3000",
     "build": "next build",
     "start": "next start",
+    "render:start": "prisma migrate deploy --config ./prisma.config.ts && next start -p ${PORT:-3000}",
     "seed": "tsx scripts/seed.ts",
     "import:contacts": "tsx scripts/import-contacts.ts",
     "import:signals": "tsx scripts/import-marketplace-signals.ts",
@@ -15,7 +16,6 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0",
-    "@prisma/adapter-pg": "^7.7.0",
     "@prisma/adapter-better-sqlite3": "^7.7.0",
     "@prisma/client": "^7.7.0",
     "better-sqlite3": "^12.9.0",
@@ -23,7 +23,6 @@
     "next": "16.2.4",
     "next-intl": "^4.9.1",
     "node-cron": "^4.2.1",
-    "pg": "^8.16.3",
     "prisma": "^7.7.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",

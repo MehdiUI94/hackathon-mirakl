@@ -136,10 +136,6 @@ function getAppBaseUrl(req: NextRequest) {
     process.env.N8N_CALLBACK_BASE_URL ??
     process.env.APP_BASE_URL ??
     process.env.RENDER_EXTERNAL_URL ??
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : undefined) ??
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ??
     process.env.NEXT_PUBLIC_APP_URL;
   if (configured) return configured.replace(/\/$/, "");
 

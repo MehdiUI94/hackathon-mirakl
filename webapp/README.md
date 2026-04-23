@@ -16,57 +16,21 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Free public deployment
+## n8n Callback URL
 
-The most practical fully free setup for this project is:
-
-- `Vercel Hobby` for the Next.js app
-- `Neon Free` for the PostgreSQL database
-
-This repo is now configured for that setup.
-
-### 1. Create a free Neon database
-
-Create a Neon project and copy two connection strings:
-
-- `DATABASE_URL`: the pooled connection string
-- `DIRECT_URL`: the direct connection string
-
-Prisma's PostgreSQL docs recommend using a pooled runtime URL and a direct URL for schema operations.
-
-### 2. Deploy `webapp` on Vercel
-
-When importing this repo in Vercel:
-
-1. Import the GitHub repository
-2. Set the **Root Directory** to `webapp`
-3. Add these environment variables in Vercel:
+If n8n Cloud must send previews back to this app, set a public callback URL in [webapp/.env](/c:/Cours/hackathon-mirakl/webapp/.env):
 
 ```env
-DATABASE_URL=postgresql://...
-DIRECT_URL=postgresql://...
-N8N_LAUNCH_WEBHOOK_URL=https://your-n8n.cloud/webhook/...
-CRON_SECRET=your-random-secret
+N8N_CALLBACK_BASE_URL="https://your-app.ngrok-free.app"
 ```
 
-`CRON_SECRET` is used to protect the scheduled `/api/campaigns/tick` route.
+You can also use:
 
-### 3. Public URLs
-
-Once deployed, your app will be publicly reachable at:
-
-```text
-https://<your-project>.vercel.app
+```env
+APP_BASE_URL="https://your-app.ngrok-free.app"
 ```
 
-Use these n8n endpoints:
-
-```text
-https://<your-project>.vercel.app/api/emails/preview
-https://<your-project>.vercel.app/api/webhooks/n8n/preview
-```
-
-The app automatically derives its callback URL from the deployment host in production, so you do not need a local tunnel.
+`N8N_CALLBACK_BASE_URL` is preferred for the n8n callback. It should point to a public URL that reaches this local app, for example through ngrok or Cloudflare Tunnel.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
@@ -81,7 +45,24 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Notes
+## Deploy on Render
 
-- Vercel Hobby cron jobs are limited, so this repo schedules a daily cron instead of an every-5-min job.
-- For local development after this migration, set `DATABASE_URL` to a PostgreSQL database as well.
+This app uses SQLite, so the simplest public deployment is a Render web service with a persistent disk.
+
+### Render setup
+
+This repo includes a root [render.yaml](/c:/Cours/hackathon-mirakl/render.yaml) blueprint.
+
+What it does:
+
+- deploys the `webapp` subdirectory as a Node web service
+- mounts a persistent disk at `/var/data`
+- stores SQLite at `file:/var/data/dev.db`
+- runs Prisma migrations before start
+- lets the app auto-detect its public URL via Render's `RENDER_EXTERNAL_URL`
+
+After deployment, your preview endpoint will be:
+
+```text
+https://<your-service>.onrender.com/api/emails/preview
+```

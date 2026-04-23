@@ -18,20 +18,16 @@
  */
 
 import "dotenv/config";
-import { PrismaPg } from "@prisma/adapter-pg";
 import * as XLSX from "xlsx";
 import path from "node:path";
+import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaClient } from "../app/generated/prisma/client";
 
 // ─── Setup DB ────────────────────────────────────────────────────────────────
 
-const connectionString = process.env.DATABASE_URL;
-
-if (!connectionString) {
-  throw new Error("DATABASE_URL is required. Use a PostgreSQL connection string.");
-}
-
-const adapter = new PrismaPg({ connectionString });
+const dbPath = process.env.DATABASE_URL?.replace("file:", "") ?? "./dev.db";
+const resolvedPath = path.resolve(process.cwd(), dbPath);
+const adapter = new PrismaBetterSqlite3({ url: `file:${resolvedPath}` });
 const prisma = new PrismaClient({ adapter });
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
