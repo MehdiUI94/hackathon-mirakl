@@ -66,7 +66,8 @@
       "Bash(echo \"PID: $!\" sleep 12 cat /tmp/pinggy.log)",
       "Bash(ssh -p 22 -o StrictHostKeyChecking=no -o ConnectTimeout=10 -R 80:localhost:3000 nokey@pinggy.io)",
       "Bash(echo \"PID: $!\" sleep 15 cat /tmp/pinggy22.log)",
-      "Bash(kill 94437 94798)"
+      "Bash(kill 94437 94798)",
+      "Bash(awk '{print $9, \"\\(\" $5 \"\\)\"}')"
     ]
   }
 }
